@@ -1,0 +1,19 @@
+{
+  "name": "commonmark-to-commonform",
+  "version": "0.0.0",
+  "description": "convert CommonMark to Common Form",
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
+  "repository": "commonform/commonmark-to-commonform",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commonform-fix-strings": "^1.0.0",
+    "commonmark": "^0.29.0"
+  },
+  "devDependencies": {
+    "defence-cli": "^3.0.1",
+    "replace-require-self": "^1.1.1"
+  },
+  "scripts": {
+    "test": "defence README.md | replace-require-self | node"
+  }
+}
