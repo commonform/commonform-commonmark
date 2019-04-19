@@ -11,9 +11,12 @@
   },
   "devDependencies": {
     "defence-cli": "^3.0.1",
-    "replace-require-self": "^1.1.1"
+    "replace-require-self": "^1.1.1",
+    "tape": "^4.10.1"
   },
   "scripts": {
-    "test": "defence README.md | replace-require-self | node"
+    "test": "npm run test:readme && npm run test:suite",
+    "test:suite": "tape test/**.test.js",
+    "test:readme": "defence README.md | replace-require-self | node"
   }
 }
