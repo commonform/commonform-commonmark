@@ -6,6 +6,10 @@
   "repository": "commonform/commonmark-to-commonform",
   "license": "Apache-2.0",
   "bin": "./bin.js",
+  "files": [
+    "index.js",
+    "bin.js"
+  ],
   "dependencies": {
     "commonform-fix-strings": "^1.0.0",
     "commonmark": "^0.29.0"
