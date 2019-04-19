@@ -31,8 +31,16 @@ module.exports = function (markdown) {
     } else if (type === 'softbreak') {
       handleText(' ', node)
     } else if (event.entering) {
+      if (type === 'item') {
+        var currentForm = formStack[0]
+        var childForm = emptyForm()
+        var child = { form: childForm }
+        currentForm.content.push(child)
+        formStack.unshift(childForm)
+      }
       contextStack.unshift({ type: type, level: node.level || undefined })
     } else {
+      if (type === 'item') formStack.shift()
       contextStack.shift()
     }
   }

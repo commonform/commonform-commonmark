@@ -15,8 +15,8 @@ assert.deepEqual(
       '',
       '## Second Heading',
       '',
-      'Using the term _Agreement_.',
-      'Referencing [First Heading](#first-heading).',
+      '- Using the term _Agreement_.',
+      '- Referencing [First Heading](#first-heading).',
     ].join('\n')
   ),
   {
@@ -31,8 +31,20 @@ assert.deepEqual(
         heading: 'Second Heading',
         form: {
           content: [
-            'Using the term ', {use: 'Agreement'}, '. ' +
-            'Referencing ', {reference: 'First Heading'}, '.'
+            {
+              form: {
+                content: [
+                  'Using the term ', {use: 'Agreement'}, '.'
+                ]
+              }
+            },
+            {
+              form: {
+                content: [
+                  'Referencing ', {reference: 'First Heading'}, '.'
+                ]
+              }
+            }
           ]
         }
       }
