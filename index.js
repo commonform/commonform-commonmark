@@ -67,13 +67,13 @@ module.exports = function (markdown) {
       lastHeadingLevel = level
     // Convert <strong> to definitions.
     } else if (type === 'strong') {
-      currentForm.content.push({definition: text})
+      currentForm.content.push({ definition: text })
     // Convert <emph> to definitions.
     } else if (type === 'emph') {
-      currentForm.content.push({use: text})
+      currentForm.content.push({ use: text })
     // Convert <a> to references.
     } else if (type === 'link') {
-      currentForm.content.push({reference: text})
+      currentForm.content.push({ reference: text })
     // Handle plain text.
     } else if (type === 'paragraph') {
       currentForm.content.push(text)
@@ -93,5 +93,5 @@ function recursivelyFixStrings (form) {
 }
 
 function emptyForm () {
-  return {content: []}
+  return { content: [] }
 }
