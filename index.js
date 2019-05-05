@@ -63,7 +63,7 @@ module.exports = function (markdown) {
         var depth = level - lastHeadingLevel
         if (depth > 1) throw new Error('Jump in heading levels')
       } else if (level < lastHeadingLevel) {
-        for (var i = level; i < lastHeadingLevel; i++) {
+        for (var i = level; i <= lastHeadingLevel; i++) {
           formStack.shift()
         }
       }

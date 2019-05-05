@@ -40,6 +40,49 @@ test('preamble-list',
   }
 )
 
+tape('heading tree', function (test) {
+  var commonmark = [
+    '# A',
+    'A',
+    '## B',
+    'B',
+    '### C',
+    'C',
+    '# D',
+    'D'
+  ].join('\n')
+  var form = {
+    content: [
+      {
+        heading: 'A',
+        form: {
+          content: [
+            'A',
+            {
+              heading: 'B',
+              form: {
+                content: [
+                  'B',
+                  {
+                    heading: 'C',
+                    form: { content: ['C'] }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        heading: 'D',
+        form: { content: ['D'] }
+      }
+    ]
+  }
+  test.deepEqual(toCommonForm(commonmark), form)
+  test.end()
+})
+
 function test (note, commonmark, form) {
   tape(note, function (test) {
     test.deepEqual(toCommonForm(commonmark), form)
