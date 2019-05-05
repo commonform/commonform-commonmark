@@ -7,13 +7,11 @@ var assert = require('assert')
 assert.deepEqual(
   toCommonForm(
     [
-      '# Title',
-      '',
-      '## First Heading',
+      '# First Heading',
       '',
       'This is the **Agreement**.',
       '',
-      '## Second Heading',
+      '# Second Heading',
       '',
       '- Using the term _Agreement_.',
       '- Referencing [First Heading](#first-heading).',
