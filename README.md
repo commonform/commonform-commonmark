@@ -24,7 +24,9 @@ assert.deepEqual(
       {
         heading: 'First Heading',
         form: {
-          content: ['This is the ', {definition: 'Agreement'}, '.']
+          content: [
+            'This is the ', {definition: 'Agreement'}, '.'
+          ]
         }
       },
       {
