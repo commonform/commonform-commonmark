@@ -1,6 +1,52 @@
 var tape = require('tape')
 var toCommonForm = require('./')
 
+test('preamble-heading',
+  [
+    'The parties agree:',
+    '',
+    '# First',
+    '',
+    'first child'
+  ].join('\n'),
+  {
+    content: [
+      'The parties agree:',
+      {
+        heading: 'First',
+        form: {
+          content: [ 'first child' ]
+        }
+      }
+    ]
+  }
+)
+
+test('preamble-list',
+  [
+    'The parties agree:',
+    '',
+    '- first child'
+  ].join('\n'),
+  {
+    content: [
+      'The parties agree:',
+      {
+        form: {
+          content: [ 'first child' ]
+        }
+      }
+    ]
+  }
+)
+
+function test (note, commonmark, form) {
+  tape(note, function (test) {
+    test.deepEqual(toCommonForm(commonmark), form)
+    test.end()
+  })
+}
+
 tape('blank', function (test) {
   var commonmark = 'The **Purchase Price** is `dollars`.'
 

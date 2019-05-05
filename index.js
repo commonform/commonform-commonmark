@@ -11,7 +11,7 @@ module.exports = function (markdown) {
   var formStack = [returned]
   var contextStack = []
   var event
-  var lastHeadingLevel = 1
+  var lastHeadingLevel = 0
 
   var UNSUPPORTED_TYPES = [
     'block_quote',
@@ -57,8 +57,6 @@ module.exports = function (markdown) {
     // Handle headings.
     if (type === 'heading') {
       var level = currentContext.level
-      // Ignore document titles.
-      if (level === 1) return
       if (level === lastHeadingLevel) {
         formStack.shift()
       } else if (level > lastHeadingLevel) {
