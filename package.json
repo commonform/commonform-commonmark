@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "npm run test:readme && npm run test:suite",
-    "test:suite": "tape test/**.test.js",
+    "test:suite": "node test.js",
     "test:readme": "defence README.md | replace-require-self | node"
   }
 }
