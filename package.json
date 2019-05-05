@@ -4,7 +4,7 @@
   "description": "convert CommonMark to Common Form",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
   "repository": "commonform/commonmark-to-commonform",
-  "license": "Apache-2.0",
+  "license": "BlueOak-1.0.0",
   "bin": "./bin.js",
   "files": [
     "index.js",
