@@ -2,6 +2,10 @@
 
 convert CommonMark to Common Form
 
+This package includes a [JavaScript module](#JavaScript) and [command-line filter](#CLI).
+
+## JavaScript
+
 ```javascript
 var toCommonForm = require('commonmark-to-commonform')
 var assert = require('assert')
@@ -53,4 +57,10 @@ assert.deepEqual(
     ]
   }
 )
+```
+
+## CLI
+
+```bash
+npx commonmark-to-commonform < terms.md > terms.json
 ```
