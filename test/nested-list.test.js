@@ -20,15 +20,15 @@ tape('nested lists', function (test) {
               form: {
                 content: [
                   'B',
-                  {form: {content: ['C']}}
+                  { form: { content: ['C'] } }
                 ]
               }
             },
-            {form: {content: ['D']}}
+            { form: { content: ['D'] } }
           ]
         }
       },
-      {form: {content: ['E']}}
+      { form: { content: ['E'] } }
     ]
   }
 
@@ -55,15 +55,15 @@ tape('nested ordered lists', function (test) {
               form: {
                 content: [
                   'B',
-                  {form: {content: ['C']}}
+                  { form: { content: ['C'] } }
                 ]
               }
             },
-            {form: {content: ['D']}}
+            { form: { content: ['D'] } }
           ]
         }
       },
-      {form: {content: ['E']}}
+      { form: { content: ['E'] } }
     ]
   }
 

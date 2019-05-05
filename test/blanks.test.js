@@ -7,9 +7,9 @@ tape('blank', function (test) {
   var form = {
     content: [
       'The ',
-      {definition: 'Purchase Price'},
+      { definition: 'Purchase Price' },
       ' is ',
-      {blank:''},
+      { blank: '' },
       '.'
     ]
   }

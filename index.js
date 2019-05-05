@@ -90,7 +90,7 @@ module.exports = function (markdown) {
     // Handle plain text.
     } else if (type === 'paragraph') {
       if (node.type === 'code') {
-        currentForm.content.push({blank: ''})
+        currentForm.content.push({ blank: '' })
       } else {
         currentForm.content.push(text)
       }
