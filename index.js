@@ -1,7 +1,9 @@
+var assert = require('assert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
 
 module.exports = function (markdown) {
+  assert(typeof markdown === 'string')
   var parser = new commonmark.Parser()
   var parsed = parser.parse(markdown)
   var walker = parsed.walker()
@@ -45,6 +47,10 @@ module.exports = function (markdown) {
   }
 
   function handleText (text, node) {
+    assert(typeof node === 'object')
+    assert(typeof node.type === 'string')
+    assert(typeof node.literal === 'string')
+    assert(node.type === 'text' || node.type === 'code')
     var currentContext = contextStack[0]
     var currentForm = formStack[0]
     var type = currentContext.type
