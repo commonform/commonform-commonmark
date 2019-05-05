@@ -13,7 +13,6 @@ module.exports = function (markdown) {
 
   var UNSUPPORTED_TYPES = [
     'block_quote',
-    'code',
     'code_block',
     'html_block',
     'image',
@@ -26,7 +25,7 @@ module.exports = function (markdown) {
     if (UNSUPPORTED_TYPES.indexOf(type) !== -1) {
       throw new Error('Unsupported: ' + type)
     }
-    if (type === 'text') {
+    if (type === 'text' || type === 'code') {
       handleText(node.literal, node)
     } else if (type === 'softbreak') {
       handleText(' ', node)
@@ -84,7 +83,11 @@ module.exports = function (markdown) {
       currentForm.content.push({ reference: text })
     // Handle plain text.
     } else if (type === 'paragraph') {
-      currentForm.content.push(text)
+      if (node.type === 'code') {
+        currentForm.content.push({blank: ''})
+      } else {
+        currentForm.content.push(text)
+      }
     }
   }
   return recursivelyFixStrings(returned)
