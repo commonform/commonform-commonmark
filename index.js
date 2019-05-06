@@ -28,7 +28,6 @@ module.exports = function (markdown) {
     if (UNSUPPORTED_TYPES.indexOf(type) !== -1) {
       throw new Error('Unsupported: ' + type)
     }
-    var childForm, child
     if (type === 'text' || type === 'code') {
       handleText(node.literal, node)
     } else if (type === 'softbreak') {
@@ -36,50 +35,26 @@ module.exports = function (markdown) {
     } else if (event.entering) {
       var currentForm
       if (type === 'item') {
-        currentForm = contentStack[0]
-        childForm = emptyForm()
-        child = { form: childForm }
-        currentForm.content.push(child)
-        contentStack.unshift(childForm)
-        childStack.unshift(child)
+        unshiftChild()
       } else if (type === 'strong') {
-        currentForm = contentStack[0]
-        var definition = { definition: '' }
-        currentForm.content.push(definition)
-        contentStack.unshift(definition)
-        childStack.unshift(null)
+        addContentElement({ definition: '' })
       } else if (type === 'emph') {
-        currentForm = contentStack[0]
-        var use = { use: '' }
-        currentForm.content.push(use)
-        contentStack.unshift(use)
-        childStack.unshift(null)
+        addContentElement({ use: '' })
       } else if (type === 'link') {
-        currentForm = contentStack[0]
-        var reference = { reference: '' }
-        currentForm.content.push(reference)
-        contentStack.unshift(reference)
-        childStack.unshift(null)
+        addContentElement({ reference: '' })
       } else if (type === 'heading') {
         var level = node.level
         if (level === lastHeadingLevel) {
-          contentStack.shift()
-          childStack.shift()
+          shiftChild()
         } else if (level > lastHeadingLevel) {
           var depth = level - lastHeadingLevel
           if (depth > 1) throw new Error('Jump in heading levels')
         } else if (level < lastHeadingLevel) {
           for (var i = level; i <= lastHeadingLevel; i++) {
-            contentStack.shift()
-            childStack.shift()
+            shiftChild()
           }
         }
-        currentForm = contentStack[0]
-        childForm = emptyForm()
-        child = { form: childForm }
-        currentForm.content.push(child)
-        contentStack.unshift(childForm)
-        childStack.unshift(child)
+        unshiftChild()
         lastHeadingLevel = level
       }
       contextStack.unshift({ type: type, level: node.level || undefined })
@@ -97,6 +72,26 @@ module.exports = function (markdown) {
     }
   }
 
+  function shiftChild () {
+    contentStack.shift()
+    childStack.shift()
+  }
+
+  function unshiftChild () {
+    var child = { form: emptyForm() }
+    currentForm = contentStack[0]
+    currentForm.content.push(child)
+    contentStack.unshift(child.form)
+    childStack.unshift(child)
+  }
+
+  function addContentElement (element) {
+    var currentForm = contentStack[0]
+    currentForm.content.push(element)
+    contentStack.unshift(element)
+    childStack.unshift(null)
+  }
+
   function handleText (text, node) {
     assert(typeof node === 'object')
     assert(typeof node.type === 'string')
@@ -112,7 +107,7 @@ module.exports = function (markdown) {
     } else if (type === 'strong') {
       contentStack[0].definition += text
     } else if (type === 'emph') {
-      use = contentStack[0].use += text
+      contentStack[0].use += text
     } else if (type === 'link') {
       contentStack[0].reference += text
     } else if (type === 'paragraph') {
