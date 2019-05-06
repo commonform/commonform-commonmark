@@ -9,6 +9,7 @@ module.exports = function (markdown) {
   var walker = parsed.walker()
   var returned = emptyForm()
   var formStack = [returned]
+  var childStack = [null] // Root form is not a child.
   var contextStack = []
   var event
   var lastHeadingLevel = 0
@@ -27,21 +28,48 @@ module.exports = function (markdown) {
     if (UNSUPPORTED_TYPES.indexOf(type) !== -1) {
       throw new Error('Unsupported: ' + type)
     }
+    var childForm, child
     if (type === 'text' || type === 'code') {
       handleText(node.literal, node)
     } else if (type === 'softbreak') {
       handleText(' ', node)
     } else if (event.entering) {
+      var currentForm
       if (type === 'item') {
-        var currentForm = formStack[0]
-        var childForm = emptyForm()
-        var child = { form: childForm }
+        currentForm = formStack[0]
+        childForm = emptyForm()
+        child = { form: childForm }
         currentForm.content.push(child)
         formStack.unshift(childForm)
+        childStack.unshift(child)
+      } else if (type === 'heading') {
+        var level = node.level
+        if (level === lastHeadingLevel) {
+          formStack.shift()
+          childStack.shift()
+        } else if (level > lastHeadingLevel) {
+          var depth = level - lastHeadingLevel
+          if (depth > 1) throw new Error('Jump in heading levels')
+        } else if (level < lastHeadingLevel) {
+          for (var i = level; i <= lastHeadingLevel; i++) {
+            formStack.shift()
+            childStack.shift()
+          }
+        }
+        currentForm = formStack[0]
+        childForm = emptyForm()
+        child = { form: childForm }
+        currentForm.content.push(child)
+        formStack.unshift(childForm)
+        childStack.unshift(child)
+        lastHeadingLevel = level
       }
       contextStack.unshift({ type: type, level: node.level || undefined })
     } else {
-      if (type === 'item') formStack.shift()
+      if (type === 'item') {
+        formStack.shift()
+        childStack.shift()
+      }
       contextStack.shift()
     }
   }
@@ -56,26 +84,9 @@ module.exports = function (markdown) {
     var type = currentContext.type
     // Handle headings.
     if (type === 'heading') {
-      var level = currentContext.level
-      if (level === lastHeadingLevel) {
-        formStack.shift()
-      } else if (level > lastHeadingLevel) {
-        var depth = level - lastHeadingLevel
-        if (depth > 1) throw new Error('Jump in heading levels')
-      } else if (level < lastHeadingLevel) {
-        for (var i = level; i <= lastHeadingLevel; i++) {
-          formStack.shift()
-        }
-      }
-      currentForm = formStack[0]
-      var childForm = emptyForm()
-      var child = {
-        heading: text,
-        form: childForm
-      }
-      currentForm.content.push(child)
-      formStack.unshift(childForm)
-      lastHeadingLevel = level
+      var currentChild = childStack[0]
+      if (!currentChild.heading) currentChild.heading = text
+      else currentChild.heading += text
     // Convert <strong> to definitions.
     } else if (type === 'strong') {
       currentForm.content.push({ definition: text })

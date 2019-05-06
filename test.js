@@ -1,6 +1,24 @@
 var tape = require('tape')
 var toCommonForm = require('./')
 
+tape('quote in heading', function (test) {
+  var heading = "Client's Obligations"
+  var commonmark = [
+    '# ' + heading,
+    'first child'
+  ].join('\n')
+  var form = {
+    content: [
+      {
+        heading,
+        form: { content: [ 'first child' ] }
+      }
+    ]
+  }
+  test.deepEqual(toCommonForm(commonmark), form)
+  test.end()
+})
+
 tape('preamble-heading', function (test) {
   var commonmark = [
     'The parties agree:',
