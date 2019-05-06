@@ -97,27 +97,25 @@ module.exports = function (markdown) {
     assert(typeof node.type === 'string')
     assert(typeof node.literal === 'string')
     assert(node.type === 'text' || node.type === 'code')
-    var currentContext = contextStack[0]
-    var currentForm = contentStack[0]
-    var type = currentContext.type
-    if (type === 'heading') {
+    var contextType = contextStack[0].type
+    if (contextType === 'heading') {
       var currentChild = childStack[0]
       if (!currentChild.heading) currentChild.heading = text
       else currentChild.heading += text
-    } else if (type === 'strong') {
+    } else if (contextType === 'strong') {
       contentStack[0].definition += text
-    } else if (type === 'emph') {
+    } else if (contextType === 'emph') {
       contentStack[0].use += text
-    } else if (type === 'link') {
+    } else if (contextType === 'link') {
       contentStack[0].reference += text
-    } else if (type === 'paragraph') {
+    } else if (contextType === 'paragraph') {
       if (node.type === 'code') {
-        currentForm.content.push({ blank: '' })
+        contentStack[0].content.push({ blank: '' })
       } else {
-        currentForm.content.push(text)
+        contentStack[0].content.push(text)
       }
     } else {
-      assert.fail('Unknown Context Type: ' + type)
+      assert.fail('Unknown Context Type: ' + contextType)
     }
   }
 
