@@ -1,6 +1,32 @@
 var tape = require('tape')
 var toCommonForm = require('./')
 
+tape('quote in reference', function (test) {
+  var heading = "Client's Obligations"
+  var commonmark = [
+    '# ' + heading,
+    '[' + heading + ']()'
+  ].join('\n')
+  var form = {
+    content: [
+      {
+        heading,
+        form: { content: [ { reference: heading } ] }
+      }
+    ]
+  }
+  test.deepEqual(toCommonForm(commonmark), form)
+  test.end()
+})
+
+tape('quote in definition', function (test) {
+  var term = "Client's Personnel"
+  var commonmark = '**' + term + '**'
+  var form = { content: [ { definition: term } ] }
+  test.deepEqual(toCommonForm(commonmark), form)
+  test.end()
+})
+
 tape('quote in heading', function (test) {
   var heading = "Client's Obligations"
   var commonmark = [

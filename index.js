@@ -42,6 +42,24 @@ module.exports = function (markdown) {
         currentForm.content.push(child)
         formStack.unshift(childForm)
         childStack.unshift(child)
+      } else if (type === 'strong') {
+        currentForm = formStack[0]
+        var definition = { definition: '' }
+        currentForm.content.push(definition)
+        formStack.unshift(definition)
+        childStack.unshift(null)
+      } else if (type === 'emph') {
+        currentForm = formStack[0]
+        var use = { use: '' }
+        currentForm.content.push(use)
+        formStack.unshift(use)
+        childStack.unshift(null)
+      } else if (type === 'link') {
+        currentForm = formStack[0]
+        var reference = { reference: '' }
+        currentForm.content.push(reference)
+        formStack.unshift(reference)
+        childStack.unshift(null)
       } else if (type === 'heading') {
         var level = node.level
         if (level === lastHeadingLevel) {
@@ -66,7 +84,12 @@ module.exports = function (markdown) {
       }
       contextStack.unshift({ type: type, level: node.level || undefined })
     } else {
-      if (type === 'item') {
+      if (
+        type === 'item' ||
+        type === 'strong' ||
+        type === 'emph' ||
+        type === 'link'
+      ) {
         formStack.shift()
         childStack.shift()
       }
@@ -82,29 +105,27 @@ module.exports = function (markdown) {
     var currentContext = contextStack[0]
     var currentForm = formStack[0]
     var type = currentContext.type
-    // Handle headings.
     if (type === 'heading') {
       var currentChild = childStack[0]
       if (!currentChild.heading) currentChild.heading = text
       else currentChild.heading += text
-    // Convert <strong> to definitions.
     } else if (type === 'strong') {
-      currentForm.content.push({ definition: text })
-    // Convert <emph> to definitions.
+      formStack[0].definition += text
     } else if (type === 'emph') {
-      currentForm.content.push({ use: text })
-    // Convert <a> to references.
+      use = formStack[0].use += text
     } else if (type === 'link') {
-      currentForm.content.push({ reference: text })
-    // Handle plain text.
+      formStack[0].reference += text
     } else if (type === 'paragraph') {
       if (node.type === 'code') {
         currentForm.content.push({ blank: '' })
       } else {
         currentForm.content.push(text)
       }
+    } else {
+      assert.fail('Unknown Context Type: ' + type)
     }
   }
+
   return recursivelyFixStrings(returned)
 }
 
