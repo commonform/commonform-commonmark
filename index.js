@@ -31,7 +31,7 @@ module.exports = function (markdown) {
     if (type === 'text' || type === 'code') {
       handleText(node.literal, node)
     } else if (type === 'softbreak') {
-      handleText(' ', node)
+      handleText(null, node)
     } else if (event.entering) {
       var currentForm
       if (type === 'item') {
@@ -95,8 +95,8 @@ module.exports = function (markdown) {
   function handleText (text, node) {
     assert(typeof node === 'object')
     assert(typeof node.type === 'string')
-    assert(typeof node.literal === 'string')
-    assert(node.type === 'text' || node.type === 'code')
+    assert(typeof node.literal === 'string' || node.type === 'softbreak')
+    assert(node.type === 'text' || node.type === 'code' || node.type === 'softbreak')
     var contextType = contextStack[0].type
     if (contextType === 'heading') {
       var currentChild = childStack[0]
@@ -116,6 +116,8 @@ module.exports = function (markdown) {
       } else {
         contentStack[0].content.push(text)
       }
+    } else if (contextType === 'softbreak') {
+      contentStack[0].content.push(' ')
     } else {
       assert.fail('Unknown Context Type: ' + contextType)
     }
