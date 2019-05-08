@@ -12,7 +12,9 @@
   ],
   "dependencies": {
     "commonform-fix-strings": "^1.0.0",
-    "commonmark": "^0.29.0"
+    "commonform-validate": "^1.0.1",
+    "commonmark": "^0.29.0",
+    "parse5": "^5.1.0"
   },
   "devDependencies": {
     "defence-cli": "^3.0.1",

@@ -1,6 +1,172 @@
 var tape = require('tape')
 var toCommonForm = require('./')
 
+tape('component', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    '  repository="api.commonform.org"',
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="yes" >',
+    '  <term component="Licensor" form="Vendor">',
+    '  <term component="Licensee" form="Customer">',
+    '  <term component="Program" form="Software">',
+    '  <heading component="Express Warranties" form="Guarantees">',
+    '</component>'
+  ].join('\n')
+  var form = {
+    content: [
+      {
+        heading: 'First Heading',
+        form: { content: ['first content'] }
+      },
+      {
+        heading: 'Copyright License',
+        repository: 'api.commonform.org',
+        publisher: 'kemitchell',
+        project: 'orthodox-software-copyright-license',
+        edition: '1e',
+        upgrade: 'yes',
+        substitutions: {
+          terms: {
+            'Licensor': 'Vendor',
+            'Licensee': 'Customer',
+            'Program': 'Software'
+          },
+          headings: {
+            'Express Warranties': 'Guarantees'
+          }
+        }
+      }
+    ]
+  }
+  test.deepEqual(toCommonForm(commonmark).form, form)
+  test.end()
+})
+
+tape('component missing repository', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    // repository="api.commonform.org"
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="yes" >',
+    '</component>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  }, /invalid component/i)
+  test.end()
+})
+
+tape('component invalid upgrade', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    '   repository="api.commonform.org"',
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="INVALID" >',
+    '</component>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  }, /invalid component/i)
+  test.end()
+})
+tape('invalid HTML', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<div>some text</div>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  })
+  test.end()
+})
+
+tape('invalid HTML within component', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    '  repository="api.commonform.org"',
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="yes" >',
+    '  <term component="Licensor" form="Vendor">',
+    '  <term component="Licensee" form="Customer">',
+    '  <term component="Program" form="Software">',
+    '  <invalid></invalid>',
+    '</component>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  }, /Invalid Tag in Component: invalid/)
+  test.end()
+})
+
+tape('component term missing form attribute', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    '  repository="api.commonform.org"',
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="yes" >',
+    '  <term component="Licensor">',
+    '</component>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  }, /term tag missing "form" attribute/)
+  test.end()
+})
+
+tape('component term missing component attribute', function (test) {
+  var commonmark = [
+    '# First Heading',
+    'first content',
+    '',
+    '<component',
+    '  heading="Copyright License"',
+    '  repository="api.commonform.org"',
+    '  publisher="kemitchell"',
+    '  project="orthodox-software-copyright-license"',
+    '  edition="1e"',
+    '  upgrade="yes" >',
+    '  <term form="Licensor">',
+    '</component>'
+  ].join('\n')
+  test.throws(function () {
+    toCommonForm(commonmark)
+  }, /term tag missing "component" attribute/)
+  test.end()
+})
+
 tape('quote in reference', function (test) {
   var heading = "Client's Obligations"
   var commonmark = [
