@@ -1,6 +1,6 @@
 {
   "name": "commonmark-to-commonform",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "convert CommonMark to Common Form",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
   "repository": "commonform/commonmark-to-commonform",
