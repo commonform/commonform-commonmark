@@ -22,7 +22,7 @@ assert.deepEqual(
       '- Using the term _Agreement_.',
       '- Referencing [First Heading](#first-heading).',
     ].join('\n')
-  ),
+  ).form,
   {
     content: [
       {

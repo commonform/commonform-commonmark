@@ -15,7 +15,7 @@ tape('quote in reference', function (test) {
       }
     ]
   }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -23,7 +23,7 @@ tape('quote in definition', function (test) {
   var term = "Client's Personnel"
   var commonmark = '**' + term + '**'
   var form = { content: [ { definition: term } ] }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -41,7 +41,7 @@ tape('quote in heading', function (test) {
       }
     ]
   }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -60,7 +60,7 @@ tape('preamble-heading', function (test) {
       }
     ]
   }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -79,7 +79,7 @@ tape('preamble-list', function (test) {
       }
     ]
   }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -122,7 +122,7 @@ tape('heading tree', function (test) {
       }
     ]
   }
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -139,7 +139,17 @@ tape('blank', function (test) {
     ]
   }
 
-  test.deepEqual(toCommonForm(commonmark), form)
+  var result = toCommonForm(commonmark)
+  test.deepEqual(result.form, form)
+  test.deepEqual(
+    result.directions,
+    [
+      {
+        identifier: 'dollars',
+        path: [ 'content', 3 ]
+      }
+    ]
+  )
   test.end()
 })
 
@@ -174,7 +184,7 @@ tape('nested lists', function (test) {
     ]
   }
 
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })
 
@@ -209,6 +219,6 @@ tape('nested ordered lists', function (test) {
     ]
   }
 
-  test.deepEqual(toCommonForm(commonmark), form)
+  test.deepEqual(toCommonForm(commonmark).form, form)
   test.end()
 })

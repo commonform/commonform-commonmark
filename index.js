@@ -7,8 +7,8 @@ module.exports = function (markdown) {
   var parser = new commonmark.Parser()
   var parsed = parser.parse(markdown)
   var walker = parsed.walker()
-  var returned = emptyForm()
-  var contentStack = [returned]
+  var form = emptyForm()
+  var contentStack = [form]
   var childStack = [null] // Root form is not a child.
   var contextStack = []
   var event
@@ -110,7 +110,9 @@ module.exports = function (markdown) {
       contentStack[0].reference += text
     } else if (contextType === 'paragraph') {
       if (node.type === 'code') {
-        contentStack[0].content.push({ blank: '' })
+        // Insert the identifier into the blank for now.
+        // `extractDirections` will separate it later.
+        contentStack[0].content.push({ blank: text })
       } else {
         contentStack[0].content.push(text)
       }
@@ -119,7 +121,7 @@ module.exports = function (markdown) {
     }
   }
 
-  return recursivelyFixStrings(returned)
+  return extractDirections(recursivelyFixStrings(form))
 }
 
 function recursivelyFixStrings (form) {
@@ -134,4 +136,56 @@ function recursivelyFixStrings (form) {
 
 function emptyForm () {
   return { content: [] }
+}
+
+function extractDirections (formWithBlankIdentifiers) {
+  return recurse(formWithBlankIdentifiers, [], [])
+
+  // Recurse the AST.
+  function recurse (formWithBlankIdentifiers, directions, path) {
+    var newContent = []
+    formWithBlankIdentifiers.content.forEach(function (element, index) {
+      var elementIsObject = typeof element === 'object'
+      var elementIsBlank = (
+        elementIsObject &&
+        element.hasOwnProperty('blank')
+      )
+      if (elementIsBlank) {
+        var identifier = element.blank
+        newContent.push(createBlank())
+        directions.push({
+          identifier: identifier,
+          path: path.concat('content', index)
+        })
+      } else {
+        var elementIsChild = (
+          elementIsObject &&
+          element.hasOwnProperty('form')
+        )
+        if (elementIsChild) {
+          var childPath = path.concat('content', index, 'form')
+          var result = recurse(element.form, directions, childPath)
+          var newChild = { form: result.form }
+          if (element.hasOwnProperty('heading')) {
+            newChild.heading = element.heading
+          }
+          newContent.push(newChild)
+        } else {
+          newContent.push(element)
+        }
+      }
+    })
+    var newForm = { content: newContent }
+    if (formWithBlankIdentifiers.hasOwnProperty('conspicuous')) {
+      newForm.conspicuous = formWithBlankIdentifiers.conspicuous
+    }
+    return {
+      form: newForm,
+      directions: directions
+    }
+  }
+
+  function createBlank () {
+    return { blank: '' }
+  }
 }
