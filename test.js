@@ -145,8 +145,8 @@ tape('blank', function (test) {
     result.directions,
     [
       {
-        identifier: 'dollars',
-        path: [ 'content', 3 ]
+        label: 'dollars',
+        blank: [ 'content', 3 ]
       }
     ]
   )

@@ -110,7 +110,7 @@ module.exports = function (markdown) {
       contentStack[0].reference += text
     } else if (contextType === 'paragraph') {
       if (node.type === 'code') {
-        // Insert the identifier into the blank for now.
+        // Insert the label into the blank for now.
         // `extractDirections` will separate it later.
         contentStack[0].content.push({ blank: text })
       } else {
@@ -138,24 +138,24 @@ function emptyForm () {
   return { content: [] }
 }
 
-function extractDirections (formWithBlankIdentifiers) {
-  return recurse(formWithBlankIdentifiers, [], [])
+function extractDirections (formWithBlankLabels) {
+  return recurse(formWithBlankLabels, [], [])
 
   // Recurse the AST.
-  function recurse (formWithBlankIdentifiers, directions, path) {
+  function recurse (formWithBlankLabels, directions, path) {
     var newContent = []
-    formWithBlankIdentifiers.content.forEach(function (element, index) {
+    formWithBlankLabels.content.forEach(function (element, index) {
       var elementIsObject = typeof element === 'object'
       var elementIsBlank = (
         elementIsObject &&
         element.hasOwnProperty('blank')
       )
       if (elementIsBlank) {
-        var identifier = element.blank
+        var label = element.blank
         newContent.push(createBlank())
         directions.push({
-          identifier: identifier,
-          path: path.concat('content', index)
+          label: label,
+          blank: path.concat('content', index)
         })
       } else {
         var elementIsChild = (
@@ -176,8 +176,8 @@ function extractDirections (formWithBlankIdentifiers) {
       }
     })
     var newForm = { content: newContent }
-    if (formWithBlankIdentifiers.hasOwnProperty('conspicuous')) {
-      newForm.conspicuous = formWithBlankIdentifiers.conspicuous
+    if (formWithBlankLabels.hasOwnProperty('conspicuous')) {
+      newForm.conspicuous = formWithBlankLabels.conspicuous
     }
     return {
       form: newForm,
