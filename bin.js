@@ -10,9 +10,9 @@ process.stdin
   })
   .once('end', function () {
     var input = Buffer.concat(chunks).toString()
-    var toCommonForm = require('./')
+    var commonmark = require('./')
     try {
-      var form = toCommonForm(input)
+      var form = commonmark.parse(input)
     } catch (error) {
       console.error(error)
       process.exit(1)

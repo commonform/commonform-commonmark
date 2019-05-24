@@ -8,6 +8,7 @@
   "bin": "./bin.js",
   "files": [
     "index.js",
+    "parse.js",
     "bin.js"
   ],
   "dependencies": {

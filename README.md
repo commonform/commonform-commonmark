@@ -7,11 +7,11 @@ This package includes a [JavaScript module](#JavaScript) and [command-line filte
 ## JavaScript
 
 ```javascript
-var toCommonForm = require('commonform-commonmark')
+var commonmark = require('commonform-commonmark')
 var assert = require('assert')
 
 assert.deepEqual(
-  toCommonForm(
+  commonmark.parse(
     [
       '# First Heading',
       '',

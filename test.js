@@ -2,7 +2,7 @@ var fs = require('fs')
 var glob = require('glob')
 var path = require('path')
 var tape = require('tape')
-var toCommonForm = require('./')
+var toCommonForm = require('./').parse
 
 glob.sync('examples/valid/*.md').forEach(function (markdown) {
   var basename = path.basename(markdown, '.md')
