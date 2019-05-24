@@ -9,7 +9,7 @@ var examples = path.join(__dirname, 'examples', 'roundtrip')
 glob.sync(path.join(examples, '*')).forEach(function (file) {
   var extname = path.extname(file)
   var basename = path.basename(file, extname)
-  tape(basename, function (test) {
+  tape('round trip: ' + basename, function (test) {
     if (extname === '.md') {
       var commonmark, parsed, stringified, reparsed
       test.doesNotThrow(function () {

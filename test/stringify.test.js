@@ -9,7 +9,7 @@ var examples = path.join(__dirname, 'examples/stringify')
 glob.sync(path.join(examples, '*.json'))
   .forEach(function (json) {
     var basename = path.basename(json, '.json')
-    tape(basename, function (test) {
+    tape('stringify: ' + basename, function (test) {
       var dirname = path.dirname(json)
       var base = path.join(dirname, basename)
       var options = fs.existsSync(base + '.options')
