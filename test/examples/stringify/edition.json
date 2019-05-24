@@ -1,27 +1,64 @@
-{ "content": [
-    { "heading": "First-Level Heading",
+{
+  "content": [
+    {
+      "heading": "First-Level Heading",
       "form": {
         "content": [
           "First-level text with a reference to ",
-          { "reference": "Sixth-Level Heading" },
-          { "form": {
+          {
+            "reference": "Sixth-Level Heading"
+          },
+          {
+            "form": {
               "content": [
-                { "heading": "Third-Level Heading",
+                {
+                  "heading": "Third-Level Heading",
                   "form": {
                     "content": [
                       "A definition of ",
-                      { "definition": "Apple" },
-                      { "form": {
+                      {
+                        "definition": "Apple"
+                      },
+                      {
+                        "form": {
                           "content": [
-                            { "heading": "Fifth-Level Heading",
+                            {
+                              "heading": "Fifth-Level Heading",
                               "form": {
                                 "content": [
-                                  { "heading": "Sixth-Level Heading",
+                                  {
+                                    "heading": "Sixth-Level Heading",
                                     "form": {
                                       "content": [
-                                        { "heading": "Seventh-Level Heading",
+                                        {
+                                          "heading": "Seventh-Level Heading",
                                           "form": {
                                             "content": [
                                               "Some text with ",
-                                              { "use": "Apple" } ] } } ] } } ] } } ] } } ] } } ] } },
-          "More first-level text." ] } } ] }
+                                              {
+                                                "use": "Apple"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "More first-level text."
+        ]
+      }
+    }
+  ]
+}

@@ -1,26 +1,76 @@
-{ "content": [
-    { "heading": "First-Level Heading",
+{
+  "content": [
+    {
+      "heading": "First-Level Heading",
       "form": {
         "content": [
           "Here comes a list.",
-          { "form": {
-              "content": [ "Apple" ] } },
-          { "form": {
-              "content": [ "Orange" ] } },
+          {
+            "form": {
+              "content": [
+                "Apple"
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                "Orange"
+              ]
+            }
+          },
           "And another one!",
-          { "form": {
+          {
+            "form": {
               "content": [
                 "Red",
-                { "form": {
-                    "content": [ "Red-Orange" ] } },
-                { "form": {
-                    "content": [ "Red-Yellow" ] } } ] } },
-          { "form": {
-              "content": [ "Purple" ] } },
-          { "form": {
+                {
+                  "form": {
+                    "content": [
+                      "Red-Orange"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "Red-Yellow"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "form": {
               "content": [
-                { "form": {
-                    "content": [ "More" ] } },
-                { "form": {
-                    "content": [ "Even More" ] } } ] } },
-          "Last text!" ] } } ] }
+                "Purple"
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "form": {
+                    "content": [
+                      "More"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "Even More"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "Last text!"
+        ]
+      }
+    }
+  ]
+}
