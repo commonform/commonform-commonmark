@@ -11,7 +11,7 @@ var commonmark = require('commonform-commonmark')
 var assert = require('assert')
 ```
 
-### Parse markup to Common Form.
+### Parse CommonMark to Common Form.
 
 ```javascript
 assert.deepStrictEqual(
