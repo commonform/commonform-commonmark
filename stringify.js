@@ -4,6 +4,7 @@ var resolve = require('commonform-resolve')
 
 module.exports = function (form, values, options) {
   options = options || {}
+  values = values || {}
   var formDepth = options.formDepth || 0
   var rendered = render(resolve(form, values), formDepth)
   return rendered.trim() + '\n'
@@ -35,7 +36,7 @@ function render (form, formDepth, indentation, conspicuous) {
         return group.content
           .map(
             indentation > 0
-              ? function makeListItem (child, index) {
+              ? function makeListItem (child) {
                 var firstElement = child.form.content[0]
                 var startsWithSeries = (
                   typeof firstElement !== 'string' &&
@@ -43,15 +44,12 @@ function render (form, formDepth, indentation, conspicuous) {
                 )
                 return (
                   new Array(indentation).join(' ') +
-                  (index + 1) + '.' +
-                  (startsWithSeries ? '\n\n' : '  ') +
+                  '-' +
+                  (startsWithSeries ? '\n\n' : ' ') +
                   render(
                     child.form,
                     nextFormDepth,
-                    // When the <ul> number is 10 or greater,
-                    // the number takes up an additional character,
-                    // and we need to indent its children further.
-                    indentation + 3 + index.toString().length,
+                    indentation + 2,
                     child.conspicuous
                   )
                 )
@@ -59,7 +57,7 @@ function render (form, formDepth, indentation, conspicuous) {
               : function makeHeadings (child) {
                 return (
                   headingFor(nextFormDepth, child.heading) +
-                  '\n\n' +
+                  '\n' +
                   render(
                     child.form,
                     nextFormDepth,

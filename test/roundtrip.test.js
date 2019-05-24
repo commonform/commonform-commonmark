@@ -11,10 +11,13 @@ glob.sync(path.join(examples, '*')).forEach(function (file) {
   var basename = path.basename(file, extname)
   tape(basename, function (test) {
     if (extname === '.md') {
-      var commonmark = fs.readFileSync(file).toString()
-      var parsed = module.parse(commonmark).form
-      var stringified = module.stringify(clone(parsed))
-      var reparsed = module.parse(stringified).form
+      var commonmark, parsed, stringified, reparsed
+      test.doesNotThrow(function () {
+        commonmark = fs.readFileSync(file).toString()
+        parsed = module.parse(commonmark).form
+        stringified = module.stringify(clone(parsed))
+        reparsed = module.parse(stringified).form
+      })
       test.deepEqual(stringified, commonmark)
       test.deepEqual(reparsed, parsed)
     }
