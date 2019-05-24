@@ -1,5 +1,4 @@
 # First-Level Heading
-
 Here comes a list.
 
 1.  Apple

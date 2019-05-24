@@ -18,7 +18,7 @@ function render (form, formDepth, indentation, conspicuous) {
           (
             (indentation || index === 0)
               ? ''
-              : (headingFor(formDepth, '(Continuing)', true) + '\n\n')
+              : (headingFor(formDepth, '(Continuing)', true) + '\n')
           ) +
           group.content
             .map(function (element) {
