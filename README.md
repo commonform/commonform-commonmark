@@ -10,29 +10,51 @@ This package includes a [JavaScript module](#JavaScript) and [command-line inter
 var commonmark = require('commonform-commonmark')
 var assert = require('assert')
 
-var markup = [
-  '# First Heading',
-  'This is the **Agreement**.',
-].join('\n') + '\n'
-
-var form = {
-  content: [
-    {
-      heading: 'First Heading',
-      form: {
-        content: [
-          'This is the ', {definition: 'Agreement'}, '.'
-        ]
+// Parse markup to Common Form.
+assert.deepStrictEqual(
+  commonmark.parse(
+    [
+      '# Purchase Price',
+      'The purchase price is $10.'
+    ].join('\n')
+  ).form,
+  {
+    content: [
+      {
+        heading: 'Purchase Price',
+        form: { content: [ 'The purchase price is $10.' ] }
       }
+    ]
+  }
+)
+
+// Extract fill-in-the-blank directions.
+assert.deepStrictEqual(
+  commonmark.parse(
+    [
+      '# Purchase Price',
+      'The purchase price is `dollars`.'
+    ].join('\n')
+  ).directions,
+  [
+    {
+      label: 'dollars',
+      blank: [ 'content', 0, 'form', 'content', 1 ]
     }
   ]
-}
-
-// Parse markup to Common Form.
-assert.deepEqual(commonmark.parse(markup).form, form)
+)
 
 // Stringify Common Form to CommonMark.
-assert.deepEqual(commonmark.stringify(form), markup)
+assert.deepStrictEqual(
+  commonmark.stringify({
+    content: [
+      'The ',
+      { definition: 'Purchase Price' },
+      ' is $10.'
+    ]
+  }),
+  'The **Purchase Price** is $10.\n'
+)
 ```
 
 ## CLI
