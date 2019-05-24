@@ -1,0 +1,36 @@
+{
+  "content": [
+    {
+      "heading": "A",
+      "form": {
+        "content": [
+          "A",
+          {
+            "heading": "B",
+            "form": {
+              "content": [
+                "B",
+                {
+                  "heading": "C",
+                  "form": {
+                    "content": [
+                      "C"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "heading": "D",
+      "form": {
+        "content": [
+          "D"
+        ]
+      }
+    }
+  ]
+}
