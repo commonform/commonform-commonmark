@@ -2,9 +2,11 @@ var fs = require('fs')
 var glob = require('glob')
 var path = require('path')
 var tape = require('tape')
-var toCommonForm = require('./').parse
+var toCommonForm = require('../').parse
 
-glob.sync('examples/valid/*.md').forEach(function (markdown) {
+var examples = path.join(__dirname, 'examples')
+
+glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   var basename = path.basename(markdown, '.md')
   tape(basename, function (test) {
     var commonmark = fs.readFileSync(markdown).toString()
@@ -14,7 +16,7 @@ glob.sync('examples/valid/*.md').forEach(function (markdown) {
   })
 })
 
-glob.sync('examples/invalid/*.md').forEach(function (markdown) {
+glob.sync(path.join(examples, 'parse/invalid/*.md')).forEach(function (markdown) {
   var basename = path.basename(markdown, '.md')
   tape(basename, function (test) {
     var commonmark = fs.readFileSync(markdown).toString()
