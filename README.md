@@ -9,8 +9,11 @@ This package includes a [JavaScript module](#JavaScript) and [command-line inter
 ```javascript
 var commonmark = require('commonform-commonmark')
 var assert = require('assert')
+```
 
-// Parse markup to Common Form.
+### Parse markup to Common Form.
+
+```javascript
 assert.deepStrictEqual(
   commonmark.parse(
     [
@@ -27,8 +30,11 @@ assert.deepStrictEqual(
     ]
   }
 )
+```
 
-// Extract fill-in-the-blank directions.
+### Extract fill-in-the-blank directions.
+
+```javaScript
 assert.deepStrictEqual(
   commonmark.parse(
     [
@@ -43,8 +49,11 @@ assert.deepStrictEqual(
     }
   ]
 )
+```
 
-// Stringify Common Form to CommonMark.
+### Stringify Common Form to CommonMark.
+
+```javascript
 assert.deepStrictEqual(
   commonmark.stringify({
     content: [
