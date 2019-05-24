@@ -1,24 +1,24 @@
 # First-Level Heading
 Here comes a list.
 
-1.  Apple
+- Apple
 
-2.  Orange
+- Orange
 
 And another one!
 
-1.  Red
+- Red
 
-    1.  Red-Orange
+  - Red-Orange
 
-    2.  Red-Yellow
+  - Red-Yellow
 
-2.  Purple
+- Purple
 
-3.
+-
 
-    1.  More
+  - More
 
-    2.  Even More
+  - Even More
 
 Last text!

@@ -1,30 +1,30 @@
 # First-Level Heading
 Here comes a list.
 
-1.  Apple
+- Apple
 
-2.  Orange
+- Orange
 
-3.  Banana
+- Banana
 
-4.  Apricot
+- Apricot
 
-5.  Lemon
+- Lemon
 
-6.  Pear
+- Pear
 
-7.  Watermelon
+- Watermelon
 
-8.  Date
+- Date
 
-9.  Grape
+- Grape
 
-10.  Grapefruit
+- Grapefruit
 
-11.
+-
 
-     1.  Blackberry
+  - Blackberry
 
-     2.  Blueberry
+  - Blueberry
 
-     3.  Raspberry
+  - Raspberry
