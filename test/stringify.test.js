@@ -16,7 +16,7 @@ glob.sync(path.join(examples, '*.json'))
         ? JSON.parse(fs.readFileSync(base + '.options'))
         : undefined
       test.equal(
-        stringify(require(base + '.json'), undefined, options) + '\n',
+        stringify(require(base + '.json'), undefined, options),
         fs.readFileSync(base + '.md').toString()
       )
       test.end()

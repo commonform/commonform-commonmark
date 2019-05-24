@@ -5,7 +5,8 @@ var resolve = require('commonform-resolve')
 module.exports = function (form, values, options) {
   options = options || {}
   var formDepth = options.formDepth || 0
-  return render(resolve(form, values), formDepth)
+  var rendered = render(resolve(form, values), formDepth)
+  return rendered.trim() + '\n'
 }
 
 function render (form, formDepth, indentation, conspicuous) {
