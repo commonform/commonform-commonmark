@@ -1,4 +1,4 @@
-var assert = require('assert')
+var assert = require('nanoassert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
 var parse5 = require('parse5')
@@ -193,7 +193,7 @@ module.exports = function (markdown) {
     ) {
       // Pass.
     } else {
-      assert.fail('Unknown Context Type: ' + contextType)
+      assert(false, 'Unknown Context Type: ' + contextType)
     }
   }
 
