@@ -2,7 +2,7 @@
 
 convert CommonMark to and from Common Form
 
-This package includes a [JavaScript module](#JavaScript) and [command-line application](#CLI).
+This package includes a [JavaScript module](#JavaScript) and [command-line interface](#CLI).
 
 ## JavaScript
 
