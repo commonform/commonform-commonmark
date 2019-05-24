@@ -18,8 +18,8 @@ glob.sync(path.join(examples, '*')).forEach(function (file) {
         stringified = module.stringify(clone(parsed))
         reparsed = module.parse(stringified).form
       })
-      test.deepEqual(stringified, commonmark)
-      test.deepEqual(reparsed, parsed)
+      test.deepEqual(stringified, commonmark, 'stringified')
+      test.deepEqual(reparsed, parsed, 'parsed')
     }
     test.end()
   })
