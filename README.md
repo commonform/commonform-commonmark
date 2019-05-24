@@ -28,7 +28,10 @@ var form = {
   ]
 }
 
+// Parse markup to Common Form.
 assert.deepEqual(commonmark.parse(markup).form, form)
+
+// Stringify Common Form to CommonMark.
 assert.deepEqual(commonmark.stringify(form), markup)
 ```
 
