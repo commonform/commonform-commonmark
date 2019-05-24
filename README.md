@@ -10,53 +10,26 @@ This package includes a [JavaScript module](#JavaScript) and [command-line appli
 var commonmark = require('commonform-commonmark')
 var assert = require('assert')
 
-assert.deepEqual(
-  commonmark.parse(
-    [
-      '# First Heading',
-      '',
-      'This is the **Agreement**.',
-      '',
-      '# Second Heading',
-      '',
-      '- Using the term _Agreement_.',
-      '- Referencing [First Heading](#first-heading).',
-    ].join('\n')
-  ).form,
-  {
-    content: [
-      {
-        heading: 'First Heading',
-        form: {
-          content: [
-            'This is the ', {definition: 'Agreement'}, '.'
-          ]
-        }
-      },
-      {
-        heading: 'Second Heading',
-        form: {
-          content: [
-            {
-              form: {
-                content: [
-                  'Using the term ', {use: 'Agreement'}, '.'
-                ]
-              }
-            },
-            {
-              form: {
-                content: [
-                  'Referencing ', {reference: 'First Heading'}, '.'
-                ]
-              }
-            }
-          ]
-        }
+var markup = [
+  '# First Heading',
+  'This is the **Agreement**.',
+].join('\n') + '\n'
+
+var form = {
+  content: [
+    {
+      heading: 'First Heading',
+      form: {
+        content: [
+          'This is the ', {definition: 'Agreement'}, '.'
+        ]
       }
-    ]
-  }
-)
+    }
+  ]
+}
+
+assert.deepEqual(commonmark.parse(markup).form, form)
+assert.deepEqual(commonmark.stringify(form), markup)
 ```
 
 ## CLI
