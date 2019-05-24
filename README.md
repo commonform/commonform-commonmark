@@ -1,13 +1,13 @@
-# commonmark-to-commonform
+# commonform-commonmark
 
-convert CommonMark to Common Form
+convert CommonMark to and from Common Form
 
 This package includes a [JavaScript module](#JavaScript) and [command-line filter](#CLI).
 
 ## JavaScript
 
 ```javascript
-var toCommonForm = require('commonmark-to-commonform')
+var toCommonForm = require('commonform-commonmark')
 var assert = require('assert')
 
 assert.deepEqual(
