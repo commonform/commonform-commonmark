@@ -1,35 +1,11 @@
 var escapeMarkdown = require('markdown-escape')
 var group = require('commonform-group-series')
-var hash = require('commonform-hash')
 var resolve = require('commonform-resolve')
 
 module.exports = function (form, values, options) {
-  if (options === undefined) {
-    options = {}
-  }
-  var haveTitle = options.hasOwnProperty('title')
-  var haveEdition = options.hasOwnProperty('edition')
-  return (
-    (
-      haveTitle
-        ? (
-          '# ' + escapeMarkdown(options.title) +
-          (
-            haveEdition
-              ? ' ' + escapeMarkdown(options.edition)
-              : ''
-          ) +
-          '\n\n'
-        )
-        : ''
-    ) +
-    (
-      options.hash
-        ? ('`[•] ' + hash(form) + '`\n\n')
-        : ''
-    ) +
-    render(resolve(form, values), haveTitle ? 1 : 0)
-  )
+  options = options || {}
+  var formDepth = options.formDepth || 0
+  return render(resolve(form, values), formDepth)
 }
 
 function render (form, formDepth, indentation, conspicuous) {
@@ -98,24 +74,10 @@ function render (form, formDepth, indentation, conspicuous) {
     .join('\n\n')
 }
 
-function formatHeading (formDepth, text, createAnchor) {
-  var anchor = createAnchor
-    ? '<a id="' + idForHeading(text) + '"></a>'
-    : ''
-  return (
-    (
-      formDepth < 7
-        ? (
-          new Array(formDepth + 1).join('#') +
-          (
-            anchor
-              ? (' ' + anchor + text)
-              : (' ' + text)
-          )
-        )
-        : (anchor + '**' + text + '**')
-    )
-  )
+function formatHeading (formDepth, text) {
+  return formDepth < 7
+    ? (new Array(formDepth + 1).join('#') + ' ' + text)
+    : ('**' + text + '**')
 }
 
 function idForHeading (heading) {
@@ -124,8 +86,8 @@ function idForHeading (heading) {
 
 function headingFor (formDepth, heading, suppressAnchor) {
   return heading
-    ? formatHeading(formDepth, heading, true && !suppressAnchor)
-    : formatHeading(formDepth, '(No Heading)', false)
+    ? formatHeading(formDepth, heading)
+    : formatHeading(formDepth, '(No Heading)')
 }
 
 function containsAHeading (child) {

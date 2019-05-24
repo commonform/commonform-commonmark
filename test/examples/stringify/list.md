@@ -1,4 +1,4 @@
-# <a id="First-Level_Heading"></a>First-Level Heading
+# First-Level Heading
 
 Here comes a list.
 
