@@ -156,7 +156,10 @@ function recursivelyPromoteComponents (form) {
         firstElement.hasOwnProperty('reference') &&
         firstElement.reference.indexOf('https://') === 0
       )
-      if (!specifiesComponent) return element
+      if (!specifiesComponent) {
+        recurse(element.form)
+        return element
+      }
       var url = firstElement.reference
       var parsed = URL.parse(url)
       var pathname = parsed.pathname
