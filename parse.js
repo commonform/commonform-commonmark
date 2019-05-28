@@ -239,54 +239,51 @@ function recursivelyMarkConspicuous (form) {
   })
 }
 
-function extractDirections (formWithBlankLabels) {
-  return recurse(formWithBlankLabels, [], [])
-
-  // Recurse the AST.
-  function recurse (formWithBlankLabels, directions, path) {
-    var newContent = []
-    formWithBlankLabels.content.forEach(function (element, index) {
-      var elementIsObject = typeof element === 'object'
-      var elementIsBlank = (
+function extractDirections (formWithBlankLabels, directions, path) {
+  directions = directions || []
+  path = path || []
+  var newContent = []
+  formWithBlankLabels.content.forEach(function (element, index) {
+    var elementIsObject = typeof element === 'object'
+    var elementIsBlank = (
+      elementIsObject &&
+      element.hasOwnProperty('blank')
+    )
+    if (elementIsBlank) {
+      var label = element.blank
+      newContent.push(createBlank())
+      directions.push({
+        label: label,
+        blank: path.concat('content', index)
+      })
+    } else {
+      var elementIsChild = (
         elementIsObject &&
-        element.hasOwnProperty('blank')
+        element.hasOwnProperty('form')
       )
-      if (elementIsBlank) {
-        var label = element.blank
-        newContent.push(createBlank())
-        directions.push({
-          label: label,
-          blank: path.concat('content', index)
-        })
-      } else {
-        var elementIsChild = (
-          elementIsObject &&
-          element.hasOwnProperty('form')
-        )
-        if (elementIsChild) {
-          var childPath = path.concat('content', index, 'form')
-          var result = recurse(element.form, directions, childPath)
-          var newChild = { form: result.form }
-          if (element.hasOwnProperty('heading')) {
-            newChild.heading = element.heading
-          }
-          if (element.hasOwnProperty('conspicuous')) {
-            newChild.form.conspicuous = element.form.conspicuous
-          }
-          newContent.push(newChild)
-        } else {
-          newContent.push(element)
+      if (elementIsChild) {
+        var childPath = path.concat('content', index, 'form')
+        var result = extractDirections(element.form, directions, childPath)
+        var newChild = { form: result.form }
+        if (element.hasOwnProperty('heading')) {
+          newChild.heading = element.heading
         }
+        if (element.hasOwnProperty('conspicuous')) {
+          newChild.form.conspicuous = element.form.conspicuous
+        }
+        newContent.push(newChild)
+      } else {
+        newContent.push(element)
       }
-    })
-    var newForm = { content: newContent }
-    if (formWithBlankLabels.hasOwnProperty('conspicuous')) {
-      newForm.conspicuous = formWithBlankLabels.conspicuous
     }
-    return {
-      form: newForm,
-      directions: directions
-    }
+  })
+  var newForm = { content: newContent }
+  if (formWithBlankLabels.hasOwnProperty('conspicuous')) {
+    newForm.conspicuous = formWithBlankLabels.conspicuous
+  }
+  return {
+    form: newForm,
+    directions: directions
   }
 
   function createBlank () {
