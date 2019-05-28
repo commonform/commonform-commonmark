@@ -1,2 +1,2 @@
 # First Heading
-<https://api.commonform.org/kemitchell/orthodox-software-copyright-license/1e> without upgrades, with **Vendor** replacing **Licensor**, **Customer** replacing **Licensee**, **Software** replacing **Program**, and [Guarantees]() replacing [Express Warranties]()
+<https://api.commonform.org/kemitchell/orthodox-software-copyright-license/1e> without upgrades, replacing **Licensor** with **Vendor**, **Licensee** with **Customer**, **Program** with **Software**, and [Express Warranties]() with [Guarantees]()

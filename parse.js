@@ -177,10 +177,10 @@ function recursivelyPromoteComponents (form) {
         var parseSubstitutions
         if (secondElement === ' without upgrades.') {
           delete component.upgrade
-        } else if (secondElement === ' without upgrades, with ') {
+        } else if (secondElement === ' without upgrades, replacing ') {
           delete component.upgrade
           parseSubstitutions = true
-        } else if (secondElement === ' with ') {
+        } else if (secondElement === ' replacing ') {
           parseSubstitutions = true
         } else {
           fail()
@@ -202,7 +202,7 @@ function recursivelyPromoteComponents (form) {
             var typeKey = first.hasOwnProperty('definition')
               ? 'definition'
               : 'reference'
-            if (second !== ' replacing ') fail()
+            if (second !== ' with ') fail()
             if (typeof third !== 'object') fail()
             if (
               !third.hasOwnProperty('definition') &&
@@ -215,7 +215,7 @@ function recursivelyPromoteComponents (form) {
             var target = typeKey === 'definition'
               ? component.substitutions.terms
               : component.substitutions.headings
-            target[third[typeKey]] = first[typeKey]
+            target[first[typeKey]] = third[typeKey]
           }
         }
       }
