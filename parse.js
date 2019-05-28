@@ -2,7 +2,6 @@ var URL = require('url')
 var assert = require('nanoassert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
-// var validate = require('commonform-validate')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
