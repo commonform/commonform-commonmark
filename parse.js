@@ -175,7 +175,7 @@ function recursivelyPromoteComponents (form) {
       var secondElement = childContent[1]
       if (secondElement) {
         var parseSubstitutions
-        if (secondElement === ' without upgrades.') {
+        if (secondElement === ' without upgrades') {
           delete component.upgrade
         } else if (secondElement === ' without upgrades, replacing ') {
           delete component.upgrade

@@ -1,0 +1,15 @@
+{
+  "content": [
+    {
+      "heading": "First Heading",
+      "repository": "api.commonform.org",
+      "publisher": "kemitchell",
+      "project": "orthodox-software-copyright-license",
+      "edition": "1e",
+      "substitutions": {
+        "terms": {},
+        "headings": {}
+      }
+    }
+  ]
+}
