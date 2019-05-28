@@ -143,94 +143,87 @@ function recursivelyFixStrings (form) {
 }
 
 function recursivelyPromoteComponents (form) {
-  return recurse(form)
-
-  function recurse (form) {
-    form.content = form.content.map(function (element) {
-      if (!element.hasOwnProperty('form')) return element
-      var childForm = element.form
-      var childContent = childForm.content
-      var firstElement = childContent[0]
-      var specifiesComponent = (
-        firstElement &&
-        firstElement.hasOwnProperty('reference') &&
-        firstElement.reference.indexOf('https://') === 0
-      )
-      if (!specifiesComponent) {
-        recurse(element.form)
-        return element
+  form.content.forEach(function (element, index) {
+    if (!element.hasOwnProperty('form')) return
+    var childForm = element.form
+    var childContent = childForm.content
+    var firstElement = childContent[0]
+    var specifiesComponent = (
+      firstElement &&
+      firstElement.hasOwnProperty('reference') &&
+      firstElement.reference.indexOf('https://') === 0
+    )
+    if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
+    var url = firstElement.reference
+    var parsed = URL.parse(url)
+    var pathname = parsed.pathname
+    var split = pathname.split('/')
+    if (split.length !== 4) {
+      throw new Error('Invalid component URL: ' + url)
+    }
+    var component = {
+      repository: parsed.hostname,
+      publisher: split[1],
+      project: split[2],
+      edition: split[3],
+      upgrade: 'yes',
+      substitutions: { terms: {}, headings: {} }
+    }
+    if (element.heading) component.heading = element.heading
+    var secondElement = childContent[1]
+    if (secondElement) {
+      var parseSubstitutions
+      if (secondElement === ' without upgrades') {
+        delete component.upgrade
+      } else if (secondElement === ' without upgrades, replacing ') {
+        delete component.upgrade
+        parseSubstitutions = true
+      } else if (secondElement === ' replacing ') {
+        parseSubstitutions = true
+      } else {
+        fail()
       }
-      var url = firstElement.reference
-      var parsed = URL.parse(url)
-      var pathname = parsed.pathname
-      var split = pathname.split('/')
-      if (split.length !== 4) {
-        throw new Error('Invalid component URL: ' + url)
-      }
-      var component = {
-        repository: parsed.hostname,
-        publisher: split[1],
-        project: split[2],
-        edition: split[3],
-        upgrade: 'yes',
-        substitutions: { terms: {}, headings: {} }
-      }
-      if (element.heading) component.heading = element.heading
-      var secondElement = childContent[1]
-      if (secondElement) {
-        var parseSubstitutions
-        if (secondElement === ' without upgrades') {
-          delete component.upgrade
-        } else if (secondElement === ' without upgrades, replacing ') {
-          delete component.upgrade
-          parseSubstitutions = true
-        } else if (secondElement === ' replacing ') {
-          parseSubstitutions = true
-        } else {
-          fail()
-        }
-        if (parseSubstitutions) {
-          var remainder = childContent.slice(2)
-          var length = remainder.length
-          for (var index = 0; index < length; index += 4) {
-            if (index + 2 >= length) fail()
-            var first = remainder[index]
-            var second = remainder[index + 1]
-            var third = remainder[index + 2]
-            var fourth = remainder[index + 3]
-            if (typeof first !== 'object') fail()
-            if (
-              !first.hasOwnProperty('use') &&
-              !first.hasOwnProperty('reference')
-            ) fail()
-            var typeKey = first.hasOwnProperty('use')
-              ? 'use'
-              : 'reference'
-            if (second !== ' with ') fail()
-            if (typeof third !== 'object') fail()
-            if (
-              !third.hasOwnProperty('use') &&
-              !third.hasOwnProperty('reference')
-            ) fail()
-            if (!third.hasOwnProperty(typeKey)) fail()
-            if (fourth) {
-              if (fourth !== ', ' && fourth !== ', and ') fail()
-            }
-            var target = typeKey === 'use'
-              ? component.substitutions.terms
-              : component.substitutions.headings
-            target[first[typeKey]] = third[typeKey]
+      if (parseSubstitutions) {
+        var remainder = childContent.slice(2)
+        var length = remainder.length
+        for (var offset = 0; offset < length; offset += 4) {
+          if (offset + 2 >= length) fail()
+          var first = remainder[offset]
+          var second = remainder[offset + 1]
+          var third = remainder[offset + 2]
+          var fourth = remainder[offset + 3]
+          if (typeof first !== 'object') fail()
+          if (
+            !first.hasOwnProperty('use') &&
+            !first.hasOwnProperty('reference')
+          ) fail()
+          var typeKey = first.hasOwnProperty('use')
+            ? 'use'
+            : 'reference'
+          if (second !== ' with ') fail()
+          if (typeof third !== 'object') fail()
+          if (
+            !third.hasOwnProperty('use') &&
+            !third.hasOwnProperty('reference')
+          ) fail()
+          if (!third.hasOwnProperty(typeKey)) fail()
+          if (fourth) {
+            if (fourth !== ', ' && fourth !== ', and ') fail()
           }
+          var target = typeKey === 'use'
+            ? component.substitutions.terms
+            : component.substitutions.headings
+          target[first[typeKey]] = third[typeKey]
         }
       }
-      return component
-      function fail () {
-        throw new Error(
-          'Invalid content after component URL: ' + url
-        )
-      }
-    })
-  }
+    }
+    form.content[index] = component
+    function fail () {
+      throw new Error(
+        'Invalid content after component URL: ' + url
+      )
+    }
+  })
 }
 
 function recursivelyMarkConspicuous (form) {
