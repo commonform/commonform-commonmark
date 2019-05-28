@@ -1,12 +1,10 @@
 var escapeMarkdown = require('markdown-escape')
 var group = require('commonform-group-series')
-var resolve = require('commonform-resolve')
 
-module.exports = function (form, values, options) {
+module.exports = function (form, options) {
   options = options || {}
-  values = values || {}
   var formDepth = options.formDepth || 0
-  var rendered = render(resolve(form, values), formDepth)
+  var rendered = render(form, formDepth)
   return rendered.trim() + '\n'
 }
 
@@ -42,28 +40,40 @@ function render (form, formDepth, indentation, conspicuous) {
                   typeof firstElement !== 'string' &&
                   firstElement.hasOwnProperty('form')
                 )
-                return (
-                  new Array(indentation).join(' ') +
-                  '-' +
-                  (startsWithSeries ? '\n\n' : ' ') +
-                  render(
+                var body
+                if (child.form) {
+                  body = render(
                     child.form,
                     nextFormDepth,
                     indentation + 2,
                     child.conspicuous
                   )
+                } else {
+                  body = stringifyComponent(child)
+                }
+                return (
+                  new Array(indentation).join(' ') +
+                  '-' +
+                  (startsWithSeries ? '\n\n' : ' ') +
+                  body
                 )
               }
               : function makeHeadings (child) {
-                return (
-                  headingFor(nextFormDepth, child.heading) +
-                  '\n' +
-                  render(
+                var body
+                if (child.form) {
+                  body = render(
                     child.form,
                     nextFormDepth,
                     0,
                     child.conspicuous
                   )
+                } else {
+                  body = stringifyComponent(child)
+                }
+                return (
+                  headingFor(nextFormDepth, child.heading) +
+                  '\n' +
+                  body
                 )
               }
           )
@@ -71,6 +81,41 @@ function render (form, formDepth, indentation, conspicuous) {
       }
     })
     .join('\n\n')
+}
+
+function stringifyComponent (component) {
+  var returned
+  returned = '<https://commonform.org'
+  returned += '/' + component.publisher
+  returned += '/' + component.project
+  returned += '/' + component.edition
+  returned += '>'
+  var substitutions = component.substitutions
+  var hasSubstitutions = (
+    Object.keys(substitutions.terms).length > 0 ||
+    Object.keys(substitutions.headings).length > 0
+  )
+  if (hasSubstitutions) {
+    if (!component.upgrade) returned += ' without upgrades, replacing '
+    else returned += ' replacing '
+    returned += []
+      .concat(
+        Object.keys(substitutions.terms).map(function (from) {
+          var to = substitutions.terms[from]
+          return '_' + from + '_ with _' + to + '_'
+        })
+      )
+      .concat(
+        Object.keys(substitutions.headings).map(function (from) {
+          var to = substitutions.headings[from]
+          return '[' + from + ']() with [' + to + ']()'
+        })
+      )
+      .join(', ')
+  } else {
+    if (!component.upgrade) returned += ' without upgrades'
+  }
+  return returned
 }
 
 function formatHeading (formDepth, text) {
@@ -113,24 +158,10 @@ function run (element, conspicuous) {
   } else if (element.hasOwnProperty('definition')) {
     return '**' + escapeMarkdown(element.definition) + '**'
   } else if (element.hasOwnProperty('blank')) {
-    if (element.blank === undefined) {
-      return escapeMarkdown('[•]')
-    } else {
-      return escapeMarkdown(element.blank)
-    }
-  } else if (element.hasOwnProperty('heading')) {
-    var heading = element.heading
-    if (
-      element.hasOwnProperty('broken') ||
-      element.hasOwnProperty('ambiguous')
-    ) {
-      return escapeMarkdown(heading)
-    } else {
-      return (
-        '[' + escapeMarkdown(heading) + ']' +
-        '(#' + idForHeading(heading) + ')'
-      )
-    }
+    return '``'
+  } else if (element.hasOwnProperty('reference')) {
+    var heading = element.reference
+    return '[' + heading + '](#' + idForHeading(heading) + ')'
   } else {
     throw new Error('Invalid type: ' + JSON.stringify(element))
   }
