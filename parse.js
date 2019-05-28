@@ -196,23 +196,23 @@ function recursivelyPromoteComponents (form) {
             var fourth = remainder[index + 3]
             if (typeof first !== 'object') fail()
             if (
-              !first.hasOwnProperty('definition') &&
+              !first.hasOwnProperty('use') &&
               !first.hasOwnProperty('reference')
             ) fail()
-            var typeKey = first.hasOwnProperty('definition')
-              ? 'definition'
+            var typeKey = first.hasOwnProperty('use')
+              ? 'use'
               : 'reference'
             if (second !== ' with ') fail()
             if (typeof third !== 'object') fail()
             if (
-              !third.hasOwnProperty('definition') &&
+              !third.hasOwnProperty('use') &&
               !third.hasOwnProperty('reference')
             ) fail()
             if (!third.hasOwnProperty(typeKey)) fail()
             if (fourth) {
               if (fourth !== ', ' && fourth !== ', and ') fail()
             }
-            var target = typeKey === 'definition'
+            var target = typeKey === 'use'
               ? component.substitutions.terms
               : component.substitutions.headings
             target[first[typeKey]] = third[typeKey]
