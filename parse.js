@@ -1,8 +1,8 @@
+var URL = require('url')
 var assert = require('nanoassert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
-var parse5 = require('parse5')
-var validate = require('commonform-validate')
+// var validate = require('commonform-validate')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
@@ -20,6 +20,7 @@ module.exports = function (markdown) {
     'block_quote',
     'code_block',
     'html_block',
+    'html_inline',
     'image',
     'thematic_break'
   ]
@@ -37,61 +38,6 @@ module.exports = function (markdown) {
       var currentForm
       if (type === 'item') {
         unshiftChild()
-      } else if (type === 'html_inline') {
-        var component
-        var parsedNode = parse5.parseFragment(literal).childNodes[0]
-        if (!parsedNode) {
-          // Pass on e.g. </component>.
-        } else {
-          var nodeName = parsedNode.nodeName
-          if (nodeName === 'component') {
-            unshiftComponent()
-            component = childStack[0]
-            var passThrough = [
-              'heading', 'repository',
-              'publisher', 'project',
-              'edition', 'upgrade'
-            ]
-            parsedNode.attrs.forEach(function (attribute) {
-              var name = attribute.name
-              if (passThrough.indexOf(name) !== -1) {
-                component[name] = attribute.value
-              }
-            })
-            if (!validate.component(component)) {
-              throw new Error('Invalid component')
-            }
-          } else {
-            component = childStack[0]
-            if (nodeName !== 'term' && nodeName !== 'heading') {
-              throw new Error('Invalid Tag in Component: ' + nodeName)
-            }
-            try {
-              var inComponent = parsedNode.attrs
-                .find(function (attr) {
-                  return attr.name === 'component'
-                })
-                .value
-            } catch (error) {
-              throw new Error(nodeName + ' tag missing "component" attribute.')
-            }
-            try {
-              var inForm = parsedNode.attrs
-                .find(function (attr) {
-                  return attr.name === 'form'
-                })
-                .value
-            } catch (error) {
-              throw new Error(nodeName + ' tag missing "form" attribute.')
-            }
-            /* istanbul ignore else */
-            if (nodeName === 'term') {
-              component.substitutions.terms[inComponent] = inForm
-            } else if (nodeName === 'heading') {
-              component.substitutions.headings[inComponent] = inForm
-            }
-          }
-        }
       } else if (type === 'strong') {
         addContentElement({ definition: '' })
       } else if (type === 'emph') {
@@ -117,7 +63,6 @@ module.exports = function (markdown) {
     } else {
       if (
         type === 'item' ||
-        type === 'html_inline' ||
         type === 'strong' ||
         type === 'emph' ||
         type === 'link'
@@ -131,15 +76,6 @@ module.exports = function (markdown) {
   function shiftChild () {
     contentStack.shift()
     childStack.shift()
-  }
-
-  function unshiftComponent () {
-    shiftChild()
-    var component = { substitutions: { terms: {}, headings: {} } }
-    currentForm = contentStack[0]
-    currentForm.content.push(component)
-    contentStack.unshift(null)
-    childStack.unshift(component)
   }
 
   function unshiftChild () {
@@ -183,21 +119,18 @@ module.exports = function (markdown) {
       }
     } else if (contextType === 'softbreak') {
       contentStack[0].content.push(' ')
-    } else if (
-      contextType === 'html_inline'
-      /*
-      contextType === 'component' ||
-      contextType === 'term substitution' ||
-      contextType === 'heading substitution'
-      */
-    ) {
-      // Pass.
     } else {
       assert(false, 'Unknown Context Type: ' + contextType)
     }
   }
 
-  return extractDirections(recursivelyFixStrings(form))
+  recursivelyFixStrings(form)
+  recursivelyPromoteComponents(form)
+  return extractDirections(form)
+}
+
+function emptyForm () {
+  return { content: [] }
 }
 
 function recursivelyFixStrings (form) {
@@ -207,11 +140,41 @@ function recursivelyFixStrings (form) {
     }
   })
   fixStrings(form)
-  return form
 }
 
-function emptyForm () {
-  return { content: [] }
+function recursivelyPromoteComponents (form) {
+  return recurse(form)
+
+  function recurse (form) {
+    form.content = form.content.map(function (element) {
+      if (!element.hasOwnProperty('form')) return element
+      var childForm = element.form
+      var childContent = childForm.content
+      var firstElement = childContent[0]
+      var specifiesComponent = (
+        firstElement &&
+        firstElement.hasOwnProperty('reference') &&
+        firstElement.reference.indexOf('https://') === 0
+      )
+      if (!specifiesComponent) return element
+      var url = firstElement.reference
+      var parsed = URL.parse(url)
+      var pathname = parsed.pathname
+      var split = pathname.split('/')
+      if (split.length !== 4) {
+        throw new Error('Invalid component URL: ' + url)
+      }
+      var component = {
+        repository: parsed.hostname,
+        publisher: split[1],
+        project: split[2],
+        edition: split[3],
+        substitutions: { terms: {}, headings: {} }
+      }
+      if (element.heading) component.heading = element.heading
+      return component
+    })
+  }
 }
 
 function extractDirections (formWithBlankLabels) {

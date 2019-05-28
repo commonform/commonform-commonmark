@@ -19,7 +19,6 @@
     "commonmark": "^0.29.0",
     "markdown-escape": "^1.0.0",
     "nanoassert": "^2.0.0",
-    "parse5": "^5.1.0",
     "simple-concat": "^1.0.0",
     "yargs": "^13.2.4"
   },
