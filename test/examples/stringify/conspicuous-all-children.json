@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "heading": "Heading",
+      "form": {
+        "conspicuous": "yes",
+        "content": [
+          {
+            "form": {
+              "content": [
+                "child"
+              ]
+            }
+          },
+          {
+            "form": {
+              "conspicuous": "yes",
+              "content": [
+                "child"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

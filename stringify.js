@@ -8,8 +8,15 @@ module.exports = function (form, options) {
   return rendered.trim() + '\n'
 }
 
-function render (form, formDepth, indentation, conspicuous) {
-  return group(form)
+function render (form, formDepth, indentation) {
+  var groups = group(form)
+  var conspicuousMarker = ''
+  if (form.conspicuous) {
+    conspicuousMarker = form.conspicuous ? '!!!' : ''
+    if (groups[0].type === 'paragraph') conspicuousMarker += ' '
+    else conspicuousMarker += '\n\n'
+  }
+  return conspicuousMarker + groups
     .map(function (group, index) {
       if (group.type === 'paragraph') {
         return (
@@ -20,7 +27,7 @@ function render (form, formDepth, indentation, conspicuous) {
           ) +
           group.content
             .map(function (element) {
-              return run(element, conspicuous)
+              return run(element)
             })
             .join('')
         )
@@ -45,8 +52,7 @@ function render (form, formDepth, indentation, conspicuous) {
                   body = render(
                     child.form,
                     nextFormDepth,
-                    indentation + 2,
-                    child.conspicuous
+                    indentation + 2
                   )
                 } else {
                   body = stringifyComponent(child)
@@ -64,8 +70,7 @@ function render (form, formDepth, indentation, conspicuous) {
                   body = render(
                     child.form,
                     nextFormDepth,
-                    0,
-                    child.conspicuous
+                    0
                   )
                 } else {
                   body = stringifyComponent(child)
@@ -146,13 +151,9 @@ function containsAHeading (child) {
   )
 }
 
-function run (element, conspicuous) {
+function run (element) {
   if (typeof element === 'string') {
-    return (
-      conspicuous
-        ? ('**_' + escapeMarkdown(element) + '_**')
-        : escapeMarkdown(element)
-    )
+    return escapeMarkdown(element)
   } else if (element.hasOwnProperty('use')) {
     return '_' + escapeMarkdown(element.use) + '_'
   } else if (element.hasOwnProperty('definition')) {

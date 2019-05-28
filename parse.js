@@ -125,6 +125,7 @@ module.exports = function (markdown) {
 
   recursivelyFixStrings(form)
   recursivelyPromoteComponents(form)
+  recursivelyMarkConspicuous(form)
   return extractDirections(form)
 }
 
@@ -229,6 +230,19 @@ function recursivelyPromoteComponents (form) {
   }
 }
 
+function recursivelyMarkConspicuous (form) {
+  form.content.forEach(function (element) {
+    if (!element.hasOwnProperty('form')) return
+    var content = element.form.content
+    var firstElement = content[0]
+    if (typeof firstElement !== 'string') return
+    if (firstElement.indexOf('!!!') !== 0) return
+    content[0] = firstElement.replace(/^!!!\s*/, '')
+    element.form.conspicuous = 'yes'
+    recursivelyMarkConspicuous(element.form)
+  })
+}
+
 function extractDirections (formWithBlankLabels) {
   return recurse(formWithBlankLabels, [], [])
 
@@ -259,6 +273,9 @@ function extractDirections (formWithBlankLabels) {
           var newChild = { form: result.form }
           if (element.hasOwnProperty('heading')) {
             newChild.heading = element.heading
+          }
+          if (element.hasOwnProperty('conspicuous')) {
+            newChild.form.conspicuous = element.form.conspicuous
           }
           newContent.push(newChild)
         } else {
