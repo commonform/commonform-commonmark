@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "form": {
+        "content": [
+          "first"
+        ]
+      }
+    },
+    {
+      "repository": "api.commonform.org",
+      "publisher": "kemitchell",
+      "project": "orthodox-software-copyright-license",
+      "edition": "1e",
+      "substitutions": {
+        "terms": {
+          "Licensor": "Vendor",
+          "Licensee": "Customer",
+          "Program": "Software"
+        },
+        "headings": {
+          "Express Warranties": "Guarantees"
+        }
+      }
+    }
+  ]
+}

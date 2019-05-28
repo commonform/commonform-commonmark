@@ -6,10 +6,15 @@
       "publisher": "kemitchell",
       "project": "orthodox-software-copyright-license",
       "edition": "1e",
-      "upgrade": "yes",
       "substitutions": {
-        "terms": {},
-        "headings": {}
+        "terms": {
+          "Licensor": "Vendor",
+          "Licensee": "Customer",
+          "Program": "Software"
+        },
+        "headings": {
+          "Express Warranties": "Guarantees"
+        }
       }
     }
   ]

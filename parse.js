@@ -169,10 +169,63 @@ function recursivelyPromoteComponents (form) {
         publisher: split[1],
         project: split[2],
         edition: split[3],
+        upgrade: 'yes',
         substitutions: { terms: {}, headings: {} }
       }
       if (element.heading) component.heading = element.heading
+      var secondElement = childContent[1]
+      if (secondElement) {
+        var parseSubstitutions
+        if (secondElement === ' without upgrades.') {
+          delete component.upgrade
+        } else if (secondElement === ' without upgrades, with ') {
+          delete component.upgrade
+          parseSubstitutions = true
+        } else if (secondElement === ' with ') {
+          parseSubstitutions = true
+        } else {
+          fail()
+        }
+        if (parseSubstitutions) {
+          var remainder = childContent.slice(2)
+          var length = remainder.length
+          for (var index = 0; index < length; index += 4) {
+            if (index + 2 >= length) fail()
+            var first = remainder[index]
+            var second = remainder[index + 1]
+            var third = remainder[index + 2]
+            var fourth = remainder[index + 3]
+            if (typeof first !== 'object') fail()
+            if (
+              !first.hasOwnProperty('definition') &&
+              !first.hasOwnProperty('reference')
+            ) fail()
+            var typeKey = first.hasOwnProperty('definition')
+              ? 'definition'
+              : 'reference'
+            if (second !== ' replacing ') fail()
+            if (typeof third !== 'object') fail()
+            if (
+              !third.hasOwnProperty('definition') &&
+              !third.hasOwnProperty('reference')
+            ) fail()
+            if (!third.hasOwnProperty(typeKey)) fail()
+            if (fourth) {
+              if (fourth !== ', ' && fourth !== ', and ') fail()
+            }
+            var target = typeKey === 'definition'
+              ? component.substitutions.terms
+              : component.substitutions.headings
+            target[third[typeKey]] = first[typeKey]
+          }
+        }
+      }
       return component
+      function fail () {
+        throw new Error(
+          'Invalid content after component URL: ' + url
+        )
+      }
     })
   }
 }
