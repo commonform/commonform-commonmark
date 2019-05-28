@@ -24,11 +24,14 @@
     "defence-cli": "^3.0.1",
     "glob": "^7.1.4",
     "replace-require-self": "^1.1.1",
+    "standard": "^12.0.1",
+    "standard-markdown": "^5.0.1",
     "tape": "^4.10.1"
   },
   "scripts": {
     "test": "npm run test:readme && npm run test:suite",
     "test:suite": "tape test/**.test.js",
-    "test:readme": "defence -i javascript README.md | replace-require-self | node"
+    "test:readme": "defence -i javascript README.md | replace-require-self | node",
+    "lint": "standard && standard-markdown README.md"
   }
 }
