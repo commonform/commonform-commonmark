@@ -9,6 +9,7 @@
   "files": [
     "index.js",
     "parse.js",
+    "stringify.js",
     "bin.js"
   ],
   "dependencies": {
