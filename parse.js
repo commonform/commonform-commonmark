@@ -167,7 +167,10 @@ function recursivelyPromoteComponents (form) {
       project: split[2],
       edition: split[3],
       upgrade: 'yes',
-      substitutions: { terms: {}, headings: {} }
+      substitutions: {
+        terms: {},
+        headings: {}
+      }
     }
     if (element.heading) component.heading = element.heading
     var secondElement = childContent[1]

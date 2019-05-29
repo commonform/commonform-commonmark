@@ -1,5 +1,5 @@
 var escapeMarkdown = require('markdown-escape')
-var group = require('commonform-group-series')
+var groupSeries = require('commonform-group-series')
 
 module.exports = function (form, options) {
   options = options || {}
@@ -9,7 +9,7 @@ module.exports = function (form, options) {
 }
 
 function render (form, formDepth, indentation) {
-  var groups = group(form)
+  var groups = groupSeries(form)
   var conspicuousMarker = ''
   if (form.conspicuous) {
     conspicuousMarker = form.conspicuous ? '!!!' : ''
@@ -67,11 +67,7 @@ function render (form, formDepth, indentation) {
               : function makeHeadings (child) {
                 var body
                 if (child.form) {
-                  body = render(
-                    child.form,
-                    nextFormDepth,
-                    0
-                  )
+                  body = render(child.form, nextFormDepth, 0)
                 } else {
                   body = stringifyComponent(child)
                 }
