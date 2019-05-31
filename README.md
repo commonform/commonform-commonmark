@@ -36,7 +36,7 @@ assert.deepStrictEqual(
 
 ### Extract fill-in-the-blank directions.
 
-```javaScript
+```javascript
 assert.deepStrictEqual(
   commonmark.parse(
     [
