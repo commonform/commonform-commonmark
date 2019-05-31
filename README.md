@@ -1,6 +1,6 @@
 # commonform-commonmark
 
-convert CommonMark to and from Common Form
+convert [CommonMark](https://commonmark.org/) to and from [Common Form](https://www.npmjs.com/package/commonform-validate)
 
 This package includes a [JavaScript module](#JavaScript) and [command-line interface](#CLI).
 
