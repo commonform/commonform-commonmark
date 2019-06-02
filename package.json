@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "commonform-fix-strings": "^1.0.0",
-    "commonform-group-series": "^1.0.0",
+    "commonform-group-series": "^2.0.0",
     "commonmark": "^0.29.0",
     "markdown-escape": "^1.0.0",
     "nanoassert": "^2.0.0",
