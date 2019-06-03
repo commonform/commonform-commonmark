@@ -19,7 +19,7 @@ function bin (stdin, stdout, stderr, argv, done) {
 
     .command(
       'parse',
-      'parse CommonMark to Common Form',
+      'parse CommonMark to Common Form JSON',
       function (yargs) {
         return yargs.option('o', {
           alias: 'only',
