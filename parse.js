@@ -127,6 +127,7 @@ module.exports = function (markdown) {
   recursivelyPromoteComponents(form)
   recursivelyMarkConspicuous(form)
   recursivelyRemoveHeadings(form)
+  recursivelyHandleContinuations(form)
   return extractDirections(form)
 }
 
@@ -251,6 +252,26 @@ function recursivelyRemoveHeadings (form) {
     var heading = element.heading
     if (heading === '(No Heading)') delete element.heading
     if (hasForm) recursivelyRemoveHeadings(element.form)
+  })
+}
+
+function recursivelyHandleContinuations (form) {
+  var spliceList = []
+  form.content.forEach(function (element, index) {
+    if (!element.hasOwnProperty('form')) return
+    var heading = element.heading
+    if (heading !== '(Continuing)') {
+      return recursivelyHandleContinuations(element.form)
+    }
+    var priorSibling = form.content[index - 1]
+    element.form.content.forEach(function (element) {
+      priorSibling.form.content.push(element)
+    })
+    spliceList.push(index)
+    recursivelyHandleContinuations(element.form)
+  })
+  spliceList.forEach(function (index) {
+    form.content.splice(index, 1)
   })
 }
 
