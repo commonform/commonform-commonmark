@@ -20,14 +20,23 @@ function bin (stdin, stdout, stderr, argv, done) {
     .command(
       'parse',
       'parse CommonMark to Common Form',
-      function (args) {
+      function (yargs) {
+        return yargs.option('o', {
+          alias: 'only',
+          describe: 'limit output',
+          choices: [ 'form', 'directions' ]
+        })
+      },
+      function (argv) {
         readInput(function (buffer) {
           try {
             var parsed = require('./').parse(buffer.toString())
           } catch (error) {
             return fail(error)
           }
-          stdout.write(JSON.stringify(parsed) + '\n')
+          var output = parsed
+          if (argv.only) output = parsed[argv.only]
+          stdout.write(JSON.stringify(output) + '\n')
           done(0)
         })
       }
