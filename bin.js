@@ -14,7 +14,7 @@ if (module.parent) {
 }
 
 function bin (stdin, stdout, stderr, argv, done) {
-  require('yargs') // eslint-disable-line
+  require('yargs')
     .scriptName('commonform-commonmark')
 
     .command(
