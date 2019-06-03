@@ -126,6 +126,7 @@ module.exports = function (markdown) {
   recursivelyFixStrings(form)
   recursivelyPromoteComponents(form)
   recursivelyMarkConspicuous(form)
+  recursivelyRemoveHeadings(form)
   return extractDirections(form)
 }
 
@@ -239,6 +240,17 @@ function recursivelyMarkConspicuous (form) {
     content[0] = firstElement.replace(/^!!!\s*/, '')
     element.form.conspicuous = 'yes'
     recursivelyMarkConspicuous(element.form)
+  })
+}
+
+function recursivelyRemoveHeadings (form) {
+  form.content.forEach(function (element) {
+    var hasForm = element.hasOwnProperty('form')
+    var formOrComponent = hasForm || element.hasOwnProperty('repository')
+    if (!formOrComponent) return
+    var heading = element.heading
+    if (heading === '(No Heading)') delete element.heading
+    if (hasForm) recursivelyRemoveHeadings(element.form)
   })
 }
 
