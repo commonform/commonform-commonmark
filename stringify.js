@@ -139,9 +139,10 @@ function stringifyComponent (component) {
 }
 
 function formatHeading (formDepth, text) {
-  return formDepth < 7
-    ? (new Array(formDepth + 1).join('#') + ' ' + text)
-    : ('**' + text + '**')
+  if (formDepth <= 6) {
+    return new Array(formDepth + 1).join('#') + ' ' + text
+  }
+  throw new Error('Form indented too deep.')
 }
 
 function idForHeading (heading) {

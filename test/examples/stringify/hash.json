@@ -30,16 +30,9 @@
                                     "heading": "Sixth-Level Heading",
                                     "form": {
                                       "content": [
+                                        "Some text with ",
                                         {
-                                          "heading": "Seventh-Level Heading",
-                                          "form": {
-                                            "content": [
-                                              "Some text with ",
-                                              {
-                                                "use": "Apple"
-                                              }
-                                            ]
-                                          }
+                                          "use": "Apple"
                                         }
                                       ]
                                     }

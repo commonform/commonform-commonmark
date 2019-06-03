@@ -25,3 +25,60 @@ glob.sync(path.join(examples, '*.json'))
       test.end()
     })
   })
+
+tape('stringify:too deep', function (test) {
+  var form = {
+    content: [
+      {
+        heading: '1',
+        form: {
+          content: [
+            {
+              heading: '2',
+              form: {
+                content: [
+                  {
+                    heading: '3',
+                    form: {
+                      content: [
+                        {
+                          heading: '4',
+                          form: {
+                            content: [
+                              {
+                                heading: '5',
+                                form: {
+                                  content: [
+                                    {
+                                      heading: '6',
+                                      form: {
+                                        content: [
+                                          {
+                                            heading: '7',
+                                            form: { content: [ 'text' ] }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+  test.throws(function () {
+    stringify(form)
+  }, /deep/)
+  test.end()
+})

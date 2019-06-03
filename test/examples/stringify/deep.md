@@ -14,8 +14,6 @@ A definition of **Apple**
 
 ###### Sixth-Level Heading
 
-**Seventh-Level Heading**
-
 Some text with _Apple_
 
 # (Continuing)
