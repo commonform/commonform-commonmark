@@ -1,7 +1,9 @@
+var bin = require('../bin')
 var fs = require('fs')
 var glob = require('glob')
 var path = require('path')
-var spawnSync = require('child_process').spawnSync
+var simpleConcat = require('simple-concat')
+var stream = require('stream')
 var stringify = require('../').stringify
 var tape = require('tape')
 
@@ -10,10 +12,10 @@ var examples = path.join(__dirname, 'examples/stringify')
 glob.sync(path.join(examples, '*.json'))
   .forEach(function (json) {
     var basename = path.basename(json, '.json')
+    var dirname = path.dirname(json)
+    var base = path.join(dirname, basename)
 
     tape('stringify: ' + basename, function (test) {
-      var dirname = path.dirname(json)
-      var base = path.join(dirname, basename)
       var blanks = fs.existsSync(base + '.blanks')
         ? JSON.parse(fs.readFileSync(base + '.blanks'))
         : undefined
@@ -28,21 +30,27 @@ glob.sync(path.join(examples, '*.json'))
     })
 
     tape('bin.js stringify: ' + basename, function (test) {
-      var dirname = path.dirname(json)
-      var base = path.join(dirname, basename)
-      var scriptPath = path.join(__dirname, '..', 'bin.js')
-      var args = [ 'stringify' ]
+      var stdin = new stream.PassThrough()
+      var stdout = new stream.PassThrough()
+      var stderr = new stream.PassThrough()
+      var argv = [ 'stringify' ]
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
-      if (blanks) args.push('--blanks', blanksPath)
-      var bin = spawnSync(scriptPath, args, {
-        input: fs.readFileSync(json)
+      if (blanks) argv.push('--blanks', blanksPath)
+      bin(stdin, stdout, stderr, argv, function (status) {
+        test.equal(status, 0, 'exits 0')
+        simpleConcat(stdout, function (error, buffer) {
+          test.ifError(error)
+          test.same(
+            buffer.toString(),
+            fs.readFileSync(base + '.md').toString()
+          )
+          test.end()
+        })
+        stdout.end()
+        stderr.end()
       })
-      test.equal(
-        bin.stdout.toString(),
-        fs.readFileSync(base + '.md').toString()
-      )
-      test.end()
+      stdin.end(fs.readFileSync(json))
     })
   })
 

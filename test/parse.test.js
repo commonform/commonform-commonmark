@@ -1,7 +1,9 @@
+var bin = require('../bin')
 var fs = require('fs')
 var glob = require('glob')
 var path = require('path')
-var spawnSync = require('child_process').spawnSync
+var simpleConcat = require('simple-concat')
+var stream = require('stream')
 var tape = require('tape')
 var toCommonForm = require('../').parse
 
@@ -18,15 +20,25 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   })
 
   tape('bin.js parse: ' + basename, function (test) {
-    var scriptPath = path.join(__dirname, '..', 'bin.js')
-    var bin = spawnSync(scriptPath, [ 'parse' ], {
-      input: fs.readFileSync(markdown)
+    var stdin = new stream.PassThrough()
+    var stdout = new stream.PassThrough()
+    var stderr = new stream.PassThrough()
+    var argv = [ 'parse' ]
+    bin(stdin, stdout, stderr, argv, function (status) {
+      test.equal(status, 0, 'exits 0')
+      simpleConcat(stdout, function (error, buffer) {
+        console.log('go there')
+        test.ifError(error)
+        test.same(
+          JSON.parse(buffer).form,
+          JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
+        )
+        test.end()
+      })
+      stdout.end()
+      stderr.end()
     })
-    test.same(
-      JSON.parse(bin.stdout.toString()).form,
-      JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
-    )
-    test.end()
+    stdin.end(fs.readFileSync(markdown))
   })
 })
 

@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 if (module.parent) {
-  module.exports = cli
+  module.exports = bin
 } else {
-  cli(
+  bin(
     process.stdin,
     process.stdout,
     process.stderr,
-    process.env,
     process.argv.slice(2),
     function (status) {
       process.exit(status)
@@ -14,7 +13,7 @@ if (module.parent) {
   )
 }
 
-function cli (stdin, stdout, stderr, env, argv, done) {
+function bin (stdin, stdout, stderr, argv, done) {
   require('yargs') // eslint-disable-line
     .scriptName('commonform-commonmark')
 
