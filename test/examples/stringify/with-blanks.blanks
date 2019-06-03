@@ -1,0 +1,38 @@
+[
+  {
+    "value": "$1,000",
+    "blank": [
+      "content",
+      0,
+      "form",
+      "content",
+      1
+    ]
+  },
+  {
+    "value": "United States dollars",
+    "blank": [
+      "content",
+      1,
+      "form",
+      "content",
+      1
+    ]
+  },
+  {
+    "value": "January 1",
+    "blank": [
+      "content",
+      2,
+      "form",
+      "content",
+      0,
+      "form",
+      "content",
+      0,
+      "form",
+      "content",
+      1
+    ]
+  }
+]

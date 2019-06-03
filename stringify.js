@@ -1,14 +1,15 @@
 var escapeMarkdown = require('markdown-escape')
 var groupSeries = require('commonform-group-series')
 
-module.exports = function (form, options) {
+module.exports = function (form, values, options) {
   options = options || {}
+  values = values || []
   var formDepth = options.formDepth || 0
-  var rendered = render(form, formDepth)
+  var rendered = render(form, values, formDepth, 0, [])
   return rendered.trim() + '\n'
 }
 
-function render (form, formDepth, indentation) {
+function render (form, values, formDepth, indentation, formAddress) {
   var groups = groupSeries(form)
   var conspicuousMarker = ''
   if (form.conspicuous) {
@@ -27,7 +28,9 @@ function render (form, formDepth, indentation) {
           ) +
           group.content
             .map(function (element) {
-              return run(element)
+              var realIndex = form.content.indexOf(element)
+              var address = formAddress.concat('content', realIndex)
+              return run(element, address, values)
             })
             .join('')
         )
@@ -49,10 +52,16 @@ function render (form, formDepth, indentation) {
                 )
                 var body
                 if (child.form) {
+                  var realIndex = form.content.indexOf(child)
+                  var address = formAddress.concat(
+                    'content', realIndex, 'form'
+                  )
                   body = render(
                     child.form,
+                    values,
                     nextFormDepth,
-                    indentation + 2
+                    indentation + 2,
+                    address
                   )
                 } else {
                   body = stringifyComponent(child)
@@ -67,7 +76,17 @@ function render (form, formDepth, indentation) {
               : function makeHeadings (child) {
                 var body
                 if (child.form) {
-                  body = render(child.form, nextFormDepth, 0)
+                  var realIndex = form.content.indexOf(child)
+                  var address = formAddress.concat(
+                    'content', realIndex, 'form'
+                  )
+                  body = render(
+                    child.form,
+                    values,
+                    nextFormDepth,
+                    0,
+                    address
+                  )
                 } else {
                   body = stringifyComponent(child)
                 }
@@ -147,7 +166,7 @@ function containsAHeading (child) {
   )
 }
 
-function run (element) {
+function run (element, address, values) {
   if (typeof element === 'string') {
     return escapeMarkdown(element)
   } else if (element.hasOwnProperty('use')) {
@@ -155,11 +174,24 @@ function run (element) {
   } else if (element.hasOwnProperty('definition')) {
     return '**' + escapeMarkdown(element.definition) + '**'
   } else if (element.hasOwnProperty('blank')) {
-    return '``'
+    var value
+    var match = values.find(function (element) {
+      return sameAddress(element.blank, address)
+    })
+    if (match) value = match.value
+    return value || '``'
   } else if (element.hasOwnProperty('reference')) {
     var heading = element.reference
     return '[' + heading + '](#' + idForHeading(heading) + ')'
   } else {
     throw new Error('Invalid type: ' + JSON.stringify(element))
   }
+}
+
+function sameAddress (a, b) {
+  if (a.length !== b.length) return false
+  for (var index = 0; index < a.length; index++) {
+    if (a[index] !== b[index]) return false
+  }
+  return true
 }

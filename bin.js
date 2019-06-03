@@ -21,11 +21,27 @@ require('yargs') // eslint-disable-line
   .command(
     'stringify',
     'stringify Common Form JSON to CommonMark',
+    function (yargs) {
+      return yargs.option('b', {
+        alias: 'blanks',
+        describe: 'JSON files with fill-in-the-blank values'
+      })
+    },
     function (argv) {
       readInput(function (input) {
+        var blanks
+        if (argv.blanks) {
+          try {
+            blanks = JSON.parse(require('fs').readFileSync(argv.blanks))
+          } catch (error) {
+            fail(error)
+          }
+        } else {
+          blanks = []
+        }
         try {
           var json = JSON.parse(input)
-          var stringified = require('./').stringify(json, {})
+          var stringified = require('./').stringify(json, blanks, {})
         } catch (error) {
           fail(error)
         }

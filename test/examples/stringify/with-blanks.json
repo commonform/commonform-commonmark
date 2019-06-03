@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "heading": "Price",
+      "form": {
+        "content": [
+          "The price is ",
+          {
+            "blank": ""
+          },
+          "."
+        ]
+      }
+    },
+    {
+      "heading": "Currency",
+      "form": {
+        "content": [
+          "The currency is ",
+          {
+            "blank": ""
+          },
+          "."
+        ]
+      }
+    },
+    {
+      "heading": "Details",
+      "form": {
+        "content": [
+          {
+            "heading": "Even More Details",
+            "form": {
+              "content": [
+                {
+                  "heading": "Still Some More Details",
+                  "form": {
+                    "content": [
+                      "The deadline is ",
+                      {
+                        "blank": ""
+                      },
+                      "."
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

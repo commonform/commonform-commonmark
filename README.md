@@ -68,6 +68,27 @@ assert.deepStrictEqual(
   }),
   'The **Purchase Price** is $10.\n'
 )
+
+assert.deepStrictEqual(
+  commonmark.stringify(
+    {
+      content: [
+        'The ',
+        { definition: 'Purchase Price' },
+        ' is ',
+        { blank: '' },
+        '.'
+      ]
+    },
+    [
+      {
+        value: '$10',
+        blank: [ 'content', 3 ]
+      }
+    ]
+  ),
+  'The **Purchase Price** is $10.\n'
+)
 ```
 
 ## CLI
