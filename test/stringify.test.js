@@ -1,6 +1,7 @@
 var fs = require('fs')
 var glob = require('glob')
 var path = require('path')
+var spawnSync = require('child_process').spawnSync
 var stringify = require('../').stringify
 var tape = require('tape')
 
@@ -9,6 +10,7 @@ var examples = path.join(__dirname, 'examples/stringify')
 glob.sync(path.join(examples, '*.json'))
   .forEach(function (json) {
     var basename = path.basename(json, '.json')
+
     tape('stringify: ' + basename, function (test) {
       var dirname = path.dirname(json)
       var base = path.join(dirname, basename)
@@ -20,6 +22,24 @@ glob.sync(path.join(examples, '*.json'))
         : undefined
       test.equal(
         stringify(require(base + '.json'), blanks, options),
+        fs.readFileSync(base + '.md').toString()
+      )
+      test.end()
+    })
+
+    tape('bin.js stringify: ' + basename, function (test) {
+      var dirname = path.dirname(json)
+      var base = path.join(dirname, basename)
+      var scriptPath = path.join(__dirname, '..', 'bin.js')
+      var args = [ 'stringify' ]
+      var blanksPath = base + '.blanks'
+      var blanks = fs.existsSync(blanksPath)
+      if (blanks) args.push('--blanks', blanksPath)
+      var bin = spawnSync(scriptPath, args, {
+        input: fs.readFileSync(json)
+      })
+      test.equal(
+        bin.stdout.toString(),
         fs.readFileSync(base + '.md').toString()
       )
       test.end()
