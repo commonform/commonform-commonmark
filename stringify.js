@@ -24,7 +24,7 @@ function render (form, values, formDepth, indentation, formAddress) {
           (
             (indentation || index === 0)
               ? ''
-              : (headingFor(formDepth, '(Continuing)', true) + '\n')
+              : (headingFor(formDepth, '(Continuing)', true) + '\n\n')
           ) +
           group.content
             .map(function (element) {
@@ -92,7 +92,7 @@ function render (form, values, formDepth, indentation, formAddress) {
                 }
                 return (
                   headingFor(nextFormDepth, child.heading) +
-                  '\n' +
+                  '\n\n' +
                   body
                 )
               }
