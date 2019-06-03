@@ -27,7 +27,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           choices: [ 'form', 'directions' ]
         })
       },
-      function (argv) {
+      function (args) {
         readInput(function (buffer) {
           try {
             var parsed = require('./').parse(buffer.toString())
@@ -35,7 +35,7 @@ function bin (stdin, stdout, stderr, argv, done) {
             return fail(error)
           }
           var output = parsed
-          if (argv.only) output = parsed[argv.only]
+          if (args.only) output = parsed[args.only]
           stdout.write(JSON.stringify(output) + '\n')
           done(0)
         })
@@ -51,12 +51,12 @@ function bin (stdin, stdout, stderr, argv, done) {
           describe: 'JSON files with fill-in-the-blank values'
         })
       },
-      function (argv) {
+      function (args) {
         readInput(function (input) {
           var blanks
-          if (argv.blanks) {
+          if (args.blanks) {
             try {
-              blanks = JSON.parse(require('fs').readFileSync(argv.blanks))
+              blanks = JSON.parse(require('fs').readFileSync(args.blanks))
             } catch (error) {
               return fail(error)
             }
