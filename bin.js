@@ -46,17 +46,28 @@ function bin (stdin, stdout, stderr, argv, done) {
       'stringify',
       'stringify Common Form JSON to CommonMark',
       function (yargs) {
-        return yargs.option('b', {
-          alias: 'blanks',
-          describe: 'JSON files with fill-in-the-blank values'
-        })
+        return yargs
+          .option('values', {
+            alias: 'v',
+            describe: 'JSON file with blank values',
+            coerce: readJSON,
+            demandOption: false
+          })
+          .option('directions', {
+            alias: 'd',
+            describe: 'JSON file with directions',
+            coerce: readJSON,
+            demandOption: false
+          })
+          .implies('directions', 'values')
       },
       function (args) {
         readInput(function (input) {
-          var blanks
-          if (args.blanks) {
+          if (args.values) {
             try {
-              blanks = JSON.parse(require('fs').readFileSync(args.blanks))
+              var blanks = require('commonform-prepare-blanks')(
+                args.values, args.directions
+              )
             } catch (error) {
               return fail(error)
             }
@@ -92,4 +103,12 @@ function bin (stdin, stdout, stderr, argv, done) {
     stderr.write(error.toString() + '\n')
     done(1)
   }
+}
+
+function readJSON (file) {
+  return JSON.parse(
+    require('fs').readFileSync(
+      require('path').normalize(file)
+    )
+  )
 }

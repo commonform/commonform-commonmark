@@ -36,7 +36,7 @@ glob.sync(path.join(examples, '*.json'))
       var argv = [ 'stringify' ]
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
-      if (blanks) argv.push('--blanks', blanksPath)
+      if (blanks) argv.push('--values', blanksPath)
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
