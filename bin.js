@@ -47,6 +47,16 @@ function bin (stdin, stdout, stderr, argv, done) {
       'stringify Common Form JSON to CommonMark',
       function (yargs) {
         return yargs
+          .option('title', {
+            alias: 't',
+            describe: 'form title',
+            type: 'string'
+          })
+          .option('edition', {
+            alias: 'e',
+            describe: 'form edition',
+            type: 'string'
+          })
           .option('values', {
             alias: 'v',
             describe: 'JSON file with blank values',
@@ -74,9 +84,13 @@ function bin (stdin, stdout, stderr, argv, done) {
           } else {
             blanks = []
           }
+          var options = {}
+          if (args.title) options.title = args.title
+          if (args.edition) options.edition = args.edition
           try {
             var json = JSON.parse(input)
-            var stringified = require('./').stringify(json, blanks, {})
+            var stringified = require('./')
+              .stringify(json, blanks, options)
           } catch (error) {
             return fail(error)
           }

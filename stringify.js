@@ -5,7 +5,15 @@ module.exports = function (form, values, options) {
   options = options || {}
   values = values || []
   var formDepth = options.formDepth || 0
-  var rendered = render(form, values, formDepth, 0, [])
+  var rendered = ''
+  if (options.title) {
+    rendered += '# ' + escapeMarkdown(options.title) + '\n\n'
+    formDepth++
+  }
+  if (options.edition) {
+    rendered += escapeMarkdown(options.edition) + '\n\n'
+  }
+  rendered += render(form, values, formDepth, 0, [])
   return rendered.trim() + '\n'
 }
 
