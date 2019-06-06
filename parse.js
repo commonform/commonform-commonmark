@@ -236,10 +236,14 @@ function recursivelyMarkConspicuous (form) {
     if (!element.hasOwnProperty('form')) return
     var content = element.form.content
     var firstElement = content[0]
-    if (typeof firstElement !== 'string') return
-    if (firstElement.indexOf('!!!') !== 0) return
-    content[0] = firstElement.replace(/^!!!\s*/, '')
-    element.form.conspicuous = 'yes'
+    var conspicuous = (
+      typeof firstElement === 'string' &&
+      firstElement.indexOf('!!!') === 0
+    )
+    if (conspicuous) {
+      content[0] = firstElement.replace(/^!!!\s*/, '')
+      element.form.conspicuous = 'yes'
+    }
     recursivelyMarkConspicuous(element.form)
   })
 }
