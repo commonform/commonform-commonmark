@@ -27,7 +27,6 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
     bin(stdin, stdout, stderr, argv, function (status) {
       test.equal(status, 0, 'exits 0')
       simpleConcat(stdout, function (error, buffer) {
-        console.log('go there')
         test.ifError(error)
         test.same(
           JSON.parse(buffer).form,
