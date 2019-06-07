@@ -1,6 +1,6 @@
 # First-Level Heading
 
-First-level text with a reference to [Sixth-Level Heading](#Sixth-Level_Heading)
+First-level text with a reference to [Sixth-Level Heading](#sixth-level-heading)
 
 ## (No Heading)
 

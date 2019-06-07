@@ -1,3 +1,4 @@
+var emojiRegEx = require('emoji-regex')()
 var escapeMarkdown = require('markdown-escape')
 var groupSeries = require('commonform-group-series')
 
@@ -154,7 +155,15 @@ function formatHeading (formDepth, text) {
 }
 
 function idForHeading (heading) {
-  return heading.replace(/ /g, '_')
+  return heading
+    .toLowerCase()
+    .trim()
+    .replace(
+      /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g,
+      ''
+    )
+    .replace(emojiRegEx, '')
+    .replace(/\s/g, '-')
 }
 
 function headingFor (formDepth, heading, suppressAnchor) {
