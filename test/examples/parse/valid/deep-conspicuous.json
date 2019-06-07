@@ -1,26 +1,19 @@
 {
   "content": [
     {
-      "heading": "Heading",
       "form": {
         "content": [
+          "one",
           {
             "form": {
               "content": [
-                "one",
+                "two",
                 {
                   "form": {
                     "content": [
-                      "two",
-                      {
-                        "form": {
-                          "content": [
-                            "three"
-                          ],
-                          "conspicuous": "yes"
-                        }
-                      }
-                    ]
+                      "three"
+                    ],
+                    "conspicuous": "yes"
                   }
                 }
               ]
