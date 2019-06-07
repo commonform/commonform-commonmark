@@ -29,7 +29,7 @@ glob.sync(path.join(examples, '*.json'))
       test.end()
     })
 
-    tape('bin.js stringify: ' + basename, function (test) {
+    tape('bin.js stringify stdin: ' + basename, function (test) {
       var stdin = new stream.PassThrough()
       var stdout = new stream.PassThrough()
       var stderr = new stream.PassThrough()
@@ -51,6 +51,29 @@ glob.sync(path.join(examples, '*.json'))
         stderr.end()
       })
       stdin.end(fs.readFileSync(json))
+    })
+
+    tape('bin.js stringify positional: ' + basename, function (test) {
+      var stdin = new stream.PassThrough()
+      var stdout = new stream.PassThrough()
+      var stderr = new stream.PassThrough()
+      var argv = [ 'stringify', json ]
+      var blanksPath = base + '.blanks'
+      var blanks = fs.existsSync(blanksPath)
+      if (blanks) argv.push('--values', blanksPath)
+      bin(stdin, stdout, stderr, argv, function (status) {
+        test.equal(status, 0, 'exits 0')
+        simpleConcat(stdout, function (error, buffer) {
+          test.ifError(error)
+          test.same(
+            buffer.toString(),
+            fs.readFileSync(base + '.md').toString()
+          )
+          test.end()
+        })
+        stdout.end()
+        stderr.end()
+      })
     })
   })
 

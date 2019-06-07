@@ -19,7 +19,7 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
     test.end()
   })
 
-  tape('bin.js parse: ' + basename, function (test) {
+  tape('bin.js parse stdin: ' + basename, function (test) {
     var stdin = new stream.PassThrough()
     var stdout = new stream.PassThrough()
     var stderr = new stream.PassThrough()
@@ -38,6 +38,26 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
       stderr.end()
     })
     stdin.end(fs.readFileSync(markdown))
+  })
+
+  tape('bin.js parse positional: ' + basename, function (test) {
+    var stdin = new stream.PassThrough()
+    var stdout = new stream.PassThrough()
+    var stderr = new stream.PassThrough()
+    var argv = [ 'parse', markdown ]
+    bin(stdin, stdout, stderr, argv, function (status) {
+      test.equal(status, 0, 'exits 0')
+      simpleConcat(stdout, function (error, buffer) {
+        test.ifError(error)
+        test.same(
+          JSON.parse(buffer).form,
+          JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
+        )
+        test.end()
+      })
+      stdout.end()
+      stderr.end()
+    })
   })
 })
 

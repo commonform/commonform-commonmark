@@ -18,17 +18,23 @@ function bin (stdin, stdout, stderr, argv, done) {
     .scriptName('commonform-commonmark')
 
     .command(
-      'parse',
+      'parse [file]',
       'parse CommonMark to Common Form JSON',
       function (yargs) {
-        return yargs.option('o', {
-          alias: 'only',
-          describe: 'limit output',
-          choices: [ 'form', 'directions' ]
-        })
+        return yargs
+          .positional('file', {
+            describe: 'CommonMark file',
+            type: 'string',
+            normalize: true
+          })
+          .option('o', {
+            alias: 'only',
+            describe: 'limit output',
+            choices: [ 'form', 'directions' ]
+          })
       },
       function (args) {
-        readInput(function (buffer) {
+        readInput(args, function (buffer) {
           try {
             var parsed = require('./').parse(buffer.toString())
           } catch (error) {
@@ -43,10 +49,15 @@ function bin (stdin, stdout, stderr, argv, done) {
     )
 
     .command(
-      'stringify',
+      'stringify [file]',
       'stringify Common Form JSON to CommonMark',
       function (yargs) {
         return yargs
+          .positional('file', {
+            describe: 'JSON file',
+            type: 'string',
+            normalize: true
+          })
           .option('title', {
             alias: 't',
             describe: 'form title',
@@ -72,7 +83,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           .implies('directions', 'values')
       },
       function (args) {
-        readInput(function (input) {
+        readInput(args, function (input) {
           if (args.values) {
             try {
               var blanks = require('commonform-prepare-blanks')(
@@ -106,8 +117,11 @@ function bin (stdin, stdout, stderr, argv, done) {
     .demandCommand()
     .parse(argv)
 
-  function readInput (callback) {
-    require('simple-concat')(stdin, function (error, buffer) {
+  function readInput (args, callback) {
+    var input = args.file
+      ? require('fs').createReadStream(args.file)
+      : stdin
+    require('simple-concat')(input, function (error, buffer) {
       if (error) return fail(error)
       callback(buffer)
     })
