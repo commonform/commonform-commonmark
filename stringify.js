@@ -54,13 +54,13 @@ function render (form, values, formDepth, indentation, formAddress, options) {
           .map(
             indentation > 0
               ? function makeListItem (child, index) {
-                var firstElement = child.form.content[0]
-                var startsWithSeries = (
-                  typeof firstElement !== 'string' &&
-                  firstElement.hasOwnProperty('form')
-                )
                 var body
                 if (child.form) {
+                  var firstElement = child.form.content[0]
+                  var startsWithSeries = (
+                    typeof firstElement !== 'string' &&
+                    firstElement.hasOwnProperty('form')
+                  )
                   var realIndex = form.content.indexOf(child)
                   var address = formAddress.concat(
                     'content', realIndex, 'form'
@@ -181,12 +181,15 @@ function headingFor (formDepth, heading, suppressAnchor) {
 function containsAHeading (child) {
   return (
     child.hasOwnProperty('heading') ||
-    child.form.content.some(function (element) {
-      return (
-        element.hasOwnProperty('form') &&
-        containsAHeading(element)
-      )
-    })
+    (
+      child.form &&
+      child.form.content.some(function (element) {
+        return (
+          element.hasOwnProperty('form') &&
+          containsAHeading(element)
+        )
+      })
+    )
   )
 }
 

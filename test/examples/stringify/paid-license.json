@@ -1,0 +1,2100 @@
+{
+  "content": [
+    {
+      "form": {
+        "content": [
+          "These terms, together with the ",
+          {
+            "definition": "Order Form"
+          },
+          " referencing them, make up a software license agreement. The terms ",
+          {
+            "definition": "Developer"
+          },
+          ", ",
+          {
+            "definition": "Customer"
+          },
+          ", and ",
+          {
+            "definition": "Use Limits"
+          },
+          " are defined on the ",
+          {
+            "use": "Order Form"
+          },
+          "."
+        ]
+      },
+      "heading": "Order Form"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Software"
+                },
+                " means the software identified on the ",
+                {
+                  "use": "Order Form"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "repository": "api.commonform.org",
+            "publisher": "kemitchell",
+            "project": "software-covered-versions",
+            "edition": "1e2u",
+            "substitutions": {
+              "terms": {
+                "Order Form": "Order Form",
+                "Software": "Software",
+                "Vendor": "Developer"
+              },
+              "headings": {}
+            }
+          }
+        ]
+      },
+      "heading": "Software"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " agrees to make the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " available for ",
+                {
+                  "use": "Customer Personnel"
+                },
+                " to download, free of charge, via the Internet."
+              ]
+            },
+            "heading": "Provide a Download"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " agrees to make sure any ",
+                {
+                  "use": "Software Dependencies"
+                },
+                " of the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " not included in the download of the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " are ",
+                {
+                  "use": "Publicly Licensed"
+                },
+                " and generally available for ",
+                {
+                  "use": "Customer"
+                },
+                " to download, free of charge, from a ",
+                {
+                  "use": "Public Software Repository"
+                },
+                ". ",
+                {
+                  "use": "Developer"
+                },
+                " does not agree to any service-level agreement or other specific guarantee about any ",
+                {
+                  "use": "Public Software Repository"
+                },
+                "."
+              ]
+            },
+            "heading": "Make Sure Customer Can Download Software Dependencies"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " agrees to give ",
+                {
+                  "use": "Customer"
+                },
+                " ",
+                {
+                  "use": "Notice"
+                },
+                " of any ",
+                {
+                  "use": "License Keys"
+                },
+                " required to use the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " on entering into this agreement. ",
+                {
+                  "use": "Developer"
+                },
+                " agrees to give ",
+                {
+                  "use": "Customer"
+                },
+                " ",
+                {
+                  "use": "Notice"
+                },
+                " of any additional ",
+                {
+                  "use": "License Keys"
+                },
+                " required to use any new ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " when released."
+              ]
+            },
+            "heading": "Provide Any License Keys"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " agrees to publish the ",
+                {
+                  "use": "Documentation"
+                },
+                " so that ",
+                {
+                  "use": "Customer Personnel"
+                },
+                " can read it, free of charge, via the Internet. ",
+                {
+                  "use": "Developer"
+                },
+                " agrees to make sure the ",
+                {
+                  "use": "Documentation"
+                },
+                " contains instructions that enable a system administrator experienced with a supported operating system to install, configure, and run the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                "."
+              ]
+            },
+            "heading": "Publish Documentation"
+          },
+          {
+            "form": {
+              "content": [
+                "If ",
+                {
+                  "use": "Developer"
+                },
+                " changes or removes functionality from the ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                " that was part of the functionality of the prior ",
+                {
+                  "use": "Latest Version of the Software"
+                },
+                ", substantially reducing how useful the ",
+                {
+                  "use": "Software"
+                },
+                " is to ",
+                {
+                  "use": "Customer"
+                },
+                ", and ",
+                {
+                  "use": "Customer"
+                },
+                " ends this agreement within three calendar months of the change, citing the change, ",
+                {
+                  "use": "Developer"
+                },
+                " agrees to refund any ",
+                {
+                  "use": "Prepaid Fees"
+                },
+                "."
+              ]
+            },
+            "heading": "Refund Prepaid Fees for Removed Functionality"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " agrees to keep the ",
+                {
+                  "use": "Software"
+                },
+                " free of malicious code, such as computer worms and viruses."
+              ]
+            },
+            "heading": "Keep Malicious Code Out of the Software"
+          },
+          {
+            "form": {
+              "content": [
+                "With the following exceptions, ",
+                {
+                  "use": "Developer"
+                },
+                " agrees to keep the ",
+                {
+                  "use": "Software"
+                },
+                " free of code that automatically limits or disables its functionality:",
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " may include code that limits or disables functionality on failure to validate ",
+                      {
+                        "use": "License Keys"
+                      },
+                      "."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " may include code that automatically limits or disables functionality based on automatic monitoring of ",
+                      {
+                        "use": "Use Limits"
+                      },
+                      "."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " may include code that reports data about ",
+                      {
+                        "use": "License Keys"
+                      },
+                      " validation and ",
+                      {
+                        "use": "Use Limits"
+                      },
+                      " monitoring back to ",
+                      {
+                        "use": "Developer"
+                      },
+                      " systems."
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Limit Validation Code in the Software"
+          },
+          {
+            "form": {
+              "content": [
+                "So long as ",
+                {
+                  "use": "Customer"
+                },
+                " has met its obligations under ",
+                {
+                  "reference": "Pay Fees"
+                },
+                ":",
+                {
+                  "form": {
+                    "content": [
+                      "Subject to ",
+                      {
+                        "reference": "Indemnification Process"
+                      },
+                      ", ",
+                      {
+                        "use": "Developer"
+                      },
+                      " agrees to give ",
+                      {
+                        "use": "Customer"
+                      },
+                      " ",
+                      {
+                        "use": "Indemnification"
+                      },
+                      " for ",
+                      {
+                        "use": "Legal Claims"
+                      },
+                      " by others alleging that ",
+                      {
+                        "use": "Permitted Use of the Software"
+                      },
+                      " does any of these:",
+                      {
+                        "form": {
+                          "content": [
+                            "infringes any copyright, trademark, or trade secret right"
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            "infringes any patent covered by ",
+                            {
+                              "use": "Developer"
+                            },
+                            "'s patent guarantee under ",
+                            {
+                              "reference": "Provide Assurance About Patents"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            "breaks any law"
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "heading": "Indemnify Customer"
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      "'s guarantee about patents depends on the ",
+                      {
+                        "use": "Order Form"
+                      },
+                      ":",
+                      {
+                        "form": {
+                          "content": [
+                            "If the ",
+                            {
+                              "use": "Order Form"
+                            },
+                            " specifies a standard patent guarantee, or does not specify any particular patent guarantee, then ",
+                            {
+                              "use": "Developer"
+                            },
+                            " guarantees that as of the date of this agreement, ",
+                            {
+                              "use": "Developer"
+                            },
+                            " is not aware of any patent that ",
+                            {
+                              "use": "Developer"
+                            },
+                            " would infringe by licensing the ",
+                            {
+                              "use": "Software"
+                            },
+                            " under this agreement, or that ",
+                            {
+                              "use": "Customer"
+                            },
+                            " would infringe by ",
+                            {
+                              "use": "Permitted Use of the Software"
+                            },
+                            "."
+                          ]
+                        },
+                        "heading": "Standard Patent Guarantee"
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            "If the ",
+                            {
+                              "use": "Order Form"
+                            },
+                            " specifies an extended patent guarantee, then ",
+                            {
+                              "use": "Developer"
+                            },
+                            " guarantees that ",
+                            {
+                              "use": "Developer"
+                            },
+                            " will not infringe any patent by licensing the ",
+                            {
+                              "use": "Software"
+                            },
+                            " under this agreement, and that ",
+                            {
+                              "use": "Customer"
+                            },
+                            " will not infringe any patent by ",
+                            {
+                              "use": "Permitted Use of the Software"
+                            },
+                            "."
+                          ]
+                        },
+                        "heading": "Extended Patent Guarantee"
+                      }
+                    ]
+                  },
+                  "heading": "Provide Assurance About Patents"
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " agrees to give ",
+                      {
+                        "use": "Customer"
+                      },
+                      " prompt ",
+                      {
+                        "use": "Notice"
+                      },
+                      " of any ",
+                      {
+                        "use": "Infringement Claim"
+                      },
+                      "."
+                    ]
+                  },
+                  "heading": "Give Notice of Infringement Claims"
+                }
+              ]
+            },
+            "heading": "Protect Customer from Liability"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "reference": "Indemnify Customer"
+                },
+                " continues after this agreement ends."
+              ]
+            },
+            "heading": "Protect Customer After this Agreement Ends"
+          }
+        ]
+      },
+      "heading": "Vendor's Obligations"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Customer"
+                },
+                " agrees to pay the license fees specified on the ",
+                {
+                  "use": "Order Form"
+                },
+                ". ",
+                {
+                  "use": "Customer"
+                },
+                " agrees to pay those fees when specified on the ",
+                {
+                  "use": "Order Form"
+                },
+                ", if not specified, on entering into this agreement. ",
+                {
+                  "use": "Customer"
+                },
+                " agrees to pay using the method specified on the ",
+                {
+                  "use": "Order Form"
+                },
+                ". ",
+                {
+                  "use": "Customer"
+                },
+                " agrees to pay all tax on fees under this agreement, except tax ",
+                {
+                  "use": "Developer"
+                },
+                " owes on income."
+              ]
+            },
+            "heading": "Pay Fees"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "reference": "Pay Fees"
+                },
+                " continues after this agreement ends."
+              ]
+            },
+            "heading": "Pay Fees Owed After this Agreement Ends"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Customer"
+                },
+                " agrees to share ",
+                {
+                  "use": "License Keys"
+                },
+                " only as needed to use the ",
+                {
+                  "use": "Software"
+                },
+                " under this agreement, and to secure ",
+                {
+                  "use": "License Keys"
+                },
+                " at least as well as ",
+                {
+                  "use": "Customer"
+                },
+                "'s own confidential information."
+              ]
+            },
+            "heading": "Keep License Keys Confidential and Secure"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Customer"
+                },
+                " agrees not to:",
+                {
+                  "form": {
+                    "content": [
+                      "reverse engineer the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "exceed the ",
+                      {
+                        "use": "Use Limits"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "circumvent any access controls or other limits of the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "circumvent code permitted under ",
+                      {
+                        "reference": "Limit Validation Code in the Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "violate another's ",
+                      {
+                        "use": "Intellectual Property Right"
+                      },
+                      " or other legal right using the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "breach any agreement using the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "break any law using the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "break any import or export law by exporting or reexporting the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "remove proprietary notices from the ",
+                      {
+                        "use": "Software"
+                      },
+                      " or the ",
+                      {
+                        "use": "Documentation"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "use the ",
+                      {
+                        "use": "Software"
+                      },
+                      " to analyze it against any competitive product or service"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "disclose data about the performance of the ",
+                      {
+                        "use": "Software"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Follow Rules About Use"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Customer"
+                },
+                " agrees to make sure ",
+                {
+                  "use": "Customer Personnel"
+                },
+                " and other personnel abide by ",
+                {
+                  "reference": "Keep License Keys Confidential and Secure"
+                },
+                " and ",
+                {
+                  "reference": "Follow Rules About Use"
+                },
+                "."
+              ]
+            },
+            "heading": "Enforce Rules About Use"
+          },
+          {
+            "form": {
+              "content": [
+                "Subject to ",
+                {
+                  "reference": "Indemnification Process"
+                },
+                ", ",
+                {
+                  "use": "Customer"
+                },
+                " agrees to give ",
+                {
+                  "use": "Developer"
+                },
+                " ",
+                {
+                  "use": "Indemnification"
+                },
+                " from ",
+                {
+                  "use": "Legal Claims"
+                },
+                " by others based on:",
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Customer"
+                      },
+                      " breach of this agreement"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Use of the Software at Customer's Own Risk"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "misuse of ",
+                      {
+                        "use": "Customer"
+                      },
+                      "'s ",
+                      {
+                        "use": "License Keys"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Indemnify Vendor"
+          }
+        ]
+      },
+      "heading": "Customer's Obligations"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " grants ",
+                {
+                  "use": "Customer"
+                },
+                " and each of the ",
+                {
+                  "use": "Users"
+                },
+                " a ",
+                {
+                  "use": "Standard License"
+                },
+                ", for any copyrights in ",
+                {
+                  "use": "Covered Versions"
+                },
+                " of the ",
+                {
+                  "use": "Software"
+                },
+                " that ",
+                {
+                  "use": "Developer"
+                },
+                " can license, to copy, install, back up, and make ",
+                {
+                  "use": "Permitted Use of the Software"
+                },
+                "."
+              ]
+            },
+            "heading": "Software Copyright License"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " grants ",
+                {
+                  "use": "Customer"
+                },
+                " and each of the ",
+                {
+                  "use": "Users"
+                },
+                " a ",
+                {
+                  "use": "Standard License"
+                },
+                ", for any patents ",
+                {
+                  "use": "Developer"
+                },
+                " can license, to make ",
+                {
+                  "use": "Permitted Use of the Software"
+                },
+                "."
+              ]
+            },
+            "heading": "Software Patent License"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Developer"
+                },
+                " grants ",
+                {
+                  "use": "Customer"
+                },
+                " and ",
+                {
+                  "use": "Customer Personnel"
+                },
+                " a ",
+                {
+                  "use": "Standard License"
+                },
+                ", for any copyrights in the ",
+                {
+                  "use": "Documentation"
+                },
+                " that ",
+                {
+                  "use": "Developer"
+                },
+                " can license, to read, back up, and copy the ",
+                {
+                  "use": "Documentation"
+                },
+                "."
+              ]
+            },
+            "heading": "Documentation Copyright License"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Standard License"
+                },
+                " means a nonexclusive license for the term of this agreement that is conditional on payment of all fees as required by this agreement and limited by the ",
+                {
+                  "use": "Use Limits"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                "If the ",
+                {
+                  "use": "Order Form"
+                },
+                " specifies publicity rights, then ",
+                {
+                  "use": "Developer"
+                },
+                " may identify ",
+                {
+                  "use": "Customer"
+                },
+                " as a customer to current and potential customers, and may list ",
+                {
+                  "use": "Customer"
+                },
+                "'s business name and logo in promotional materials, such as ",
+                {
+                  "use": "Developer"
+                },
+                "'s websites, during the term of this agreement."
+              ]
+            },
+            "heading": "Publicity License"
+          },
+          {
+            "form": {
+              "content": [
+                "Apart from the licenses in ",
+                {
+                  "reference": "Intellectual Property"
+                },
+                ", this agreement does not license or assign any ",
+                {
+                  "use": "Intellectual Property Right"
+                },
+                "."
+              ]
+            },
+            "heading": "No Other Licenses"
+          }
+        ]
+      },
+      "heading": "Intellectual Property"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "form": {
+                    "content": [
+                      "Each side's only legal remedy for ",
+                      {
+                        "use": "Legal Claims"
+                      },
+                      " covered by ",
+                      {
+                        "use": "Indemnification"
+                      },
+                      " will be ",
+                      {
+                        "use": "Indemnification"
+                      },
+                      "."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Customer"
+                      },
+                      "'s only legal remedy for changes to software functionality in the ",
+                      {
+                        "use": "Latest Version of the Software"
+                      },
+                      " will be refunds under ",
+                      {
+                        "reference": "Refund Prepaid Fees for Removed Functionality"
+                      },
+                      "."
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Agreed Legal Remedies"
+          },
+          {
+            "form": {
+              "content": [
+                "Neither side will be liable for any failure or delay in meeting any obligation under this agreement caused by:",
+                {
+                  "form": {
+                    "content": [
+                      "failure of the other side or its personnel to meet their obligations under this agreement"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "actions done or delayed on written request of the other side"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "fire, flood, earthquake, and other natural disasters"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "declared and undeclared wars, acts of terrorism, sabotage, riots, civil disorders, rebellions, and revolutions"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "extraordinary malfunction of Internet infrastructure, data centers, or communications utilities"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "government actions taken in response to any of these causes"
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Excuses"
+          },
+          {
+            "form": {
+              "conspicuous": "yes",
+              "content": [
+                "With the exception of its obligations in ",
+                {
+                  "reference": "Vendor's Obligations"
+                },
+                ", ",
+                {
+                  "use": "Developer"
+                },
+                " provides the ",
+                {
+                  "use": "Software"
+                },
+                " as is, without any warranty. ",
+                {
+                  "use": "Developer"
+                },
+                " disclaims any warranties the law might otherwise imply, like warranties of merchantability, fitness for any particular purpose, title, or noninfringement."
+              ]
+            },
+            "heading": "Only Express Warranties"
+          },
+          {
+            "form": {
+              "conspicuous": "yes",
+              "content": [
+                {
+                  "form": {
+                    "conspicuous": "yes",
+                    "content": [
+                      "Subject to ",
+                      {
+                        "reference": "Damages Limit Exceptions"
+                      },
+                      ", neither side's total liability for breach of this agreement will exceed the amount ",
+                      {
+                        "use": "Customer"
+                      },
+                      " paid ",
+                      {
+                        "use": "Developer"
+                      },
+                      " under this agreement during the twelve months before the first claim is filed. This limit applies even if the side liable is advised that the other may suffer damages, and even if ",
+                      {
+                        "use": "Developer"
+                      },
+                      " paid nothing at all."
+                    ]
+                  },
+                  "heading": "Damages Limit"
+                },
+                {
+                  "form": {
+                    "conspicuous": "yes",
+                    "content": [
+                      "Neither side will be liable for breach-of-contract damages they could not have reasonably foreseen when entering this agreement."
+                    ]
+                  },
+                  "heading": "Damages Exclusion"
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "reference": "Limited Damages"
+                      },
+                      " does not limit damages for breach of:",
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Pay Fees"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Follow Rules About Use"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Enforce Rules About Use"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Provide Assurance About Patents"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Indemnify Customer"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "reference": "Indemnify Vendor"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "heading": "Damages Limit Exceptions"
+                }
+              ]
+            },
+            "heading": "Limited Damages"
+          }
+        ]
+      },
+      "heading": "Liability"
+    },
+    {
+      "form": {
+        "content": [
+          "This agreement will continue for the initial term specified on the ",
+          {
+            "use": "Order Form"
+          },
+          ". If the ",
+          {
+            "use": "Order Form"
+          },
+          " specifies automatic renewal, then this agreement will renew automatically for additional periods, each as long as the initial term."
+        ]
+      },
+      "heading": "Term and Renewal"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                "Subject to ",
+                {
+                  "reference": "Change Process"
+                },
+                ":",
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Customer"
+                      },
+                      " may end this agreement at any time."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "If the ",
+                      {
+                        "use": "Order Form"
+                      },
+                      " specifies flexible pricing for increased ",
+                      {
+                        "use": "Use Limits"
+                      },
+                      ", ",
+                      {
+                        "use": "Customer"
+                      },
+                      " may increase its ",
+                      {
+                        "use": "Use Limits"
+                      },
+                      " within that pricing at any time. ",
+                      {
+                        "use": "Customer"
+                      },
+                      " changes to ",
+                      {
+                        "use": "Use Limits"
+                      },
+                      " take effect as soon as ",
+                      {
+                        "use": "Customer"
+                      },
+                      " pays the additional fees."
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Changes Customer May Make"
+          },
+          {
+            "form": {
+              "content": [
+                "Subject to ",
+                {
+                  "reference": "Change Process"
+                },
+                ":",
+                {
+                  "form": {
+                    "content": [
+                      "If ",
+                      {
+                        "use": "Customer"
+                      },
+                      " breaches this agreement, ",
+                      {
+                        "use": "Developer"
+                      },
+                      " gives ",
+                      {
+                        "use": "Notice"
+                      },
+                      " of the breach, and ",
+                      {
+                        "use": "Customer"
+                      },
+                      " does not cure the breach within 30 calendar days, ",
+                      {
+                        "use": "Developer"
+                      },
+                      " may end this agreement immediately."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " may end this agreement when it would otherwise automatically renew by giving ",
+                      {
+                        "use": "Notice"
+                      },
+                      " at least 30 calendar days ahead of time."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "use": "Developer"
+                      },
+                      " may take any of these steps in response to an ",
+                      {
+                        "use": "Infringement Claim"
+                      },
+                      ":",
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "use": "Developer"
+                            },
+                            " may release a new version of the ",
+                            {
+                              "use": "Software"
+                            },
+                            " so that ",
+                            {
+                              "use": "Permitted Use of the Software"
+                            },
+                            " will no longer infringe or break the law."
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            "If the problem is infringement, ",
+                            {
+                              "use": "Developer"
+                            },
+                            " may get a license for ",
+                            {
+                              "use": "Customer"
+                            },
+                            " so that ",
+                            {
+                              "use": "Permitted Use of the Software"
+                            },
+                            " will no longer infringe."
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            "If the problem is illegality, ",
+                            {
+                              "use": "Developer"
+                            },
+                            " may get the government approvals, licenses, or other requirements needed to abide by the law."
+                          ]
+                        }
+                      },
+                      {
+                        "form": {
+                          "content": [
+                            {
+                              "use": "Developer"
+                            },
+                            " may refund any ",
+                            {
+                              "use": "Prepaid Fees"
+                            },
+                            " and end this agreement immediately."
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "heading": "Changes Vendor May Make"
+          }
+        ]
+      },
+      "heading": "Changes"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                "Both sides agree that to receive ",
+                {
+                  "use": "Indemnification"
+                },
+                " under this agreement, they must give ",
+                {
+                  "use": "Notice"
+                },
+                " of any covered ",
+                {
+                  "use": "Legal Claims"
+                },
+                " quickly, allow the other side to control investigation, defense, and settlement, and cooperate with those efforts. Both sides agree that if they fail to give ",
+                {
+                  "use": "Notice"
+                },
+                " of any covered ",
+                {
+                  "use": "Legal Claims"
+                },
+                " quickly, ",
+                {
+                  "use": "Indemnification"
+                },
+                " will not cover amounts that could have been defended against or mitigated if ",
+                {
+                  "use": "Notice"
+                },
+                " had been given quickly. Both sides agree that if they take control of the defense and settlement of any ",
+                {
+                  "use": "Legal Claims"
+                },
+                " covered by ",
+                {
+                  "use": "Indemnification"
+                },
+                ", they will not agree to any settlements that admit fault or impose obligations on the other side without their ",
+                {
+                  "use": "Permission"
+                },
+                "."
+              ]
+            },
+            "heading": "Indemnification Process"
+          },
+          {
+            "form": {
+              "content": [
+                "Both sides agree that to give ",
+                {
+                  "use": "Notice"
+                },
+                " under this agreement, the side giving ",
+                {
+                  "use": "Notice"
+                },
+                " must send by e-mail to the address the recipient given with its signature, or to a different address given later for ",
+                {
+                  "use": "Notice"
+                },
+                " going forward. If either side finds that e-mail can't be delivered to the e-mail address given, it may give ",
+                {
+                  "use": "Notice"
+                },
+                " by registered mail to the address on file for the recipient with the state under whose laws it is organized."
+              ]
+            },
+            "heading": "Notice Process"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "use": "Customer"
+                },
+                " and ",
+                {
+                  "use": "Developer"
+                },
+                " agree to make changes allowed under this agreement by ",
+                {
+                  "use": "Notice"
+                },
+                "."
+              ]
+            },
+            "heading": "Change Process"
+          }
+        ]
+      },
+      "heading": "Process"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                "The law of the state of ",
+                {
+                  "use": "Developer's Address"
+                },
+                " will govern this agreement"
+              ]
+            },
+            "heading": "Governing Law"
+          },
+          {
+            "edition": "2e",
+            "heading": "No CISG",
+            "project": "no-cisg",
+            "publisher": "kemitchell",
+            "repository": "api.commonform.org",
+            "substitutions": {
+              "headings": {},
+              "terms": {}
+            },
+            "upgrade": "yes"
+          },
+          {
+            "edition": "2e",
+            "heading": "No UCITA",
+            "project": "no-ucita",
+            "publisher": "kemitchell",
+            "repository": "api.commonform.org",
+            "substitutions": {
+              "headings": {},
+              "terms": {}
+            },
+            "upgrade": "yes"
+          },
+          {
+            "edition": "2e",
+            "heading": "Government Procurement",
+            "project": "software-far",
+            "publisher": "kemitchell",
+            "repository": "api.commonform.org",
+            "substitutions": {
+              "headings": {},
+              "terms": {
+                "Customer": "Customer",
+                "Documentation": "Documentation",
+                "Software": "Software"
+              }
+            },
+            "upgrade": "yes"
+          },
+          {
+            "form": {
+              "content": [
+                "Both sides intend the ",
+                {
+                  "use": "Order Form"
+                },
+                " and these terms as the final, complete, and only expression of their terms about licensing of the ",
+                {
+                  "use": "Software"
+                },
+                ". However, this agreement does not affect any separate nondisclosure agreement ",
+                {
+                  "use": "Developer"
+                },
+                " and ",
+                {
+                  "use": "Customer"
+                },
+                " may have."
+              ]
+            },
+            "heading": "Whole Agreement"
+          },
+          {
+            "form": {
+              "content": [
+                "Only ",
+                {
+                  "use": "Developer"
+                },
+                " and ",
+                {
+                  "use": "Customer"
+                },
+                " may enforce this agreement."
+              ]
+            },
+            "heading": "Enforcement"
+          },
+          {
+            "form": {
+              "content": [
+                "Each side may assign all its rights, licenses, and obligations under this agreement, as a whole, to a new legal entity created to change its jurisdiction or legal form of organization, or to an entity that acquires substantially all of its assets or enough securities to control its management. Otherwise, each side needs ",
+                {
+                  "use": "Permission"
+                },
+                " to assign any right or license under this agreement. Attempts to assign against the terms of this agreement will have no legal effect."
+              ]
+            },
+            "heading": "Assignment"
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "definition": "Lawsuit"
+                      },
+                      " means a lawsuit brought by one side against the other, related to this agreement or the ",
+                      {
+                        "use": "Software"
+                      },
+                      "."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      {
+                        "definition": "Developer's Local Courts"
+                      },
+                      " means the state and federal courts with jurisdiction at ",
+                      {
+                        "use": "Developer's Address"
+                      },
+                      "."
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "Both sides agree to bring any ",
+                      {
+                        "use": "Lawsuit"
+                      },
+                      " in ",
+                      {
+                        "use": "Developer's Local Courts"
+                      },
+                      "."
+                    ]
+                  },
+                  "heading": "Forum"
+                },
+                {
+                  "form": {
+                    "content": [
+                      "Both sides consent to the exclusive jurisdiction of ",
+                      {
+                        "use": "Developer's Local Courts"
+                      },
+                      ". Both sides may enforce judgments from ",
+                      {
+                        "use": "Developer's Local Courts"
+                      },
+                      " in other jurisdictions."
+                    ]
+                  },
+                  "heading": "Exclusive Jurisdiction"
+                },
+                {
+                  "form": {
+                    "content": [
+                      "Both sides waive any objection to venue for any ",
+                      {
+                        "use": "Lawsuit"
+                      },
+                      " in ",
+                      {
+                        "use": "Developer's Local Courts"
+                      },
+                      " and any claim that the other brought any ",
+                      {
+                        "use": "Lawsuit"
+                      },
+                      " in ",
+                      {
+                        "use": "Developer's Local Courts"
+                      },
+                      " in an inconvenient forum."
+                    ]
+                  },
+                  "heading": "Inconvenient Forum Waiver"
+                }
+              ]
+            },
+            "heading": "Lawsuits"
+          }
+        ]
+      },
+      "heading": "General Contract Terms"
+    },
+    {
+      "form": {
+        "content": [
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Customer Personnel"
+                },
+                " means ",
+                {
+                  "use": "Customer"
+                },
+                "'s employees and each ",
+                {
+                  "use": "Customer"
+                },
+                " subsidiary's employees, as well as independent contractors providing services to ",
+                {
+                  "use": "Customer"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Documentation"
+                },
+                " means documentation for the ",
+                {
+                  "use": "Software"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Indemnification"
+                },
+                " means indemnifying and holding harmless for all liability, expenses, damages, and costs."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Infringement Claim"
+                },
+                " means a court order against ",
+                {
+                  "use": "Customer"
+                },
+                "'s use of the ",
+                {
+                  "use": "Software"
+                },
+                " based on a claim that it infringes any ",
+                {
+                  "use": "Intellectual Property Right"
+                },
+                " or breaks any law, or a threat of that kind of claim that ",
+                {
+                  "use": "Developer"
+                },
+                " believes credible."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Intellectual Property Right"
+                },
+                " means any patent, copyright, trademark, or trade secret right, or any other legal right typically referred to as an intellectual property right."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Latest Version of the Software"
+                },
+                " means the latest of the ",
+                {
+                  "use": "Covered Versions"
+                },
+                " of the ",
+                {
+                  "use": "Software"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Legal Claims"
+                },
+                " means claims, demands, lawsuits, and other legal actions."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "License Keys"
+                },
+                " means license keys or other secrets used to validate rights to use the ",
+                {
+                  "use": "Software"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Notice"
+                },
+                " means a written communication from one side to the other per ",
+                {
+                  "reference": "Notice Process"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Permission"
+                },
+                " means prior ",
+                {
+                  "use": "Notice"
+                },
+                " of consent."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Public Software Repository"
+                },
+                " means a website or Internet service that provides free-of-charge downloads of ",
+                {
+                  "use": "Publicly Licensed"
+                },
+                " ",
+                {
+                  "use": "Software"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Publicly Licensed"
+                },
+                " means published with a notice of a license to the public, or to everyone who receives a copy."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Permitted Use of the Software"
+                },
+                " means ",
+                {
+                  "use": "Customer"
+                },
+                "'s use of the ",
+                {
+                  "use": "Software"
+                },
+                ", other than ",
+                {
+                  "use": "Use of the Software at Customer's Own Risk"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Prepaid Fees"
+                },
+                " means fees ",
+                {
+                  "use": "Customer"
+                },
+                " prepaid under this agreement for time remaining in the term of this agreement."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Software Dependencies"
+                },
+                " means software from others that the ",
+                {
+                  "use": "Software"
+                },
+                " depends on, installs, configures, or links, directly or indirectly."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Use of the Software at Customer's Own Risk"
+                },
+                " means:",
+                {
+                  "form": {
+                    "content": [
+                      "use of the ",
+                      {
+                        "use": "Software"
+                      },
+                      " in breach of this agreement"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "use of the ",
+                      {
+                        "use": "Software"
+                      },
+                      " with changes, additions, or in combination with other software, computers, or data, in a way that infringes someone else's ",
+                      {
+                        "use": "Intellectual Property Right"
+                      },
+                      " or breaks the law, if use of the ",
+                      {
+                        "use": "Software"
+                      },
+                      " as provided, as described by the ",
+                      {
+                        "use": "Documentation"
+                      },
+                      ", would not"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "use of other than the ",
+                      {
+                        "use": "Latest Version of the Software"
+                      },
+                      " that infringes someone else's ",
+                      {
+                        "use": "Intellectual Property Right"
+                      },
+                      " or breaks the law, if ",
+                      {
+                        "use": "Customer"
+                      },
+                      " had ",
+                      {
+                        "use": "Notice"
+                      },
+                      " that using the ",
+                      {
+                        "use": "Latest Version of the Software"
+                      },
+                      " would not"
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "content": [
+                      "unauthorized use of the ",
+                      {
+                        "use": "Software"
+                      },
+                      " with ",
+                      {
+                        "use": "Customer"
+                      },
+                      " ",
+                      {
+                        "use": "License Keys"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Users"
+                },
+                " means ",
+                {
+                  "use": "Customer Personnel"
+                },
+                " using the ",
+                {
+                  "use": "Software"
+                },
+                "."
+              ]
+            }
+          },
+          {
+            "form": {
+              "content": [
+                {
+                  "definition": "Developer's Address"
+                },
+                " means the address that ",
+                {
+                  "use": "Developer"
+                },
+                " gives along with its signature to the ",
+                {
+                  "use": "Order Form"
+                },
+                "."
+              ]
+            }
+          }
+        ]
+      },
+      "heading": "Definitions"
+    }
+  ]
+}
