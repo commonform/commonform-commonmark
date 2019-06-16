@@ -14,11 +14,11 @@ module.exports = function (form, values, options) {
   if (options.edition) {
     rendered += escapeMarkdown(options.edition) + '\n\n'
   }
-  rendered += render(form, values, formDepth, 0, [])
+  rendered += render(form, values, formDepth, 0, [], options)
   return rendered.trim() + '\n'
 }
 
-function render (form, values, formDepth, indentation, formAddress) {
+function render (form, values, formDepth, indentation, formAddress, options) {
   var groups = groupSeries(form)
   var conspicuousMarker = ''
   if (form.conspicuous) {
@@ -53,7 +53,7 @@ function render (form, values, formDepth, indentation, formAddress) {
         return group.content
           .map(
             indentation > 0
-              ? function makeListItem (child) {
+              ? function makeListItem (child, index) {
                 var firstElement = child.form.content[0]
                 var startsWithSeries = (
                   typeof firstElement !== 'string' &&
@@ -70,14 +70,19 @@ function render (form, values, formDepth, indentation, formAddress) {
                     values,
                     nextFormDepth,
                     indentation + 2,
-                    address
+                    address,
+                    options
                   )
                 } else {
                   body = stringifyComponent(child)
                 }
+                var prefix = '-'
+                if (options.ordered) {
+                  prefix = (index + 1) + '.'
+                }
                 return (
                   new Array(indentation).join(' ') +
-                  '-' +
+                  prefix +
                   (startsWithSeries ? '\n\n' : ' ') +
                   body
                 )
@@ -94,7 +99,8 @@ function render (form, values, formDepth, indentation, formAddress) {
                     values,
                     nextFormDepth,
                     0,
-                    address
+                    address,
+                    options
                   )
                 } else {
                   body = stringifyComponent(child)

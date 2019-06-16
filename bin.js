@@ -81,6 +81,12 @@ function bin (stdin, stdout, stderr, argv, done) {
             demandOption: false
           })
           .implies('directions', 'values')
+          .option('ordered', {
+            alias: 'o',
+            describe: 'output ordered lists',
+            default: false,
+            type: 'boolean'
+          })
       },
       function (args) {
         readInput(args, function (input) {
@@ -98,6 +104,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           var options = {}
           if (args.title) options.title = args.title
           if (args.edition) options.edition = args.edition
+          if (args.ordered) options.ordered = true
           try {
             var json = JSON.parse(input)
             var stringified = require('./')

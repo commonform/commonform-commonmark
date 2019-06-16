@@ -15,12 +15,13 @@ glob.sync(path.join(examples, '*.json'))
     var dirname = path.dirname(json)
     var base = path.join(dirname, basename)
 
+    var options = fs.existsSync(base + '.options')
+      ? JSON.parse(fs.readFileSync(base + '.options'))
+      : undefined
+
     tape('stringify: ' + basename, function (test) {
       var blanks = fs.existsSync(base + '.blanks')
         ? JSON.parse(fs.readFileSync(base + '.blanks'))
-        : undefined
-      var options = fs.existsSync(base + '.options')
-        ? JSON.parse(fs.readFileSync(base + '.options'))
         : undefined
       test.equal(
         stringify(require(base + '.json'), blanks, options),
@@ -37,6 +38,7 @@ glob.sync(path.join(examples, '*.json'))
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
+      if (options && options.ordered) argv.push('--ordered')
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
@@ -61,6 +63,7 @@ glob.sync(path.join(examples, '*.json'))
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
+      if (options && options.ordered) argv.push('--ordered')
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
