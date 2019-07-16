@@ -1,7 +1,8 @@
-var URL = require('url')
+var parseURL = require('url-parse')
 var assert = require('nanoassert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
+var has = require('has')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
@@ -137,7 +138,7 @@ function emptyForm () {
 
 function recursivelyFixStrings (form) {
   form.content.forEach(function (element) {
-    if (element.hasOwnProperty('form')) {
+    if (has(element, 'form')) {
       recursivelyFixStrings(element.form)
     }
   })
@@ -146,18 +147,18 @@ function recursivelyFixStrings (form) {
 
 function recursivelyPromoteComponents (form) {
   form.content.forEach(function (element, index) {
-    if (!element.hasOwnProperty('form')) return
+    if (!has(element, 'form')) return
     var childForm = element.form
     var childContent = childForm.content
     var firstElement = childContent[0]
     var specifiesComponent = (
       firstElement &&
-      firstElement.hasOwnProperty('reference') &&
+      has(firstElement, 'reference') &&
       firstElement.reference.indexOf('https://') === 0
     )
     if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
     var url = firstElement.reference
-    var parsed = URL.parse(url)
+    var parsed = parseURL(url)
     var pathname = parsed.pathname
     var split = pathname.split('/')
     if (split.length !== 4) {
@@ -199,19 +200,19 @@ function recursivelyPromoteComponents (form) {
           var fourth = remainder[offset + 3]
           if (typeof first !== 'object') fail()
           if (
-            !first.hasOwnProperty('use') &&
-            !first.hasOwnProperty('reference')
+            !has(first, 'use') &&
+            !has(first, 'reference')
           ) fail()
-          var typeKey = first.hasOwnProperty('use')
+          var typeKey = has(first, 'use')
             ? 'use'
             : 'reference'
           if (second !== ' with ') fail()
           if (typeof third !== 'object') fail()
           if (
-            !third.hasOwnProperty('use') &&
-            !third.hasOwnProperty('reference')
+            !has(third, 'use') &&
+            !has(third, 'reference')
           ) fail()
-          if (!third.hasOwnProperty(typeKey)) fail()
+          if (!has(third, typeKey)) fail()
           if (fourth) {
             if (fourth !== ', ' && fourth !== ', and ') fail()
           }
@@ -233,7 +234,7 @@ function recursivelyPromoteComponents (form) {
 
 function recursivelyMarkConspicuous (form) {
   form.content.forEach(function (element) {
-    if (!element.hasOwnProperty('form')) return
+    if (!has(element, 'form')) return
     var content = element.form.content
     var firstElement = content[0]
     var conspicuous = (
@@ -250,8 +251,8 @@ function recursivelyMarkConspicuous (form) {
 
 function recursivelyRemoveHeadings (form) {
   form.content.forEach(function (element) {
-    var hasForm = element.hasOwnProperty('form')
-    var formOrComponent = hasForm || element.hasOwnProperty('repository')
+    var hasForm = has(element, 'form')
+    var formOrComponent = hasForm || has(element, 'repository')
     if (!formOrComponent) return
     var heading = element.heading
     if (heading === '(No Heading)') delete element.heading
@@ -262,7 +263,7 @@ function recursivelyRemoveHeadings (form) {
 function recursivelyHandleContinuations (form) {
   var spliceList = []
   form.content.forEach(function (element, index) {
-    if (!element.hasOwnProperty('form')) return
+    if (!has(element, 'form')) return
     var heading = element.heading
     if (heading !== '(Continuing)') {
       return recursivelyHandleContinuations(element.form)
@@ -287,7 +288,7 @@ function extractDirections (formWithBlankLabels, directions, path) {
     var elementIsObject = typeof element === 'object'
     var elementIsBlank = (
       elementIsObject &&
-      element.hasOwnProperty('blank')
+      has(element, 'blank')
     )
     if (elementIsBlank) {
       var label = element.blank
@@ -299,16 +300,16 @@ function extractDirections (formWithBlankLabels, directions, path) {
     } else {
       var elementIsChild = (
         elementIsObject &&
-        element.hasOwnProperty('form')
+        has(element, 'form')
       )
       if (elementIsChild) {
         var childPath = path.concat('content', index, 'form')
         var result = extractDirections(element.form, directions, childPath)
         var newChild = { form: result.form }
-        if (element.hasOwnProperty('heading')) {
+        if (has(element, 'heading')) {
           newChild.heading = element.heading
         }
-        if (element.hasOwnProperty('conspicuous')) {
+        if (has(element, 'conspicuous')) {
           newChild.form.conspicuous = element.form.conspicuous
         }
         newContent.push(newChild)
@@ -318,7 +319,7 @@ function extractDirections (formWithBlankLabels, directions, path) {
     }
   })
   var newForm = { content: newContent }
-  if (formWithBlankLabels.hasOwnProperty('conspicuous')) {
+  if (has(formWithBlankLabels, 'conspicuous')) {
     newForm.conspicuous = formWithBlankLabels.conspicuous
   }
   return {

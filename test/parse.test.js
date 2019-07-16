@@ -23,7 +23,7 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
     var stdin = new stream.PassThrough()
     var stdout = new stream.PassThrough()
     var stderr = new stream.PassThrough()
-    var argv = [ 'parse' ]
+    var argv = ['parse']
     bin(stdin, stdout, stderr, argv, function (status) {
       test.equal(status, 0, 'exits 0')
       simpleConcat(stdout, function (error, buffer) {
@@ -44,7 +44,7 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
     var stdin = new stream.PassThrough()
     var stdout = new stream.PassThrough()
     var stderr = new stream.PassThrough()
-    var argv = [ 'parse', markdown ]
+    var argv = ['parse', markdown]
     bin(stdin, stdout, stderr, argv, function (status) {
       test.equal(status, 0, 'exits 0')
       simpleConcat(stdout, function (error, buffer) {
@@ -80,7 +80,7 @@ tape('parse: blank', function (test) {
     [
       {
         label: 'dollars',
-        blank: [ 'content', 3 ]
+        blank: ['content', 3]
       }
     ]
   )

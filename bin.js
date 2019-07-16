@@ -30,7 +30,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           .option('o', {
             alias: 'only',
             describe: 'limit output',
-            choices: [ 'form', 'directions' ]
+            choices: ['form', 'directions']
           })
       },
       function (args) {

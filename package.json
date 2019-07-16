@@ -18,9 +18,11 @@
     "commonform-prepare-blanks": "^1.0.2",
     "commonmark": "^0.29.0",
     "emoji-regex": "^8.0.0",
+    "has": "^1.0.3",
     "markdown-escape": "^1.0.0",
     "nanoassert": "^2.0.0",
     "simple-concat": "^1.0.0",
+    "url-parse": "^1.4.7",
     "yargs": "^13.2.4"
   },
   "devDependencies": {

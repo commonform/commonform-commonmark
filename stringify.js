@@ -1,6 +1,7 @@
 var emojiRegEx = require('emoji-regex')()
 var escapeMarkdown = require('markdown-escape')
 var groupSeries = require('commonform-group-series')
+var has = require('has')
 
 module.exports = function (form, values, options) {
   options = options || {}
@@ -59,7 +60,7 @@ function render (form, values, formDepth, indentation, formAddress, options) {
                   var firstElement = child.form.content[0]
                   var startsWithSeries = (
                     typeof firstElement !== 'string' &&
-                    firstElement.hasOwnProperty('form')
+                    has(firstElement, 'form')
                   )
                   var realIndex = form.content.indexOf(child)
                   var address = formAddress.concat(
@@ -180,12 +181,12 @@ function headingFor (formDepth, heading, suppressAnchor) {
 
 function containsAHeading (child) {
   return (
-    child.hasOwnProperty('heading') ||
+    has(child, 'heading') ||
     (
       child.form &&
       child.form.content.some(function (element) {
         return (
-          element.hasOwnProperty('form') &&
+          has(element, 'form') &&
           containsAHeading(element)
         )
       })
@@ -196,18 +197,18 @@ function containsAHeading (child) {
 function run (element, address, values) {
   if (typeof element === 'string') {
     return escapeMarkdown(element)
-  } else if (element.hasOwnProperty('use')) {
+  } else if (has(element, 'use')) {
     return '_' + escapeMarkdown(element.use) + '_'
-  } else if (element.hasOwnProperty('definition')) {
+  } else if (has(element, 'definition')) {
     return '**' + escapeMarkdown(element.definition) + '**'
-  } else if (element.hasOwnProperty('blank')) {
+  } else if (has(element, 'blank')) {
     var value
     var match = values.find(function (element) {
       return sameAddress(element.blank, address)
     })
     if (match) value = match.value
     return value || '``'
-  } else if (element.hasOwnProperty('reference')) {
+  } else if (has(element, 'reference')) {
     var heading = element.reference
     return '[' + heading + '](#' + idForHeading(heading) + ')'
   } else {

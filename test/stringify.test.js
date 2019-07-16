@@ -34,7 +34,7 @@ glob.sync(path.join(examples, '*.json'))
       var stdin = new stream.PassThrough()
       var stdout = new stream.PassThrough()
       var stderr = new stream.PassThrough()
-      var argv = [ 'stringify' ]
+      var argv = ['stringify']
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
@@ -59,7 +59,7 @@ glob.sync(path.join(examples, '*.json'))
       var stdin = new stream.PassThrough()
       var stdout = new stream.PassThrough()
       var stderr = new stream.PassThrough()
-      var argv = [ 'stringify', json ]
+      var argv = ['stringify', json]
       var blanksPath = base + '.blanks'
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
@@ -109,7 +109,7 @@ tape('stringify:too deep', function (test) {
                                         content: [
                                           {
                                             heading: '7',
-                                            form: { content: [ 'text' ] }
+                                            form: { content: ['text'] }
                                           }
                                         ]
                                       }
