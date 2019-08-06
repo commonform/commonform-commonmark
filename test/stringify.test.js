@@ -39,6 +39,7 @@ glob.sync(path.join(examples, '*.json'))
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
       if (options && options.ordered) argv.push('--ordered')
+      if (options && options.ids) argv.push('--ids')
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
@@ -64,6 +65,7 @@ glob.sync(path.join(examples, '*.json'))
       var blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
       if (options && options.ordered) argv.push('--ordered')
+      if (options && options.ids) argv.push('--ids')
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {

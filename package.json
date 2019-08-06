@@ -18,6 +18,7 @@
     "commonform-prepare-blanks": "^1.0.2",
     "commonmark": "^0.29.0",
     "emoji-regex": "^8.0.0",
+    "github-slugger": "^1.2.1",
     "has": "^1.0.3",
     "markdown-escape": "^1.0.0",
     "nanoassert": "^2.0.0",

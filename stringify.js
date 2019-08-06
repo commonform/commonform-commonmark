@@ -1,3 +1,4 @@
+var GitHubSlugger = require('github-slugger')
 var emojiRegEx = require('emoji-regex')()
 var escapeMarkdown = require('markdown-escape')
 var groupSeries = require('commonform-group-series')
@@ -15,6 +16,10 @@ module.exports = function (form, values, options) {
   if (options.edition) {
     rendered += escapeMarkdown(options.edition) + '\n\n'
   }
+  if (options.ids) {
+    options.headingSlugger = new GitHubSlugger()
+  }
+  options.referenceSlugger = new GitHubSlugger()
   rendered += render(form, values, formDepth, 0, [], options)
   return rendered.trim() + '\n'
 }
@@ -34,13 +39,13 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
           (
             (indentationLevel || index === 0)
               ? ''
-              : (headingFor(formDepth, '(Continuing)', true) + '\n\n')
+              : (headingFor(formDepth, '(Continuing)', true, options) + '\n\n')
           ) +
           group.content
             .map(function (element) {
               var realIndex = form.content.indexOf(element)
               var address = formAddress.concat('content', realIndex)
-              return run(element, address, values)
+              return run(element, address, values, options)
             })
             .join('')
         )
@@ -107,7 +112,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                   body = stringifyComponent(child)
                 }
                 return (
-                  headingFor(nextFormDepth, child.heading) +
+                  headingFor(nextFormDepth, child.heading, false, options) +
                   '\n\n' +
                   body
                 )
@@ -173,10 +178,17 @@ function idForHeading (heading) {
     .replace(/\s/g, '-')
 }
 
-function headingFor (formDepth, heading, suppressAnchor) {
-  return heading
-    ? formatHeading(formDepth, heading)
-    : formatHeading(formDepth, '(No Heading)')
+function headingFor (formDepth, heading, suppressAnchor, options) {
+  if (heading) {
+    var returned = ''
+    if (!suppressAnchor && options.headingSlugger) {
+      var slug = options.headingSlugger.slug(heading)
+      returned += '<a id="' + slug + '"></a>\n'
+    }
+    return returned + formatHeading(formDepth, heading)
+  } else {
+    return formatHeading(formDepth, '(No Heading)')
+  }
 }
 
 function containsAHeading (child) {
@@ -194,7 +206,7 @@ function containsAHeading (child) {
   )
 }
 
-function run (element, address, values) {
+function run (element, address, values, options) {
   if (typeof element === 'string') {
     return escapeMarkdown(element)
   } else if (has(element, 'use')) {
@@ -210,7 +222,9 @@ function run (element, address, values) {
     return value || '``'
   } else if (has(element, 'reference')) {
     var heading = element.reference
-    return '[' + heading + '](#' + idForHeading(heading) + ')'
+    options.referenceSlugger.reset()
+    var slug = options.referenceSlugger.slug(heading)
+    return '[' + heading + '](#' + slug + ')'
   } else {
     throw new Error('Invalid type: ' + JSON.stringify(element))
   }

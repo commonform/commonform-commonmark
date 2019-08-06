@@ -87,6 +87,12 @@ function bin (stdin, stdout, stderr, argv, done) {
             default: false,
             type: 'boolean'
           })
+          .option('ids', {
+            alias: 'i',
+            describe: 'output explicit heading IDs',
+            default: false,
+            type: 'boolean'
+          })
       },
       function (args) {
         readInput(args, function (input) {
@@ -105,6 +111,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           if (args.title) options.title = args.title
           if (args.edition) options.edition = args.edition
           if (args.ordered) options.ordered = true
+          if (args.ids) options.ids = true
           try {
             var json = JSON.parse(input)
             var stringified = require('./')

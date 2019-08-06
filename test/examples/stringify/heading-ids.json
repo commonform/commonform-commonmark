@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "heading": "First",
+      "form": {
+        "content": [
+          "first"
+        ]
+      }
+    },
+    {
+      "heading": "With Space",
+      "form": {
+        "content": [
+          {
+            "reference": "With Hyphen"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "With-Hyphen",
+      "form": {
+        "content": [
+          {
+            "reference": "With Space"
+          }
+        ]
+      }
+    }
+  ]
+}
