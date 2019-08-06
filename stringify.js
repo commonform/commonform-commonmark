@@ -19,7 +19,7 @@ module.exports = function (form, values, options) {
   return rendered.trim() + '\n'
 }
 
-function render (form, values, formDepth, indentation, formAddress, options) {
+function render (form, values, formDepth, indentationLevel, formAddress, options) {
   var groups = groupSeries(form)
   var conspicuousMarker = ''
   if (form.conspicuous) {
@@ -32,7 +32,7 @@ function render (form, values, formDepth, indentation, formAddress, options) {
       if (group.type === 'paragraph') {
         return (
           (
-            (indentation || index === 0)
+            (indentationLevel || index === 0)
               ? ''
               : (headingFor(formDepth, '(Continuing)', true) + '\n\n')
           ) +
@@ -45,15 +45,15 @@ function render (form, values, formDepth, indentation, formAddress, options) {
             .join('')
         )
       } else { // series
-        if (!indentation) {
-          indentation = group.content.every(function (element) {
+        if (!indentationLevel) {
+          indentationLevel = group.content.every(function (element) {
             return !containsAHeading(element)
           }) ? 1 : 0
         }
         var nextFormDepth = formDepth + 1
         return group.content
           .map(
-            indentation > 0
+            indentationLevel > 0
               ? function makeListItem (child, index) {
                 var body
                 if (child.form) {
@@ -70,7 +70,7 @@ function render (form, values, formDepth, indentation, formAddress, options) {
                     child.form,
                     values,
                     nextFormDepth,
-                    indentation + 2,
+                    indentationLevel + 1,
                     address,
                     options
                   )
@@ -82,7 +82,7 @@ function render (form, values, formDepth, indentation, formAddress, options) {
                   prefix = (index + 1) + '.'
                 }
                 return (
-                  new Array(indentation).join(' ') +
+                  new Array(indentationLevel).join('    ') +
                   prefix +
                   (startsWithSeries ? '\n\n' : ' ') +
                   body
