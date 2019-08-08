@@ -131,7 +131,9 @@ module.exports = function (markdown) {
   recursivelyMarkConspicuous(form)
   recursivelyRemoveHeadings(form)
   recursivelyHandleContinuations(form)
-  return extractDirections(form)
+  var returned = extractDirections(form)
+  returned.frontMatter = split.data
+  return returned
 }
 
 function emptyForm () {

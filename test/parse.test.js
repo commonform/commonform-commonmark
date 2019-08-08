@@ -86,3 +86,23 @@ tape('parse: blank', function (test) {
   )
   test.end()
 })
+
+tape('parse: front matter', function (test) {
+  var commonmark = [
+    '---',
+    'title: Form Title',
+    '---',
+    '',
+    'This form has front matter.'
+  ].join('\n')
+  var result = toCommonForm(commonmark)
+  test.deepEqual(
+    result,
+    {
+      form: { content: ['This form has front matter.'] },
+      directions: [],
+      frontMatter: { title: 'Form Title' }
+    }
+  )
+  test.end()
+})
