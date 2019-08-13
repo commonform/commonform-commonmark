@@ -9,12 +9,18 @@ module.exports = function (form, values, options) {
   values = values || []
   var formDepth = options.formDepth || 0
   var rendered = ''
-  if (options.title) {
+  if (options.title && !options.frontMatter) {
     rendered += '# ' + escapeMarkdown(options.title) + '\n\n'
     formDepth++
   }
-  if (options.edition) {
+  if (options.edition && !options.frontMatter) {
     rendered += escapeMarkdown(options.edition) + '\n\n'
+  }
+  if (options.frontMatter) {
+    rendered += '---\n'
+    if (options.title) rendered += 'title: ' + options.title + '\n'
+    if (options.edition) rendered += 'edition: ' + options.edition + '\n'
+    rendered += '---\n\n'
   }
   if (options.ids) {
     options.headingSlugger = new GitHubSlugger()

@@ -1,13 +1,15 @@
-var parseURL = require('url-parse')
 var assert = require('nanoassert')
 var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
+var grayMatter = require('gray-matter')
 var has = require('has')
+var parseURL = require('url-parse')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
+  var split = grayMatter(markdown)
   var parser = new commonmark.Parser()
-  var parsed = parser.parse(markdown)
+  var parsed = parser.parse(split.content)
   var walker = parsed.walker()
   var form = emptyForm()
   var contentStack = [form]
@@ -129,7 +131,9 @@ module.exports = function (markdown) {
   recursivelyMarkConspicuous(form)
   recursivelyRemoveHeadings(form)
   recursivelyHandleContinuations(form)
-  return extractDirections(form)
+  var returned = extractDirections(form)
+  returned.frontMatter = split.data
+  return returned
 }
 
 function emptyForm () {

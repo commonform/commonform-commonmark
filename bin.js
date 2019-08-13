@@ -93,6 +93,12 @@ function bin (stdin, stdout, stderr, argv, done) {
             default: false,
             type: 'boolean'
           })
+          .option('front-matter', {
+            alias: 'm',
+            describe: 'output YAML front matter',
+            default: false,
+            type: 'boolean'
+          })
       },
       function (args) {
         readInput(args, function (input) {
@@ -111,6 +117,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           if (args.title) options.title = args.title
           if (args.edition) options.edition = args.edition
           if (args.ordered) options.ordered = true
+          if (args['front-matter']) options.frontMatter = true
           if (args.ids) options.ids = true
           try {
             var json = JSON.parse(input)
