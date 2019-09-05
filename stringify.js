@@ -172,18 +172,6 @@ function formatHeading (formDepth, text) {
   throw new Error('Form indented too deep.')
 }
 
-function idForHeading (heading) {
-  return heading
-    .toLowerCase()
-    .trim()
-    .replace(
-      /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g,
-      ''
-    )
-    .replace(emojiRegEx, '')
-    .replace(/\s/g, '-')
-}
-
 function headingFor (formDepth, heading, suppressAnchor, options) {
   if (heading) {
     var returned = ''
