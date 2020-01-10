@@ -1,5 +1,4 @@
 var GitHubSlugger = require('github-slugger')
-var emojiRegEx = require('emoji-regex')()
 var escapeMarkdown = require('markdown-escape')
 var groupSeries = require('commonform-group-series')
 var has = require('has')
