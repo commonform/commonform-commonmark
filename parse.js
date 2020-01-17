@@ -21,8 +21,6 @@ module.exports = function (markdown) {
   var UNSUPPORTED_TYPES = [
     'block_quote',
     'code_block',
-    'html_block',
-    'html_inline',
     'image',
     'thematic_break'
   ]
@@ -36,6 +34,13 @@ module.exports = function (markdown) {
     }
     if (type === 'text' || type === 'code' || type === 'softbreak') {
       handleText(literal, node)
+    } else if (type === 'html_block' || type === 'html_inline') {
+      if (
+        literal &&
+        literal.startsWith('<!--') &&
+        literal.endsWith('-->')
+      ) continue
+      throw new Error('Unsupported: ' + node.type)
     } else if (event.entering) {
       var currentForm
       if (type === 'item') {
