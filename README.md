@@ -29,7 +29,7 @@ assert.deepStrictEqual(
     content: [
       {
         heading: 'Purchase Price',
-        form: { content: [ 'The purchase price is $10.' ] }
+        form: { content: ['The purchase price is $10.'] }
       }
     ]
   }
@@ -49,7 +49,7 @@ assert.deepStrictEqual(
   [
     {
       label: 'dollars',
-      blank: [ 'content', 0, 'form', 'content', 1 ]
+      blank: ['content', 0, 'form', 'content', 1]
     }
   ]
 )
@@ -83,7 +83,7 @@ assert.deepStrictEqual(
     [
       {
         value: '$10',
-        blank: [ 'content', 3 ]
+        blank: ['content', 3]
       }
     ]
   ),
