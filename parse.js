@@ -29,6 +29,7 @@ module.exports = function (markdown) {
     var node = event.node
     var type = node.type
     var literal = node.literal
+    var sourcepos = node.sourcepos
     if (UNSUPPORTED_TYPES.indexOf(type) !== -1) {
       throw new Error('Unsupported: ' + type)
     }
@@ -66,7 +67,20 @@ module.exports = function (markdown) {
         unshiftChild()
         lastHeadingLevel = level
       }
-      contextStack.unshift({ type: type, level: node.level || undefined })
+      var context = { type: type, level: node.level || undefined }
+      if (sourcepos) {
+        context.source = {
+          start: {
+            line: sourcepos[0][0],
+            column: sourcepos[0][1]
+          },
+          end: {
+            line: sourcepos[1][0],
+            column: sourcepos[1][1]
+          }
+        }
+      }
+      contextStack.unshift(context)
     } else {
       if (
         type === 'item' ||
