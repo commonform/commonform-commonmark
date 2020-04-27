@@ -142,7 +142,7 @@ function stringifyComponent (component) {
     Object.keys(substitutions.headings).length > 0
   )
   if (hasSubstitutions) {
-    if (!component.upgrade) returned += ' without upgrades, replacing '
+    if (component.upgrade) returned += ' with updates and corrections, replacing '
     else returned += ' replacing '
     returned += []
       .concat(
@@ -159,7 +159,7 @@ function stringifyComponent (component) {
       )
       .join(', ')
   } else {
-    if (!component.upgrade) returned += ' without upgrades'
+    if (component.upgrade) returned += ' with updates and corrections'
   }
   return returned
 }

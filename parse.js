@@ -178,7 +178,6 @@ function recursivelyPromoteComponents (form) {
       publisher: split[1],
       project: split[2],
       edition: split[3],
-      upgrade: 'yes',
       substitutions: {
         terms: {},
         headings: {}
@@ -188,10 +187,10 @@ function recursivelyPromoteComponents (form) {
     var secondElement = childContent[1]
     if (secondElement) {
       var parseSubstitutions
-      if (secondElement === ' without upgrades') {
-        delete component.upgrade
-      } else if (secondElement === ' without upgrades, replacing ') {
-        delete component.upgrade
+      if (secondElement === ' with updates and corrections') {
+        component.upgrade = 'yes'
+      } else if (secondElement === ' with updates and corrections, replacing ') {
+        component.upgrade = 'yes'
         parseSubstitutions = true
       } else if (secondElement === ' replacing ') {
         parseSubstitutions = true

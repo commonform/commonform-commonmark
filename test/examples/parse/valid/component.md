@@ -1,3 +1,3 @@
 # First Heading
 
-<https://api.commonform.org/kemitchell/orthodox-software-copyright-license/1e>
+<https://api.commonform.org/kemitchell/orthodox-software-copyright-license/1e> with updates and corrections
