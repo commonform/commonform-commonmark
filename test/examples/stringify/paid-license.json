@@ -46,7 +46,7 @@
             }
           },
           {
-            "repository": "api.commonform.org",
+            "repository": "commonform.org",
             "publisher": "kemitchell",
             "project": "software-covered-versions",
             "edition": "1e2u",
@@ -1552,7 +1552,7 @@
             "heading": "No CISG",
             "project": "no-cisg",
             "publisher": "kemitchell",
-            "repository": "api.commonform.org",
+            "repository": "commonform.org",
             "substitutions": {
               "headings": {},
               "terms": {}
@@ -1564,7 +1564,7 @@
             "heading": "No UCITA",
             "project": "no-ucita",
             "publisher": "kemitchell",
-            "repository": "api.commonform.org",
+            "repository": "commonform.org",
             "substitutions": {
               "headings": {},
               "terms": {}
@@ -1576,7 +1576,7 @@
             "heading": "Government Procurement",
             "project": "software-far",
             "publisher": "kemitchell",
-            "repository": "api.commonform.org",
+            "repository": "commonform.org",
             "substitutions": {
               "headings": {},
               "terms": {
