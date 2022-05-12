@@ -33,7 +33,7 @@
     "replace-require-self": "^1.1.1",
     "standard": "^14.0.2",
     "standard-markdown": "^6.0.0",
-    "tape": "^4.10.1"
+    "tape": "^5.5.3"
   },
   "scripts": {
     "coverage": "nyc --reporter=lcov --reporter=text-summary npm run test",
