@@ -1,1 +1,1 @@
-module.exports = /after component/
+module.exports = /after snippet/

@@ -268,15 +268,15 @@ The law of the state of _Developer's Address_ will govern this agreement
 
 ## No CISG
 
-<https://commonform.org/kemitchell/no-cisg/2e> with updates and corrections
+<https://commonform.org/kemitchell/no-cisg/2e>
 
 ## No UCITA
 
-<https://commonform.org/kemitchell/no-ucita/2e> with updates and corrections
+<https://commonform.org/kemitchell/no-ucita/2e>
 
 ## Government Procurement
 
-<https://commonform.org/kemitchell/software-far/2e> with updates and corrections, replacing _Customer_ with _Customer_, _Documentation_ with _Documentation_, _Software_ with _Software_
+<https://commonform.org/kemitchell/software-far/2e> replacing _Customer_ with _Customer_, _Documentation_ with _Documentation_, _Software_ with _Software_
 
 ## Whole Agreement
 

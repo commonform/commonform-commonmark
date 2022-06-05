@@ -132,7 +132,7 @@ module.exports = function (markdown) {
   }
 
   recursivelyFixStrings(form)
-  recursivelyPromoteComponents(form)
+  recursivelyPromoteSnippets(form)
   recursivelyMarkConspicuous(form)
   recursivelyRemoveHeadings(form)
   recursivelyHandleContinuations(form)
@@ -154,50 +154,32 @@ function recursivelyFixStrings (form) {
   fixStrings(form)
 }
 
-function recursivelyPromoteComponents (form) {
+function recursivelyPromoteSnippets (form) {
   form.content.forEach(function (element, index) {
     if (!has(element, 'form')) return
     var childForm = element.form
     var childContent = childForm.content
     var firstElement = childContent[0]
-    var specifiesComponent = (
+    var specifiesSnippet = (
       firstElement &&
       has(firstElement, 'reference') &&
       firstElement.reference.indexOf('https://') === 0
     )
-    if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
+    if (!specifiesSnippet) return recursivelyPromoteSnippets(element.form)
     var url = firstElement.reference
     var parsed = parseURL(url)
     var pathname = parsed.pathname
     var split = pathname.split('/')
     if (split.length !== 4) {
-      throw new Error('Invalid component URL: ' + url)
+      throw new Error('Invalid snippet URL: ' + url)
     }
-    var component = {
-      repository: parsed.hostname,
-      publisher: split[1],
-      project: split[2],
-      edition: split[3],
-      substitutions: {
-        terms: {},
-        headings: {}
-      }
-    }
-    if (element.heading) component.heading = element.heading
+    var snippet = { snippet: url }
+    if (element.heading) snippet.heading = element.heading
     var secondElement = childContent[1]
     if (secondElement) {
       var parseSubstitutions
-      if (secondElement === ' with updates and corrections') {
-        component.upgrade = 'yes'
-      } else if (secondElement === ' with updates and corrections, replacing ') {
-        component.upgrade = 'yes'
-        parseSubstitutions = true
-      } else if (secondElement === ' replacing ') {
-        parseSubstitutions = true
-      } else {
-        fail()
-      }
-      if (parseSubstitutions) {
+      if (secondElement === ' replacing ') {
+        snippet.substitutions = {}
         var remainder = childContent.slice(2)
         var length = remainder.length
         for (var offset = 0; offset < length; offset += 4) {
@@ -224,17 +206,22 @@ function recursivelyPromoteComponents (form) {
           if (fourth) {
             if (fourth !== ', ' && fourth !== ', and ') fail()
           }
-          var target = typeKey === 'use'
-            ? component.substitutions.terms
-            : component.substitutions.headings
-          target[first[typeKey]] = third[typeKey]
+          var groupKey = typeKey === 'use'
+            ? 'terms'
+            : 'headings'
+          if (!snippet.substitutions[groupKey]) {
+            snippet.substitutions[groupKey] = {}
+          }
+          snippet.substitutions[groupKey][first[typeKey]] = third[typeKey]
         }
+      } else {
+        fail()
       }
     }
-    form.content[index] = component
+    form.content[index] = snippet
     function fail () {
       throw new Error(
-        'Invalid content after component URL: ' + url
+        'Invalid content after snippet URL: ' + url
       )
     }
   })
@@ -260,8 +247,8 @@ function recursivelyMarkConspicuous (form) {
 function recursivelyRemoveHeadings (form) {
   form.content.forEach(function (element) {
     var hasForm = has(element, 'form')
-    var formOrComponent = hasForm || has(element, 'repository')
-    if (!formOrComponent) return
+    var formOrSnippet = hasForm || has(element, 'snippet')
+    if (!formOrSnippet) return
     var heading = element.heading
     if (heading === '(No Heading)') delete element.heading
     if (hasForm) recursivelyRemoveHeadings(element.form)

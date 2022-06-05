@@ -46,17 +46,13 @@
             }
           },
           {
-            "repository": "commonform.org",
-            "publisher": "kemitchell",
-            "project": "software-covered-versions",
-            "edition": "1e2u",
+            "snippet": "https://commonform.org/kemitchell/software-covered-versions/1e2u",
             "substitutions": {
               "terms": {
                 "Order Form": "Order Form",
                 "Software": "Software",
                 "Vendor": "Developer"
-              },
-              "headings": {}
+              }
             }
           }
         ]
@@ -1548,44 +1544,23 @@
             "heading": "Governing Law"
           },
           {
-            "edition": "2e",
             "heading": "No CISG",
-            "project": "no-cisg",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
-            "substitutions": {
-              "headings": {},
-              "terms": {}
-            },
-            "upgrade": "yes"
+            "snippet": "https://commonform.org/kemitchell/no-cisg/2e"
           },
           {
-            "edition": "2e",
             "heading": "No UCITA",
-            "project": "no-ucita",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
-            "substitutions": {
-              "headings": {},
-              "terms": {}
-            },
-            "upgrade": "yes"
+            "snippet": "https://commonform.org/kemitchell/no-ucita/2e"
           },
           {
-            "edition": "2e",
             "heading": "Government Procurement",
-            "project": "software-far",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
+            "snippet": "https://commonform.org/kemitchell/software-far/2e",
             "substitutions": {
-              "headings": {},
               "terms": {
                 "Customer": "Customer",
                 "Documentation": "Documentation",
                 "Software": "Software"
               }
-            },
-            "upgrade": "yes"
+            }
           },
           {
             "form": {

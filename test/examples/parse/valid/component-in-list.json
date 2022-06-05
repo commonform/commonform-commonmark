@@ -8,10 +8,7 @@
       }
     },
     {
-      "repository": "commonform.org",
-      "publisher": "kemitchell",
-      "project": "orthodox-software-copyright-license",
-      "edition": "1e",
+      "snippet": "https://commonform.org/kemitchell/orthodox-software-copyright-license/1e",
       "substitutions": {
         "terms": {
           "Licensor": "Vendor",

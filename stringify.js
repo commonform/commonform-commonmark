@@ -85,7 +85,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     options
                   )
                 } else {
-                  body = stringifyComponent(child)
+                  body = stringifySnippet(child)
                 }
                 var prefix = '-'
                 if (options.ordered) {
@@ -114,7 +114,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     options
                   )
                 } else {
-                  body = stringifyComponent(child)
+                  body = stringifySnippet(child)
                 }
                 return (
                   headingFor(nextFormDepth, child.heading, false, options) +
@@ -129,37 +129,32 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
     .join('\n\n')
 }
 
-function stringifyComponent (component) {
+function stringifySnippet (snippet) {
   var returned
-  returned = '<https://commonform.org'
-  returned += '/' + component.publisher
-  returned += '/' + component.project
-  returned += '/' + component.edition
-  returned += '>'
-  var substitutions = component.substitutions
+  returned = '<' + snippet.snippet + '>'
+  var substitutions = snippet.substitutions || {}
+  var terms = substitutions.terms || {}
+  var headings = substitutions.headings || {}
   var hasSubstitutions = (
-    Object.keys(substitutions.terms).length > 0 ||
-    Object.keys(substitutions.headings).length > 0
+    Object.keys(terms).length > 0 ||
+    Object.keys(headings).length > 0
   )
   if (hasSubstitutions) {
-    if (component.upgrade) returned += ' with updates and corrections, replacing '
-    else returned += ' replacing '
+    returned += ' replacing '
     returned += []
       .concat(
-        Object.keys(substitutions.terms).map(function (from) {
-          var to = substitutions.terms[from]
+        Object.keys(terms).map(function (from) {
+          var to = terms[from]
           return '_' + from + '_ with _' + to + '_'
         })
       )
       .concat(
-        Object.keys(substitutions.headings).map(function (from) {
-          var to = substitutions.headings[from]
+        Object.keys(headings).map(function (from) {
+          var to = headings[from]
           return '[' + from + ']() with [' + to + ']()'
         })
       )
       .join(', ')
-  } else {
-    if (component.upgrade) returned += ' with updates and corrections'
   }
   return returned
 }
@@ -219,7 +214,7 @@ function run (element, address, values, options) {
     var slug = options.referenceSlugger.slug(heading)
     return '[' + heading + '](#' + slug + ')'
   } else {
-    throw new Error('Invalid type: ' + JSON.stringify(element))
+    throw new Error('Invalid Type: ' + JSON.stringify(element))
   }
 }
 
