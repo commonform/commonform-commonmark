@@ -3,7 +3,8 @@ var commonmark = require('commonmark')
 var fixStrings = require('commonform-fix-strings')
 var grayMatter = require('gray-matter')
 var has = require('has')
-var parseURL = require('url-parse')
+
+var VERSION_SUFFIX_RE = new RegExp('/' + require('legal-versioning-regexp') + '$')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
@@ -167,17 +168,13 @@ function recursivelyPromoteComponents (form) {
     )
     if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
     var url = firstElement.reference
-    var parsed = parseURL(url)
-    var pathname = parsed.pathname
-    var split = pathname.split('/')
-    if (split.length !== 4) {
+    var match = VERSION_SUFFIX_RE.exec(url)
+    if (!match) {
       throw new Error('Invalid component URL: ' + url)
     }
     var component = {
-      repository: parsed.hostname,
-      publisher: split[1],
-      project: split[2],
-      edition: split[3],
+      component: url.replace(VERSION_SUFFIX_RE, ''),
+      version: match[0].slice(1),
       substitutions: {
         terms: {},
         headings: {}
@@ -186,18 +183,7 @@ function recursivelyPromoteComponents (form) {
     if (element.heading) component.heading = element.heading
     var secondElement = childContent[1]
     if (secondElement) {
-      var parseSubstitutions
-      if (secondElement === ' with updates and corrections') {
-        component.upgrade = 'yes'
-      } else if (secondElement === ' with updates and corrections, replacing ') {
-        component.upgrade = 'yes'
-        parseSubstitutions = true
-      } else if (secondElement === ' replacing ') {
-        parseSubstitutions = true
-      } else {
-        fail()
-      }
-      if (parseSubstitutions) {
+      if (secondElement === ' replacing ') {
         var remainder = childContent.slice(2)
         var length = remainder.length
         for (var offset = 0; offset < length; offset += 4) {
@@ -229,6 +215,8 @@ function recursivelyPromoteComponents (form) {
             : component.substitutions.headings
           target[first[typeKey]] = third[typeKey]
         }
+      } else {
+        fail()
       }
     }
     form.content[index] = component

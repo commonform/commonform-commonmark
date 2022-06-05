@@ -46,10 +46,8 @@
             }
           },
           {
-            "repository": "commonform.org",
-            "publisher": "kemitchell",
-            "project": "software-covered-versions",
-            "edition": "1e2u",
+            "component": "https://commonform.org/kemitchell/software-covered-versions",
+            "version": "1.2.0",
             "substitutions": {
               "terms": {
                 "Order Form": "Order Form",
@@ -1548,35 +1546,27 @@
             "heading": "Governing Law"
           },
           {
-            "edition": "2e",
             "heading": "No CISG",
-            "project": "no-cisg",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
+            "component": "https://commonform.org/kemitchell/no-cisg",
+            "version": "2.0.0",
             "substitutions": {
               "headings": {},
               "terms": {}
-            },
-            "upgrade": "yes"
+            }
           },
           {
-            "edition": "2e",
             "heading": "No UCITA",
-            "project": "no-ucita",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
+            "component": "https://commonform.org/kemitchell/no-ucita",
+            "version": "2.0.0",
             "substitutions": {
               "headings": {},
               "terms": {}
-            },
-            "upgrade": "yes"
+            }
           },
           {
-            "edition": "2e",
             "heading": "Government Procurement",
-            "project": "software-far",
-            "publisher": "kemitchell",
-            "repository": "commonform.org",
+            "component": "https://commonform.org/kemitchell/software-far",
+            "version": "2.0.0",
             "substitutions": {
               "headings": {},
               "terms": {
@@ -1584,8 +1574,7 @@
                 "Documentation": "Documentation",
                 "Software": "Software"
               }
-            },
-            "upgrade": "yes"
+            }
           },
           {
             "form": {

@@ -6,7 +6,7 @@ These terms, together with the **Order Form** referencing them, make up a softwa
 
 - **Software** means the software identified on the _Order Form_.
 
-- <https://commonform.org/kemitchell/software-covered-versions/1e2u> replacing _Order Form_ with _Order Form_, _Software_ with _Software_, _Vendor_ with _Developer_
+- <https://commonform.org/kemitchell/software-covered-versions/1.2.0> replacing _Order Form_ with _Order Form_, _Software_ with _Software_, _Vendor_ with _Developer_
 
 # Vendor's Obligations
 
@@ -268,15 +268,15 @@ The law of the state of _Developer's Address_ will govern this agreement
 
 ## No CISG
 
-<https://commonform.org/kemitchell/no-cisg/2e> with updates and corrections
+<https://commonform.org/kemitchell/no-cisg/2.0.0>
 
 ## No UCITA
 
-<https://commonform.org/kemitchell/no-ucita/2e> with updates and corrections
+<https://commonform.org/kemitchell/no-ucita/2.0.0>
 
 ## Government Procurement
 
-<https://commonform.org/kemitchell/software-far/2e> with updates and corrections, replacing _Customer_ with _Customer_, _Documentation_ with _Documentation_, _Software_ with _Software_
+<https://commonform.org/kemitchell/software-far/2.0.0> replacing _Customer_ with _Customer_, _Documentation_ with _Documentation_, _Software_ with _Software_
 
 ## Whole Agreement
 

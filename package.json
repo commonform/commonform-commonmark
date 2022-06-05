@@ -20,10 +20,10 @@
     "github-slugger": "^1.2.1",
     "gray-matter": "^4.0.2",
     "has": "^1.0.3",
+    "legal-versioning-regexp": "^1.0.0",
     "markdown-escape": "^1.0.0",
     "nanoassert": "^2.0.0",
     "simple-concat": "^1.0.0",
-    "url-parse": "^1.4.7",
     "yargs": "^17.5.0"
   },
   "devDependencies": {

@@ -42,7 +42,7 @@ glob.sync(path.join(examples, '*.json'))
       if (options && options.ids) argv.push('--ids')
       if (options && options.frontMatter) argv.push('--front-matter')
       if (options && options.title) argv.push('--title', options.title)
-      if (options && options.edition) argv.push('--edition', options.edition)
+      if (options && options.version) argv.push('--form-version', options.version)
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
@@ -71,7 +71,7 @@ glob.sync(path.join(examples, '*.json'))
       if (options && options.ids) argv.push('--ids')
       if (options && options.frontMatter) argv.push('--front-matter')
       if (options && options.title) argv.push('--title', options.title)
-      if (options && options.edition) argv.push('--edition', options.edition)
+      if (options && options.version) argv.push('--form-version', options.version)
       bin(stdin, stdout, stderr, argv, function (status) {
         test.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {

@@ -12,13 +12,13 @@ module.exports = function (form, values, options) {
     rendered += '# ' + escapeMarkdown(options.title) + '\n\n'
     formDepth++
   }
-  if (options.edition && !options.frontMatter) {
-    rendered += escapeMarkdown(options.edition) + '\n\n'
+  if (options.version && !options.frontMatter) {
+    rendered += escapeMarkdown(options.version) + '\n\n'
   }
   if (options.frontMatter) {
     rendered += '---\n'
     if (options.title) rendered += 'title: ' + options.title + '\n'
-    if (options.edition) rendered += 'edition: ' + options.edition + '\n'
+    if (options.version) rendered += 'version: ' + options.version + '\n'
     rendered += '---\n\n'
   }
   if (options.ids) {
@@ -131,10 +131,10 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
 
 function stringifyComponent (component) {
   var returned
-  returned = '<https://commonform.org'
-  returned += '/' + component.publisher
-  returned += '/' + component.project
-  returned += '/' + component.edition
+  returned = '<'
+  returned += component.component
+  if (!returned.endsWith('/')) returned += '/'
+  returned += component.version
   returned += '>'
   var substitutions = component.substitutions
   var hasSubstitutions = (
@@ -142,8 +142,7 @@ function stringifyComponent (component) {
     Object.keys(substitutions.headings).length > 0
   )
   if (hasSubstitutions) {
-    if (component.upgrade) returned += ' with updates and corrections, replacing '
-    else returned += ' replacing '
+    returned += ' replacing '
     returned += []
       .concat(
         Object.keys(substitutions.terms).map(function (from) {
@@ -158,8 +157,6 @@ function stringifyComponent (component) {
         })
       )
       .join(', ')
-  } else {
-    if (component.upgrade) returned += ' with updates and corrections'
   }
   return returned
 }

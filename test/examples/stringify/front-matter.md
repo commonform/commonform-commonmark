@@ -1,6 +1,6 @@
 ---
 title: Title
-edition: 1e
+version: 1.0.0
 ---
 
-This form has a title and edition.
+This form has a title and version.
