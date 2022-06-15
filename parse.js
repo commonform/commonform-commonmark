@@ -183,7 +183,7 @@ function recursivelyPromoteComponents (form) {
     if (element.heading) component.heading = element.heading
     var secondElement = childContent[1]
     if (secondElement) {
-      if (secondElement === ' replacing ') {
+      if (secondElement === ' substituting ') {
         var remainder = childContent.slice(2)
         var length = remainder.length
         for (var offset = 0; offset < length; offset += 4) {
@@ -200,7 +200,7 @@ function recursivelyPromoteComponents (form) {
           var typeKey = has(first, 'use')
             ? 'use'
             : 'reference'
-          if (second !== ' with ') fail()
+          if (second !== ' for ') fail()
           if (typeof third !== 'object') fail()
           if (
             !has(third, 'use') &&
@@ -213,7 +213,7 @@ function recursivelyPromoteComponents (form) {
           var target = typeKey === 'use'
             ? component.substitutions.terms
             : component.substitutions.headings
-          target[first[typeKey]] = third[typeKey]
+          target[third[typeKey]] = first[typeKey]
         }
       } else {
         fail()

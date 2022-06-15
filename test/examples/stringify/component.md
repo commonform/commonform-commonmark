@@ -4,4 +4,4 @@ first
 
 # Second
 
-<https://commonform.org/kemitchell/orthodox-software-copyright-license/1.0.0> replacing _Licensor_ with _Vendor_, _Licensee_ with _Customer_, _Program_ with _Software_, [Express Warranties]() with [Guarantees]()
+<https://commonform.org/kemitchell/orthodox-software-copyright-license/1.0.0> substituting _Vendor_ for _Licensor_, _Customer_ for _Licensee_, _Software_ for _Program_, [Guarantees]() for [Express Warranties]()

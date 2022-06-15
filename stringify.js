@@ -142,18 +142,18 @@ function stringifyComponent (component) {
     Object.keys(substitutions.headings).length > 0
   )
   if (hasSubstitutions) {
-    returned += ' replacing '
+    returned += ' substituting '
     returned += []
       .concat(
         Object.keys(substitutions.terms).map(function (from) {
           var to = substitutions.terms[from]
-          return '_' + from + '_ with _' + to + '_'
+          return '_' + to + '_ for _' + from + '_'
         })
       )
       .concat(
         Object.keys(substitutions.headings).map(function (from) {
           var to = substitutions.headings[from]
-          return '[' + from + ']() with [' + to + ']()'
+          return '[' + to + ']() for [' + from + ']()'
         })
       )
       .join(', ')

@@ -50,8 +50,6 @@
             "version": "1.2.0",
             "substitutions": {
               "terms": {
-                "Order Form": "Order Form",
-                "Software": "Software",
                 "Vendor": "Developer"
               },
               "headings": {}
@@ -1569,11 +1567,7 @@
             "version": "2.0.0",
             "substitutions": {
               "headings": {},
-              "terms": {
-                "Customer": "Customer",
-                "Documentation": "Documentation",
-                "Software": "Software"
-              }
+              "terms": {}
             }
           },
           {
