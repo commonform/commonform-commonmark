@@ -188,10 +188,10 @@ function recursivelyPromoteComponents (form) {
         var length = remainder.length
         for (var offset = 0; offset < length; offset += 4) {
           if (offset + 2 >= length) fail()
-          var first = remainder[offset]
-          var second = remainder[offset + 1]
-          var third = remainder[offset + 2]
-          var fourth = remainder[offset + 3]
+          var first = remainder[offset] // use or reference
+          var second = remainder[offset + 1] // ' for '
+          var third = remainder[offset + 2] // use or reference
+          var fourth = remainder[offset + 3] // optional ', ' or ', and '
           if (typeof first !== 'object') fail()
           if (
             !has(first, 'use') &&
