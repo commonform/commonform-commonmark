@@ -85,7 +85,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     options
                   )
                 } else {
-                  body = stringifyComponent(child)
+                  body = stringifyComponent(child, indentationLevel+ 1)
                 }
                 var prefix = '-'
                 if (options.ordered) {
@@ -114,7 +114,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     options
                   )
                 } else {
-                  body = stringifyComponent(child)
+                  body = stringifyComponent(child, 0)
                 }
                 return (
                   headingFor(nextFormDepth, child.heading, false, options) +
@@ -129,7 +129,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
     .join('\n\n')
 }
 
-function stringifyComponent (component) {
+function stringifyComponent (component, indentationLevel) {
   var returned
   returned = '<'
   returned += component.component
@@ -139,24 +139,32 @@ function stringifyComponent (component) {
   var substitutions = component.substitutions
   var hasSubstitutions = (
     Object.keys(substitutions.terms).length > 0 ||
-    Object.keys(substitutions.headings).length > 0
+    Object.keys(substitutions.headings).length > 0 ||
+    Object.keys(substitutions.blanks).length > 0
   )
   if (hasSubstitutions) {
-    returned += ' substituting '
+    var indent = indentationLevel === 0 ? '' : new Array(indentationLevel).join('  ')
+    returned += ' substituting:\n'
     returned += []
       .concat(
         Object.keys(substitutions.terms).map(function (from) {
           var to = substitutions.terms[from]
-          return '_' + to + '_ for _' + from + '_'
+          return indent + '- _' + to + '_ for _' + from + '_'
         })
       )
       .concat(
         Object.keys(substitutions.headings).map(function (from) {
           var to = substitutions.headings[from]
-          return '[' + to + ']() for [' + from + ']()'
+          return indent + '- [' + to + ']() for [' + from + ']()'
         })
       )
-      .join(', ')
+      .concat(
+        Object.keys(substitutions.blanks).map(function (index) {
+          var value = substitutions.blanks[index]
+          return indent + '- "' + value + '" for blank ' + (parseInt(index))
+        })
+      )
+      .join('\n')
   }
   return returned
 }

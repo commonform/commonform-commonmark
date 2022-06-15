@@ -6,7 +6,8 @@
       "version": "1.0.0",
       "substitutions": {
         "terms": {},
-        "headings": {}
+        "headings": {},
+        "blanks": {}
       }
     }
   ]

@@ -52,7 +52,8 @@
               "terms": {
                 "Vendor": "Developer"
               },
-              "headings": {}
+              "headings": {},
+              "blanks": {}
             }
           }
         ]
@@ -1549,7 +1550,8 @@
             "version": "2.0.0",
             "substitutions": {
               "headings": {},
-              "terms": {}
+              "terms": {},
+              "blanks": {}
             }
           },
           {
@@ -1558,7 +1560,8 @@
             "version": "2.0.0",
             "substitutions": {
               "headings": {},
-              "terms": {}
+              "terms": {},
+              "blanks": {}
             }
           },
           {
@@ -1567,7 +1570,8 @@
             "version": "2.0.0",
             "substitutions": {
               "headings": {},
-              "terms": {}
+              "terms": {},
+              "blanks": {}
             }
           },
           {

@@ -155,6 +155,8 @@ function recursivelyFixStrings (form) {
   fixStrings(form)
 }
 
+var BLANK_RE = /^"(?<value>[^"]+)" for blank (?<number>[1-9]?[0-9]*)$/
+
 function recursivelyPromoteComponents (form) {
   form.content.forEach(function (element, index) {
     if (!has(element, 'form')) return
@@ -168,55 +170,51 @@ function recursivelyPromoteComponents (form) {
     )
     if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
     var url = firstElement.reference
-    var match = VERSION_SUFFIX_RE.exec(url)
-    if (!match) {
+    var versionMatch = VERSION_SUFFIX_RE.exec(url)
+    if (!versionMatch) {
       throw new Error('Invalid component URL: ' + url)
     }
     var component = {
       component: url.replace(VERSION_SUFFIX_RE, ''),
-      version: match[0].slice(1),
+      version: versionMatch[0].slice(1),
       substitutions: {
         terms: {},
-        headings: {}
+        headings: {},
+        blanks: {}
       }
     }
     if (element.heading) component.heading = element.heading
     var secondElement = childContent[1]
     if (secondElement) {
-      if (secondElement === ' substituting ') {
-        var remainder = childContent.slice(2)
-        var length = remainder.length
-        for (var offset = 0; offset < length; offset += 4) {
-          if (offset + 2 >= length) fail()
-          var first = remainder[offset] // use or reference
-          var second = remainder[offset + 1] // ' for '
-          var third = remainder[offset + 2] // use or reference
-          var fourth = remainder[offset + 3] // optional ', ' or ', and '
-          if (typeof first !== 'object') fail()
-          if (
-            !has(first, 'use') &&
-            !has(first, 'reference')
-          ) fail()
-          var typeKey = has(first, 'use')
-            ? 'use'
-            : 'reference'
-          if (second !== ' for ') fail()
-          if (typeof third !== 'object') fail()
-          if (
-            !has(third, 'use') &&
-            !has(third, 'reference')
-          ) fail()
-          if (!has(third, typeKey)) fail()
-          if (fourth) {
-            if (fourth !== ', ' && fourth !== ', and ') fail()
-          }
-          var target = typeKey === 'use'
-            ? component.substitutions.terms
-            : component.substitutions.headings
-          target[third[typeKey]] = first[typeKey]
+      if (secondElement !== ' substituting:') return fail()
+      var remainder = childContent.slice(2)
+      for (let index = 0; index < remainder.length; index++) {
+        var child = remainder[index]
+        if (
+          typeof child !== 'object' ||
+          !has(child, 'form') ||
+          typeof child.form !== 'object' ||
+          !has(child.form, 'content')
+        ) return fail()
+        var content = child.form.content
+        var first = content[0]
+        var second = content[1]
+        var third = content[2]
+        if (has(first, 'use')) {
+          if (second === ' for ' && has(third, 'use')) {
+            component.substitutions.terms[third.use] = first.use
+          } else return fail()
+        } else if (has(first, 'reference')) {
+          if (second === ' for ' && has(third, 'reference')) {
+            component.substitutions.headings[third.reference] = first.reference
+          } else return fail()
+        } else if (typeof first === 'string' && !second && !third) {
+          var blankMatch = BLANK_RE.exec(first)
+          if (!blankMatch) return fail()
+          component.substitutions.blanks[parseInt(blankMatch.groups.number)] = blankMatch.groups.value
+        } else {
+          fail()
         }
-      } else {
-        fail()
       }
     }
     form.content[index] = component

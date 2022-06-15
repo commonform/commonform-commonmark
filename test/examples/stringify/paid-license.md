@@ -6,7 +6,8 @@ These terms, together with the **Order Form** referencing them, make up a softwa
 
 - **Software** means the software identified on the _Order Form_.
 
-- <https://commonform.org/kemitchell/software-covered-versions/1.2.0> substituting _Developer_ for _Vendor_
+- <https://commonform.org/kemitchell/software-covered-versions/1.2.0> substituting:
+  - _Developer_ for _Vendor_
 
 # Vendor's Obligations
 

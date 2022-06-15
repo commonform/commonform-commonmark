@@ -1,0 +1,59 @@
+{
+  "content": [
+    {
+      "heading": "A",
+      "component": "https://example.com/component/",
+      "version": "1.0.0",
+      "substitutions": {
+        "terms": {},
+        "headings": {},
+        "blanks": {
+          "1": "apple"
+        }
+      }
+    },
+    {
+      "heading": "B",
+      "form": {
+        "content": [
+          {
+            "component": "https://example.com/component/",
+            "version": "1.0.0",
+            "substitutions": {
+              "terms": {},
+              "headings": {},
+              "blanks": {
+                "1": "banana"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "heading": "C",
+      "form": {
+        "content": [
+          {
+            "heading": "D",
+            "form": {
+              "content": [
+                {
+                  "component": "https://example.com/component/",
+                  "version": "1.0.0",
+                  "substitutions": {
+                    "terms": {},
+                    "headings": {},
+                    "blanks": {
+                      "1": "cherry"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

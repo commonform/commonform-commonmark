@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "heading": "Governing Law",
+      "component": "https://example.com/governing-law",
+      "version": "1.0.0",
+      "substitutions": {
+        "terms": {},
+        "headings": {},
+        "blanks": {
+          "1": "California"
+        }
+      }
+    }
+  ]
+}
