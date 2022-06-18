@@ -1,25 +1,25 @@
-var assert = require('nanoassert')
-var commonmark = require('commonmark')
-var fixStrings = require('commonform-fix-strings')
-var grayMatter = require('gray-matter')
-var has = require('has')
+const assert = require('nanoassert')
+const commonmark = require('commonmark')
+const fixStrings = require('commonform-fix-strings')
+const grayMatter = require('gray-matter')
+const has = require('has')
 
-var VERSION_SUFFIX_RE = new RegExp('/' + require('legal-versioning-regexp') + '$')
+const VERSION_SUFFIX_RE = new RegExp('/' + require('legal-versioning-regexp') + '$')
 
 module.exports = function (markdown) {
   assert(typeof markdown === 'string')
-  var split = grayMatter(markdown)
-  var parser = new commonmark.Parser()
-  var parsed = parser.parse(split.content)
-  var walker = parsed.walker()
-  var form = emptyForm()
-  var contentStack = [form]
-  var childStack = [null] // Root form is not a child.
-  var contextStack = []
-  var event
-  var lastHeadingLevel = 0
+  const split = grayMatter(markdown)
+  const parser = new commonmark.Parser()
+  const parsed = parser.parse(split.content)
+  const walker = parsed.walker()
+  const form = emptyForm()
+  const contentStack = [form]
+  const childStack = [null] // Root form is not a child.
+  const contextStack = []
+  let event
+  let lastHeadingLevel = 0
 
-  var UNSUPPORTED_TYPES = [
+  const UNSUPPORTED_TYPES = [
     'block_quote',
     'code_block',
     'image',
@@ -27,9 +27,9 @@ module.exports = function (markdown) {
   ]
 
   while ((event = walker.next())) {
-    var node = event.node
-    var type = node.type
-    var literal = node.literal
+    const node = event.node
+    const type = node.type
+    const literal = node.literal
     if (UNSUPPORTED_TYPES.indexOf(type) !== -1) {
       throw new Error('Unsupported: ' + type)
     }
@@ -53,21 +53,21 @@ module.exports = function (markdown) {
       } else if (type === 'link') {
         addContentElement({ reference: '' })
       } else if (type === 'heading') {
-        var level = node.level
+        const level = node.level
         if (level === lastHeadingLevel) {
           shiftChild()
         } else if (level > lastHeadingLevel) {
-          var depth = level - lastHeadingLevel
+          const depth = level - lastHeadingLevel
           if (depth > 1) throw new Error('Jump in heading levels')
         } else if (level < lastHeadingLevel) {
-          for (var i = level; i <= lastHeadingLevel; i++) {
+          for (let i = level; i <= lastHeadingLevel; i++) {
             shiftChild()
           }
         }
         unshiftChild()
         lastHeadingLevel = level
       }
-      contextStack.unshift({ type: type, level: node.level || undefined })
+      contextStack.unshift({ type, level: node.level || undefined })
     } else {
       if (
         type === 'item' ||
@@ -87,7 +87,7 @@ module.exports = function (markdown) {
   }
 
   function unshiftChild () {
-    var child = { form: emptyForm() }
+    const child = { form: emptyForm() }
     currentForm = contentStack[0]
     currentForm.content.push(child)
     contentStack.unshift(child.form)
@@ -95,7 +95,7 @@ module.exports = function (markdown) {
   }
 
   function addContentElement (element) {
-    var currentForm = contentStack[0]
+    const currentForm = contentStack[0]
     currentForm.content.push(element)
     contentStack.unshift(element)
     childStack.unshift(null)
@@ -106,9 +106,9 @@ module.exports = function (markdown) {
     assert(typeof node.type === 'string')
     assert(typeof node.literal === 'string' || node.type === 'softbreak')
     assert(node.type === 'text' || node.type === 'code' || node.type === 'softbreak')
-    var contextType = contextStack[0].type
+    const contextType = contextStack[0].type
     if (contextType === 'heading') {
-      var currentChild = childStack[0]
+      const currentChild = childStack[0]
       if (!currentChild.heading) currentChild.heading = text
       else currentChild.heading += text
     } else if (contextType === 'strong') {
@@ -137,7 +137,7 @@ module.exports = function (markdown) {
   recursivelyMarkConspicuous(form)
   recursivelyRemoveHeadings(form)
   recursivelyHandleContinuations(form)
-  var returned = extractDirections(form)
+  const returned = extractDirections(form)
   returned.frontMatter = split.data
   return returned
 }
@@ -155,26 +155,26 @@ function recursivelyFixStrings (form) {
   fixStrings(form)
 }
 
-var BLANK_RE = /^"(?<value>[^"]+)" for blank (?<number>[1-9]?[0-9]*)$/
+const BLANK_RE = /^"(?<value>[^"]+)" for blank (?<number>[1-9]?[0-9]*)$/
 
 function recursivelyPromoteComponents (form) {
   form.content.forEach(function (element, index) {
     if (!has(element, 'form')) return
-    var childForm = element.form
-    var childContent = childForm.content
-    var firstElement = childContent[0]
-    var specifiesComponent = (
+    const childForm = element.form
+    const childContent = childForm.content
+    const firstElement = childContent[0]
+    const specifiesComponent = (
       firstElement &&
       has(firstElement, 'reference') &&
       firstElement.reference.indexOf('https://') === 0
     )
     if (!specifiesComponent) return recursivelyPromoteComponents(element.form)
-    var url = firstElement.reference
-    var versionMatch = VERSION_SUFFIX_RE.exec(url)
+    const url = firstElement.reference
+    const versionMatch = VERSION_SUFFIX_RE.exec(url)
     if (!versionMatch) {
       throw new Error('Invalid component URL: ' + url)
     }
-    var component = {
+    const component = {
       component: url.replace(VERSION_SUFFIX_RE, ''),
       version: versionMatch[0].slice(1),
       substitutions: {
@@ -184,22 +184,22 @@ function recursivelyPromoteComponents (form) {
       }
     }
     if (element.heading) component.heading = element.heading
-    var secondElement = childContent[1]
+    const secondElement = childContent[1]
     if (secondElement) {
       if (secondElement !== ' substituting:') return fail()
-      var remainder = childContent.slice(2)
+      const remainder = childContent.slice(2)
       for (let index = 0; index < remainder.length; index++) {
-        var child = remainder[index]
+        const child = remainder[index]
         if (
           typeof child !== 'object' ||
           !has(child, 'form') ||
           typeof child.form !== 'object' ||
           !has(child.form, 'content')
         ) return fail()
-        var content = child.form.content
-        var first = content[0]
-        var second = content[1]
-        var third = content[2]
+        const content = child.form.content
+        const first = content[0]
+        const second = content[1]
+        const third = content[2]
         if (has(first, 'use')) {
           if (second === ' for ' && has(third, 'use')) {
             component.substitutions.terms[third.use] = first.use
@@ -209,7 +209,7 @@ function recursivelyPromoteComponents (form) {
             component.substitutions.headings[third.reference] = first.reference
           } else return fail()
         } else if (typeof first === 'string' && !second && !third) {
-          var blankMatch = BLANK_RE.exec(first)
+          const blankMatch = BLANK_RE.exec(first)
           if (!blankMatch) return fail()
           component.substitutions.blanks[parseInt(blankMatch.groups.number)] = blankMatch.groups.value
         } else {
@@ -229,9 +229,9 @@ function recursivelyPromoteComponents (form) {
 function recursivelyMarkConspicuous (form) {
   form.content.forEach(function (element) {
     if (!has(element, 'form')) return
-    var content = element.form.content
-    var firstElement = content[0]
-    var conspicuous = (
+    const content = element.form.content
+    const firstElement = content[0]
+    const conspicuous = (
       typeof firstElement === 'string' &&
       firstElement.indexOf('!!!') === 0
     )
@@ -245,24 +245,24 @@ function recursivelyMarkConspicuous (form) {
 
 function recursivelyRemoveHeadings (form) {
   form.content.forEach(function (element) {
-    var hasForm = has(element, 'form')
-    var formOrComponent = hasForm || has(element, 'repository')
+    const hasForm = has(element, 'form')
+    const formOrComponent = hasForm || has(element, 'repository')
     if (!formOrComponent) return
-    var heading = element.heading
+    const heading = element.heading
     if (heading === '(No Heading)') delete element.heading
     if (hasForm) recursivelyRemoveHeadings(element.form)
   })
 }
 
 function recursivelyHandleContinuations (form) {
-  var spliceList = []
+  const spliceList = []
   form.content.forEach(function (element, index) {
     if (!has(element, 'form')) return
-    var heading = element.heading
+    const heading = element.heading
     if (heading !== '(Continuing)') {
       return recursivelyHandleContinuations(element.form)
     }
-    var priorSibling = form.content[index - 1]
+    const priorSibling = form.content[index - 1]
     element.form.content.forEach(function (element) {
       priorSibling.form.content.push(element)
     })
@@ -277,29 +277,29 @@ function recursivelyHandleContinuations (form) {
 function extractDirections (formWithBlankLabels, directions, path) {
   directions = directions || []
   path = path || []
-  var newContent = []
+  const newContent = []
   formWithBlankLabels.content.forEach(function (element, index) {
-    var elementIsObject = typeof element === 'object'
-    var elementIsBlank = (
+    const elementIsObject = typeof element === 'object'
+    const elementIsBlank = (
       elementIsObject &&
       has(element, 'blank')
     )
     if (elementIsBlank) {
-      var label = element.blank
+      const label = element.blank
       newContent.push(createBlank())
       directions.push({
-        label: label,
+        label,
         blank: path.concat('content', index)
       })
     } else {
-      var elementIsChild = (
+      const elementIsChild = (
         elementIsObject &&
         has(element, 'form')
       )
       if (elementIsChild) {
-        var childPath = path.concat('content', index, 'form')
-        var result = extractDirections(element.form, directions, childPath)
-        var newChild = { form: result.form }
+        const childPath = path.concat('content', index, 'form')
+        const result = extractDirections(element.form, directions, childPath)
+        const newChild = { form: result.form }
         if (has(element, 'heading')) {
           newChild.heading = element.heading
         }
@@ -312,13 +312,13 @@ function extractDirections (formWithBlankLabels, directions, path) {
       }
     }
   })
-  var newForm = { content: newContent }
+  const newForm = { content: newContent }
   if (has(formWithBlankLabels, 'conspicuous')) {
     newForm.conspicuous = formWithBlankLabels.conspicuous
   }
   return {
     form: newForm,
-    directions: directions
+    directions
   }
 
   function createBlank () {

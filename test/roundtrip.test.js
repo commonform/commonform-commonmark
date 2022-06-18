@@ -1,16 +1,16 @@
-var fs = require('fs')
-var glob = require('glob')
-var path = require('path')
-var tape = require('tape')
-var module = require('../')
+const fs = require('fs')
+const glob = require('glob')
+const path = require('path')
+const tape = require('tape')
+const module = require('../')
 
-var examples = path.join(__dirname, 'examples', 'roundtrip')
+const examples = path.join(__dirname, 'examples', 'roundtrip')
 
 glob.sync(path.join(examples, '*')).forEach(function (file) {
-  var extname = path.extname(file)
-  var basename = path.basename(file, extname)
+  const extname = path.extname(file)
+  const basename = path.basename(file, extname)
   tape('round trip: ' + basename, function (test) {
-    var source, parsed, stringified, reparsed
+    let source, parsed, stringified, reparsed
     if (extname === '.md') {
       test.doesNotThrow(function () {
         source = fs.readFileSync(file).toString()

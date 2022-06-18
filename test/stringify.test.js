@@ -1,26 +1,26 @@
-var bin = require('../bin')
-var fs = require('fs')
-var glob = require('glob')
-var path = require('path')
-var simpleConcat = require('simple-concat')
-var stream = require('stream')
-var stringify = require('../').stringify
-var tape = require('tape')
+const bin = require('../bin')
+const fs = require('fs')
+const glob = require('glob')
+const path = require('path')
+const simpleConcat = require('simple-concat')
+const stream = require('stream')
+const stringify = require('../').stringify
+const tape = require('tape')
 
-var examples = path.join(__dirname, 'examples/stringify')
+const examples = path.join(__dirname, 'examples/stringify')
 
 glob.sync(path.join(examples, '*.json'))
   .forEach(function (json) {
-    var basename = path.basename(json, '.json')
-    var dirname = path.dirname(json)
-    var base = path.join(dirname, basename)
+    const basename = path.basename(json, '.json')
+    const dirname = path.dirname(json)
+    const base = path.join(dirname, basename)
 
-    var options = fs.existsSync(base + '.options')
+    const options = fs.existsSync(base + '.options')
       ? JSON.parse(fs.readFileSync(base + '.options'))
       : undefined
 
     tape('stringify: ' + basename, function (test) {
-      var blanks = fs.existsSync(base + '.blanks')
+      const blanks = fs.existsSync(base + '.blanks')
         ? JSON.parse(fs.readFileSync(base + '.blanks'))
         : undefined
       test.equal(
@@ -31,12 +31,12 @@ glob.sync(path.join(examples, '*.json'))
     })
 
     tape('bin.js stringify stdin: ' + basename, function (test) {
-      var stdin = new stream.PassThrough()
-      var stdout = new stream.PassThrough()
-      var stderr = new stream.PassThrough()
-      var argv = ['stringify']
-      var blanksPath = base + '.blanks'
-      var blanks = fs.existsSync(blanksPath)
+      const stdin = new stream.PassThrough()
+      const stdout = new stream.PassThrough()
+      const stderr = new stream.PassThrough()
+      const argv = ['stringify']
+      const blanksPath = base + '.blanks'
+      const blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
       if (options && options.ordered) argv.push('--ordered')
       if (options && options.ids) argv.push('--ids')
@@ -60,12 +60,12 @@ glob.sync(path.join(examples, '*.json'))
     })
 
     tape('bin.js stringify positional: ' + basename, function (test) {
-      var stdin = new stream.PassThrough()
-      var stdout = new stream.PassThrough()
-      var stderr = new stream.PassThrough()
-      var argv = ['stringify', json]
-      var blanksPath = base + '.blanks'
-      var blanks = fs.existsSync(blanksPath)
+      const stdin = new stream.PassThrough()
+      const stdout = new stream.PassThrough()
+      const stderr = new stream.PassThrough()
+      const argv = ['stringify', json]
+      const blanksPath = base + '.blanks'
+      const blanks = fs.existsSync(blanksPath)
       if (blanks) argv.push('--values', blanksPath)
       if (options && options.ordered) argv.push('--ordered')
       if (options && options.ids) argv.push('--ids')
@@ -89,7 +89,7 @@ glob.sync(path.join(examples, '*.json'))
   })
 
 tape('stringify:too deep', function (test) {
-  var form = {
+  const form = {
     content: [
       {
         heading: '1',

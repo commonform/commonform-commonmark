@@ -1,13 +1,13 @@
-var GitHubSlugger = require('github-slugger')
-var escapeMarkdown = require('markdown-escape')
-var groupSeries = require('commonform-group-series')
-var has = require('has')
+const GitHubSlugger = require('github-slugger')
+const escapeMarkdown = require('markdown-escape')
+const groupSeries = require('commonform-group-series')
+const has = require('has')
 
 module.exports = function (form, values, options) {
   options = options || {}
   values = values || []
-  var formDepth = options.formDepth || 0
-  var rendered = ''
+  let formDepth = options.formDepth || 0
+  let rendered = ''
   if (options.title && !options.frontMatter) {
     rendered += '# ' + escapeMarkdown(options.title) + '\n\n'
     formDepth++
@@ -30,8 +30,8 @@ module.exports = function (form, values, options) {
 }
 
 function render (form, values, formDepth, indentationLevel, formAddress, options) {
-  var groups = groupSeries(form)
-  var conspicuousMarker = ''
+  const groups = groupSeries(form)
+  let conspicuousMarker = ''
   if (form.conspicuous) {
     conspicuousMarker = form.conspicuous ? '!!!' : ''
     if (groups[0].type === 'paragraph') conspicuousMarker += ' '
@@ -48,8 +48,8 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
           ) +
           group.content
             .map(function (element) {
-              var realIndex = form.content.indexOf(element)
-              var address = formAddress.concat('content', realIndex)
+              const realIndex = form.content.indexOf(element)
+              const address = formAddress.concat('content', realIndex)
               return run(element, address, values, options)
             })
             .join('')
@@ -58,22 +58,24 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
         if (!indentationLevel) {
           indentationLevel = group.content.every(function (element) {
             return !containsAHeading(element)
-          }) ? 1 : 0
+          })
+            ? 1
+            : 0
         }
-        var nextFormDepth = formDepth + 1
+        const nextFormDepth = formDepth + 1
         return group.content
           .map(
             indentationLevel > 0
               ? function makeListItem (child, index) {
-                var body
+                let body
                 if (child.form) {
-                  var firstElement = child.form.content[0]
+                  const firstElement = child.form.content[0]
                   var startsWithSeries = (
                     typeof firstElement !== 'string' &&
                     has(firstElement, 'form')
                   )
-                  var realIndex = form.content.indexOf(child)
-                  var address = formAddress.concat(
+                  const realIndex = form.content.indexOf(child)
+                  const address = formAddress.concat(
                     'content', realIndex, 'form'
                   )
                   body = render(
@@ -85,9 +87,9 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     options
                   )
                 } else {
-                  body = stringifyComponent(child, indentationLevel+ 1)
+                  body = stringifyComponent(child, indentationLevel + 1)
                 }
-                var prefix = '-'
+                let prefix = '-'
                 if (options.ordered) {
                   prefix = (index + 1) + '.'
                 }
@@ -99,10 +101,10 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                 )
               }
               : function makeHeadings (child) {
-                var body
+                let body
                 if (child.form) {
-                  var realIndex = form.content.indexOf(child)
-                  var address = formAddress.concat(
+                  const realIndex = form.content.indexOf(child)
+                  const address = formAddress.concat(
                     'content', realIndex, 'form'
                   )
                   body = render(
@@ -130,37 +132,37 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
 }
 
 function stringifyComponent (component, indentationLevel) {
-  var returned
+  let returned
   returned = '<'
   returned += component.component
   if (!returned.endsWith('/')) returned += '/'
   returned += component.version
   returned += '>'
-  var substitutions = component.substitutions
-  var hasSubstitutions = (
+  const substitutions = component.substitutions
+  const hasSubstitutions = (
     Object.keys(substitutions.terms).length > 0 ||
     Object.keys(substitutions.headings).length > 0 ||
     Object.keys(substitutions.blanks).length > 0
   )
   if (hasSubstitutions) {
-    var indent = indentationLevel === 0 ? '' : new Array(indentationLevel).join('  ')
+    const indent = indentationLevel === 0 ? '' : new Array(indentationLevel).join('  ')
     returned += ' substituting:\n'
     returned += []
       .concat(
         Object.keys(substitutions.terms).map(function (from) {
-          var to = substitutions.terms[from]
+          const to = substitutions.terms[from]
           return indent + '- _' + to + '_ for _' + from + '_'
         })
       )
       .concat(
         Object.keys(substitutions.headings).map(function (from) {
-          var to = substitutions.headings[from]
+          const to = substitutions.headings[from]
           return indent + '- [' + to + ']() for [' + from + ']()'
         })
       )
       .concat(
         Object.keys(substitutions.blanks).map(function (index) {
-          var value = substitutions.blanks[index]
+          const value = substitutions.blanks[index]
           return indent + '- "' + value + '" for blank ' + (parseInt(index))
         })
       )
@@ -178,9 +180,9 @@ function formatHeading (formDepth, text) {
 
 function headingFor (formDepth, heading, suppressAnchor, options) {
   if (heading) {
-    var returned = ''
+    let returned = ''
     if (!suppressAnchor && options.headingSlugger) {
-      var slug = options.headingSlugger.slug(heading)
+      const slug = options.headingSlugger.slug(heading)
       returned += '<a id="' + slug + '"></a>\n'
     }
     return returned + formatHeading(formDepth, heading)
@@ -212,16 +214,16 @@ function run (element, address, values, options) {
   } else if (has(element, 'definition')) {
     return '**' + escapeMarkdown(element.definition) + '**'
   } else if (has(element, 'blank')) {
-    var value
-    var match = values.find(function (element) {
+    let value
+    const match = values.find(function (element) {
       return sameAddress(element.blank, address)
     })
     if (match) value = match.value
     return value || '``'
   } else if (has(element, 'reference')) {
-    var heading = element.reference
+    const heading = element.reference
     options.referenceSlugger.reset()
-    var slug = options.referenceSlugger.slug(heading)
+    const slug = options.referenceSlugger.slug(heading)
     return '[' + heading + '](#' + slug + ')'
   } else {
     throw new Error('Invalid type: ' + JSON.stringify(element))
@@ -230,7 +232,7 @@ function run (element, address, values, options) {
 
 function sameAddress (a, b) {
   if (a.length !== b.length) return false
-  for (var index = 0; index < a.length; index++) {
+  for (let index = 0; index < a.length; index++) {
     if (a[index] !== b[index]) return false
   }
   return true

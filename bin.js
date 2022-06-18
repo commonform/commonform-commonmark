@@ -40,7 +40,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           } catch (error) {
             return fail(error)
           }
-          var output = parsed
+          let output = parsed
           if (args.only) output = parsed[args.only]
           stdout.write(JSON.stringify(output) + '\n')
           done(0)
@@ -113,14 +113,14 @@ function bin (stdin, stdout, stderr, argv, done) {
           } else {
             blanks = []
           }
-          var options = {}
+          const options = {}
           if (args.title) options.title = args.title
           if (args['form-version']) options.version = args['form-version']
           if (args.ordered) options.ordered = true
           if (args['front-matter']) options.frontMatter = true
           if (args.ids) options.ids = true
           try {
-            var json = JSON.parse(input)
+            const json = JSON.parse(input)
             var stringified = require('./')
               .stringify(json, blanks, options)
           } catch (error) {
@@ -139,7 +139,7 @@ function bin (stdin, stdout, stderr, argv, done) {
     .parse(argv)
 
   function readInput (args, callback) {
-    var input = args.file
+    const input = args.file
       ? require('fs').createReadStream(args.file)
       : stdin
     require('simple-concat')(input, function (error, buffer) {
