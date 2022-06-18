@@ -3,7 +3,7 @@ const escapeMarkdown = require('markdown-escape')
 const groupSeries = require('commonform-group-series')
 const has = require('has')
 
-module.exports = function (form, values, options) {
+module.exports = (form, values, options) => {
   options = options || {}
   values = values || []
   let formDepth = options.formDepth || 0
@@ -38,7 +38,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
     else conspicuousMarker += '\n\n'
   }
   return conspicuousMarker + groups
-    .map(function (group, index) {
+    .map((group, index) => {
       if (group.type === 'paragraph') {
         return (
           (
@@ -47,7 +47,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
               : (headingFor(formDepth, '(Continuing)', true, options) + '\n\n')
           ) +
           group.content
-            .map(function (element) {
+            .map(element => {
               const realIndex = form.content.indexOf(element)
               const address = formAddress.concat('content', realIndex)
               return run(element, address, values, options)
@@ -56,7 +56,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
         )
       } else { // series
         if (!indentationLevel) {
-          indentationLevel = group.content.every(function (element) {
+          indentationLevel = group.content.every(element => {
             return !containsAHeading(element)
           })
             ? 1
@@ -66,7 +66,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
         return group.content
           .map(
             indentationLevel > 0
-              ? function makeListItem (child, index) {
+              ? (child, index) => {
                 let body
                 let startsWithSeries
                 if (child.form) {
@@ -101,7 +101,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                   body
                 )
               }
-              : function makeHeadings (child) {
+              : child => {
                 let body
                 if (child.form) {
                   const realIndex = form.content.indexOf(child)
@@ -150,19 +150,19 @@ function stringifyComponent (component, indentationLevel) {
     returned += ' substituting:\n'
     returned += []
       .concat(
-        Object.keys(substitutions.terms).map(function (from) {
+        Object.keys(substitutions.terms).map(from => {
           const to = substitutions.terms[from]
           return indent + '- _' + to + '_ for _' + from + '_'
         })
       )
       .concat(
-        Object.keys(substitutions.headings).map(function (from) {
+        Object.keys(substitutions.headings).map(from => {
           const to = substitutions.headings[from]
           return indent + '- [' + to + ']() for [' + from + ']()'
         })
       )
       .concat(
-        Object.keys(substitutions.blanks).map(function (index) {
+        Object.keys(substitutions.blanks).map(index => {
           const value = substitutions.blanks[index]
           return indent + '- "' + value + '" for blank ' + (parseInt(index))
         })
@@ -197,12 +197,10 @@ function containsAHeading (child) {
     has(child, 'heading') ||
     (
       child.form &&
-      child.form.content.some(function (element) {
-        return (
-          has(element, 'form') &&
-          containsAHeading(element)
-        )
-      })
+      child.form.content.some(element => (
+        has(element, 'form') &&
+        containsAHeading(element)
+      ))
     )
   )
 }

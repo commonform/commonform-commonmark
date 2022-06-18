@@ -6,7 +6,7 @@ const has = require('has')
 
 const VERSION_SUFFIX_RE = new RegExp('/' + require('legal-versioning-regexp') + '$')
 
-module.exports = function (markdown) {
+module.exports = markdown => {
   assert(typeof markdown === 'string')
   const split = grayMatter(markdown)
   const parser = new commonmark.Parser()
@@ -147,7 +147,7 @@ function emptyForm () {
 }
 
 function recursivelyFixStrings (form) {
-  form.content.forEach(function (element) {
+  form.content.forEach(element => {
     if (has(element, 'form')) {
       recursivelyFixStrings(element.form)
     }
@@ -158,7 +158,7 @@ function recursivelyFixStrings (form) {
 const BLANK_RE = /^"(?<value>[^"]+)" for blank (?<number>[1-9]?[0-9]*)$/
 
 function recursivelyPromoteComponents (form) {
-  form.content.forEach(function (element, index) {
+  form.content.forEach((element, index) => {
     if (!has(element, 'form')) return
     const childForm = element.form
     const childContent = childForm.content
@@ -227,7 +227,7 @@ function recursivelyPromoteComponents (form) {
 }
 
 function recursivelyMarkConspicuous (form) {
-  form.content.forEach(function (element) {
+  form.content.forEach(element => {
     if (!has(element, 'form')) return
     const content = element.form.content
     const firstElement = content[0]
@@ -244,7 +244,7 @@ function recursivelyMarkConspicuous (form) {
 }
 
 function recursivelyRemoveHeadings (form) {
-  form.content.forEach(function (element) {
+  form.content.forEach(element => {
     const hasForm = has(element, 'form')
     const formOrComponent = hasForm || has(element, 'repository')
     if (!formOrComponent) return
@@ -256,20 +256,20 @@ function recursivelyRemoveHeadings (form) {
 
 function recursivelyHandleContinuations (form) {
   const spliceList = []
-  form.content.forEach(function (element, index) {
+  form.content.forEach((element, index) => {
     if (!has(element, 'form')) return
     const heading = element.heading
     if (heading !== '(Continuing)') {
       return recursivelyHandleContinuations(element.form)
     }
     const priorSibling = form.content[index - 1]
-    element.form.content.forEach(function (element) {
+    element.form.content.forEach(element => {
       priorSibling.form.content.push(element)
     })
     spliceList.push(index)
     recursivelyHandleContinuations(element.form)
   })
-  spliceList.forEach(function (index) {
+  spliceList.forEach(index => {
     form.content.splice(index, 1)
   })
 }
@@ -278,7 +278,7 @@ function extractDirections (formWithBlankLabels, directions, path) {
   directions = directions || []
   path = path || []
   const newContent = []
-  formWithBlankLabels.content.forEach(function (element, index) {
+  formWithBlankLabels.content.forEach((element, index) => {
     const elementIsObject = typeof element === 'object'
     const elementIsBlank = (
       elementIsObject &&
