@@ -67,40 +67,40 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
           .map(
             indentationLevel > 0
               ? (child, index) => {
-                let body
-                let startsWithSeries
-                if (child.form) {
-                  const firstElement = child.form.content[0]
-                  startsWithSeries = (
-                    typeof firstElement !== 'string' &&
-                    has(firstElement, 'form')
+                  let body
+                  let startsWithSeries
+                  if (child.form) {
+                    const firstElement = child.form.content[0]
+                    startsWithSeries = (
+                      typeof firstElement !== 'string' &&
+                      has(firstElement, 'form')
+                    )
+                    const realIndex = form.content.indexOf(child)
+                    const address = formAddress.concat(
+                      'content', realIndex, 'form'
+                    )
+                    body = render(
+                      child.form,
+                      values,
+                      nextFormDepth,
+                      indentationLevel + 1,
+                      address,
+                      options
+                    )
+                  } else {
+                    body = stringifyComponent(child, indentationLevel + 1)
+                  }
+                  let prefix = '-'
+                  if (options.ordered) {
+                    prefix = (index + 1) + '.'
+                  }
+                  return (
+                    new Array(indentationLevel).join('    ') +
+                    prefix +
+                    (startsWithSeries ? '\n\n' : ' ') +
+                    body
                   )
-                  const realIndex = form.content.indexOf(child)
-                  const address = formAddress.concat(
-                    'content', realIndex, 'form'
-                  )
-                  body = render(
-                    child.form,
-                    values,
-                    nextFormDepth,
-                    indentationLevel + 1,
-                    address,
-                    options
-                  )
-                } else {
-                  body = stringifyComponent(child, indentationLevel + 1)
                 }
-                let prefix = '-'
-                if (options.ordered) {
-                  prefix = (index + 1) + '.'
-                }
-                return (
-                  new Array(indentationLevel).join('    ') +
-                  prefix +
-                  (startsWithSeries ? '\n\n' : ' ') +
-                  body
-                )
-              }
               : child => {
                 let body
                 if (child.form) {
