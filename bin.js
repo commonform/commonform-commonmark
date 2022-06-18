@@ -35,8 +35,9 @@ function bin (stdin, stdout, stderr, argv, done) {
       },
       function (args) {
         readInput(args, function (buffer) {
+          let parsed
           try {
-            var parsed = require('./').parse(buffer.toString())
+            parsed = require('./').parse(buffer.toString())
           } catch (error) {
             return fail(error)
           }
@@ -102,9 +103,10 @@ function bin (stdin, stdout, stderr, argv, done) {
       },
       function (args) {
         readInput(args, function (input) {
+          let blanks
           if (args.values) {
             try {
-              var blanks = require('commonform-prepare-blanks')(
+              blanks = require('commonform-prepare-blanks')(
                 args.values, args.directions
               )
             } catch (error) {
@@ -119,9 +121,10 @@ function bin (stdin, stdout, stderr, argv, done) {
           if (args.ordered) options.ordered = true
           if (args['front-matter']) options.frontMatter = true
           if (args.ids) options.ids = true
+          let json, stringified
           try {
-            const json = JSON.parse(input)
-            var stringified = require('./')
+            json = JSON.parse(input)
+            stringified = require('./')
               .stringify(json, blanks, options)
           } catch (error) {
             return fail(error)

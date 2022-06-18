@@ -26,6 +26,7 @@ module.exports = function (markdown) {
     'thematic_break'
   ]
 
+  let currentForm
   while ((event = walker.next())) {
     const node = event.node
     const type = node.type
@@ -43,7 +44,6 @@ module.exports = function (markdown) {
       ) continue
       throw new Error('Unsupported: ' + node.type)
     } else if (event.entering) {
-      var currentForm
       if (type === 'item') {
         unshiftChild()
       } else if (type === 'strong') {

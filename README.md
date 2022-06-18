@@ -11,8 +11,8 @@ This package includes a [JavaScript module](#JavaScript) and [command-line inter
 ## JavaScript
 
 ```javascript
-var commonmark = require('commonform-commonmark')
-var assert = require('assert')
+const commonmark = require('commonform-commonmark')
+const assert = require('assert')
 ```
 
 ### Parse CommonMark to Common Form.

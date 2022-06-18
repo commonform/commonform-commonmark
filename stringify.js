@@ -68,9 +68,10 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
             indentationLevel > 0
               ? function makeListItem (child, index) {
                 let body
+                let startsWithSeries
                 if (child.form) {
                   const firstElement = child.form.content[0]
-                  var startsWithSeries = (
+                  startsWithSeries = (
                     typeof firstElement !== 'string' &&
                     has(firstElement, 'form')
                   )
