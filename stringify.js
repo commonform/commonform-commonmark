@@ -9,7 +9,7 @@ module.exports = (form, values, options) => {
   let formDepth = options.formDepth || 0
   let rendered = ''
   if (options.title && !options.frontMatter) {
-    rendered += '# ' + escapeMarkdown(options.title) + '\n\n'
+    rendered += `# ${escapeMarkdown(options.title)}\n\n`
     formDepth++
   }
   if (options.version && !options.frontMatter) {
@@ -17,8 +17,8 @@ module.exports = (form, values, options) => {
   }
   if (options.frontMatter) {
     rendered += '---\n'
-    if (options.title) rendered += 'title: ' + options.title + '\n'
-    if (options.version) rendered += 'version: ' + options.version + '\n'
+    if (options.title) rendered += `title: ${options.title}\n`
+    if (options.version) rendered += `version: ${options.version}\n`
     rendered += '---\n\n'
   }
   if (options.ids) {
@@ -95,7 +95,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     prefix = (index + 1) + '.'
                   }
                   return (
-                    new Array(indentationLevel).join('    ') +
+                    '    '.repeat(indentationLevel - 1) +
                     prefix +
                     (startsWithSeries ? '\n\n' : ' ') +
                     body
@@ -146,25 +146,25 @@ function stringifyComponent (component, indentationLevel) {
     Object.keys(substitutions.blanks).length > 0
   )
   if (hasSubstitutions) {
-    const indent = indentationLevel === 0 ? '' : new Array(indentationLevel).join('  ')
+    const indent = indentationLevel === 0 ? '' : '  '.repeat(indentationLevel - 1)
     returned += ' substituting:\n'
     returned += []
       .concat(
         Object.keys(substitutions.terms).map(from => {
           const to = substitutions.terms[from]
-          return indent + '- _' + to + '_ for _' + from + '_'
+          return `${indent}- _${to}_ for _${from}_`
         })
       )
       .concat(
         Object.keys(substitutions.headings).map(from => {
           const to = substitutions.headings[from]
-          return indent + '- [' + to + ']() for [' + from + ']()'
+          return `${indent}- [${to}]() for [${from}]()`
         })
       )
       .concat(
         Object.keys(substitutions.blanks).map(index => {
           const value = substitutions.blanks[index]
-          return indent + '- "' + value + '" for blank ' + (parseInt(index))
+          return `${indent}- "${value}" for blank ${parseInt(index)}`
         })
       )
       .join('\n')
@@ -174,7 +174,7 @@ function stringifyComponent (component, indentationLevel) {
 
 function formatHeading (formDepth, text) {
   if (formDepth <= 6) {
-    return new Array(formDepth + 1).join('#') + ' ' + text
+    return '#'.repeat(formDepth) + ' ' + text
   }
   throw new Error('Form indented too deep.')
 }
@@ -184,7 +184,7 @@ function headingFor (formDepth, heading, suppressAnchor, options) {
     let returned = ''
     if (!suppressAnchor && options.headingSlugger) {
       const slug = options.headingSlugger.slug(heading)
-      returned += '<a id="' + slug + '"></a>\n'
+      returned += `<a id="${slug}"></a>\n`
     }
     return returned + formatHeading(formDepth, heading)
   } else {
@@ -209,9 +209,9 @@ function run (element, address, values, options) {
   if (typeof element === 'string') {
     return escapeMarkdown(element)
   } else if (has(element, 'use')) {
-    return '_' + escapeMarkdown(element.use) + '_'
+    return `_${escapeMarkdown(element.use)}_`
   } else if (has(element, 'definition')) {
-    return '**' + escapeMarkdown(element.definition) + '**'
+    return `**${escapeMarkdown(element.definition)}**`
   } else if (has(element, 'blank')) {
     let value
     const match = values.find(function (element) {
@@ -223,9 +223,9 @@ function run (element, address, values, options) {
     const heading = element.reference
     options.referenceSlugger.reset()
     const slug = options.referenceSlugger.slug(heading)
-    return '[' + heading + '](#' + slug + ')'
+    return `[${heading}](#${slug})`
   } else {
-    throw new Error('Invalid type: ' + JSON.stringify(element))
+    throw new Error(`Invalid type: ${JSON.stringify(element)}`)
   }
 }
 
