@@ -1,5 +1,5 @@
 const GitHubSlugger = require('github-slugger')
-const escapeMarkdown = require('markdown-escape')
+const markdownEscape = require('markdown-escape')
 const groupSeries = require('commonform-group-series')
 const has = require('has')
 
@@ -9,11 +9,11 @@ module.exports = (form, values, options) => {
   let formDepth = options.formDepth || 0
   let rendered = ''
   if (options.title && !options.frontMatter) {
-    rendered += `# ${escapeMarkdown(options.title)}\n\n`
+    rendered += `# ${customEscape(options.title)}\n\n`
     formDepth++
   }
   if (options.version && !options.frontMatter) {
-    rendered += escapeMarkdown(options.version) + '\n\n'
+    rendered += customEscape(options.version) + '\n\n'
   }
   if (options.frontMatter) {
     rendered += '---\n'
@@ -207,11 +207,11 @@ function containsAHeading (child) {
 
 function run (element, address, values, options) {
   if (typeof element === 'string') {
-    return escapeMarkdown(element)
+    return customEscape(element)
   } else if (has(element, 'use')) {
-    return `_${escapeMarkdown(element.use)}_`
+    return `_${customEscape(element.use)}_`
   } else if (has(element, 'definition')) {
-    return `**${escapeMarkdown(element.definition)}**`
+    return `**${customEscape(element.definition)}**`
   } else if (has(element, 'blank')) {
     let value
     const match = values.find(function (element) {
@@ -235,4 +235,8 @@ function sameAddress (a, b) {
     if (a[index] !== b[index]) return false
   }
   return true
+}
+
+function customEscape (string) {
+  return markdownEscape(string, ['slashes'])
 }
