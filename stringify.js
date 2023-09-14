@@ -224,6 +224,8 @@ function run (element, address, values, options) {
     options.referenceSlugger.reset()
     const slug = options.referenceSlugger.slug(heading)
     return `[${heading}](#${slug})`
+  } else if (has(element, 'url')) {
+    return `<${element.url}>`
   } else {
     throw new Error(`Invalid type: ${JSON.stringify(element)}`)
   }
