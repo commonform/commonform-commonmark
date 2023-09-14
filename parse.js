@@ -51,7 +51,7 @@ module.exports = markdown => {
       } else if (type === 'emph') {
         addContentElement({ use: '' })
       } else if (type === 'link') {
-        addContentElement({ link: true })
+        addContentElement({ placeholder: true })
       } else if (type === 'heading') {
         const level = node.level
         if (level === lastHeadingLevel) {
@@ -117,13 +117,13 @@ module.exports = markdown => {
       contentStack[0].use += text
     } else if (contextType === 'link') {
       const first = contentStack[0]
-      delete first.link
-      if (first.url) {
-        first.url += text
+      delete first.placeholder
+      if (first.link) {
+        first.link += link
       } else if (first.reference) {
         first.reference += text
       } else if (text.startsWith('https://') || text.startsWith('http://')) {
-        first.url = text
+        first.link = text
       } else {
         first.reference = text
       }
@@ -173,9 +173,9 @@ function recursivelyPromoteComponents (form) {
     const childForm = element.form
     const childContent = childForm.content
     const firstElement = childContent[0]
-    const startsWithURL = firstElement && has(firstElement, 'url')
-    if (!startsWithURL) return recursivelyPromoteComponents(element.form)
-    const { url } = firstElement
+    const startsWithLink = firstElement && has(firstElement, 'link')
+    if (!startsWithLink) return recursivelyPromoteComponents(element.form)
+    const { link: url } = firstElement
     const versionMatch = VERSION_SUFFIX_RE.exec(url)
     if (!versionMatch) {
       throw new Error('Invalid component URL: ' + url)
