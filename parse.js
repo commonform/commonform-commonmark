@@ -119,7 +119,7 @@ module.exports = markdown => {
       const first = contentStack[0]
       delete first.placeholder
       if (first.link) {
-        first.link += link
+        first.link += text
       } else if (first.reference) {
         first.reference += text
       } else if (text.startsWith('https://') || text.startsWith('http://')) {
