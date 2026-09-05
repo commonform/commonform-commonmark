@@ -1,6 +1,7 @@
 import fs from 'fs'
+import test from 'node:test'
+import assert from 'node:assert'
 import path from 'path'
-import tape from 'tape'
 import * as exported from '../index.js'
 
 const examples = path.join('test', 'examples', 'roundtrip')
@@ -8,28 +9,28 @@ const examples = path.join('test', 'examples', 'roundtrip')
 fs.globSync(path.join(examples, '*')).forEach(function (file) {
   const extname = path.extname(file)
   const basename = path.basename(file, extname)
-  tape('round trip: ' + basename, function (test) {
+  test('round trip: ' + basename, (t, done) => {
     let source, parsed, stringified, reparsed
     if (extname === '.md') {
-      test.doesNotThrow(function () {
+      assert.doesNotThrow(function () {
         source = fs.readFileSync(file).toString()
         parsed = exported.parse(source).form
         stringified = exported.stringify(clone(parsed))
         reparsed = exported.parse(stringified).form
       })
-      test.deepEqual(stringified, source, 'stringified')
-      test.deepEqual(reparsed, parsed, 'parsed')
+      assert.deepEqual(stringified, source, 'stringified')
+      assert.deepEqual(reparsed, parsed, 'parsed')
     }
     if (extname === '.json') {
-      test.doesNotThrow(function () {
+      assert.doesNotThrow(function () {
         source = fs.readFileSync(file).toString()
         parsed = JSON.parse(source)
         stringified = exported.stringify(clone(parsed))
         reparsed = exported.parse(stringified).form
       })
-      test.deepEqual(reparsed, parsed, 'parsed')
+      assert.deepEqual(reparsed, parsed, 'parsed')
     }
-    test.end()
+    done()
   })
 })
 

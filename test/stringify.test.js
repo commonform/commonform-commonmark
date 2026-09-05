@@ -1,10 +1,11 @@
 import bin from '../bin.js'
+import test from 'node:test'
+import assert from 'node:assert'
 import fs from 'fs'
 import path from 'path'
 import simpleConcat from 'simple-concat'
 import stream from 'stream'
 import { stringify } from '../index.js'
-import tape from 'tape'
 
 const examples = path.join('test', 'examples', 'stringify')
 
@@ -18,18 +19,18 @@ fs.globSync(path.join(examples, '*.json'))
       ? JSON.parse(fs.readFileSync(base + '.options'))
       : undefined
 
-    tape('stringify: ' + basename, function (test) {
+    test('stringify: ' + basename, (t, done) => {
       const blanks = fs.existsSync(base + '.blanks')
         ? JSON.parse(fs.readFileSync(base + '.blanks'))
         : undefined
-      test.equal(
+      assert.equal(
         stringify(JSON.parse(fs.readFileSync(base + '.json')), blanks, options),
         fs.readFileSync(base + '.md').toString()
       )
-      test.end()
+      done()
     })
 
-    tape('bin.js stringify stdin: ' + basename, function (test) {
+    test('bin.js stringify stdin: ' + basename, (t, done) => {
       const stdin = new stream.PassThrough()
       const stdout = new stream.PassThrough()
       const stderr = new stream.PassThrough()
@@ -43,14 +44,14 @@ fs.globSync(path.join(examples, '*.json'))
       if (options && options.title) argv.push('--title', options.title)
       if (options && options.version) argv.push('--form-version', options.version)
       bin(stdin, stdout, stderr, argv, function (status) {
-        test.equal(status, 0, 'exits 0')
+        assert.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
-          test.ifError(error)
-          test.same(
+          assert.ifError(error)
+          assert.deepEqual(
             buffer.toString(),
             fs.readFileSync(base + '.md').toString()
           )
-          test.end()
+          done()
         })
         stdout.end()
         stderr.end()
@@ -58,7 +59,7 @@ fs.globSync(path.join(examples, '*.json'))
       stdin.end(fs.readFileSync(json))
     })
 
-    tape('bin.js stringify positional: ' + basename, function (test) {
+    test('bin.js stringify positional: ' + basename, (t, done) => {
       const stdin = new stream.PassThrough()
       const stdout = new stream.PassThrough()
       const stderr = new stream.PassThrough()
@@ -72,14 +73,14 @@ fs.globSync(path.join(examples, '*.json'))
       if (options && options.title) argv.push('--title', options.title)
       if (options && options.version) argv.push('--form-version', options.version)
       bin(stdin, stdout, stderr, argv, function (status) {
-        test.equal(status, 0, 'exits 0')
+        assert.equal(status, 0, 'exits 0')
         simpleConcat(stdout, function (error, buffer) {
-          test.ifError(error)
-          test.same(
+          assert.ifError(error)
+          assert.deepEqual(
             buffer.toString(),
             fs.readFileSync(base + '.md').toString()
           )
-          test.end()
+          done()
         })
         stdout.end()
         stderr.end()
@@ -87,7 +88,7 @@ fs.globSync(path.join(examples, '*.json'))
     })
   })
 
-tape('stringify:too deep', function (test) {
+test('stringify:too deep', (t, done) => {
   const form = {
     content: [
       {
@@ -138,8 +139,8 @@ tape('stringify:too deep', function (test) {
       }
     ]
   }
-  test.throws(function () {
+  assert.throws(function () {
     stringify(form)
   }, /deep/)
-  test.end()
+  done()
 })

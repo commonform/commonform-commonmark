@@ -1,9 +1,10 @@
 import bin from '../bin.js'
 import fs from 'fs'
+import test from 'node:test'
+import assert from 'node:assert'
 import path from 'path'
 import simpleConcat from 'simple-concat'
 import stream from 'stream'
-import tape from 'tape'
 import { parse as toCommonForm } from '../index.js'
 
 const examples = path.join('test', 'examples')
@@ -11,27 +12,27 @@ const examples = path.join('test', 'examples')
 fs.globSync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   const basename = path.basename(markdown, '.md')
 
-  tape('parse: ' + basename, function (test) {
+  test('parse: ' + basename, (t, done) => {
     const commonmark = fs.readFileSync(markdown).toString()
     const form = JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
-    test.deepEqual(toCommonForm(commonmark).form, form)
-    test.end()
+    assert.deepEqual(toCommonForm(commonmark).form, form)
+    done()
   })
 
-  tape('bin.js parse stdin: ' + basename, function (test) {
+  test('bin.js parse stdin: ' + basename, (t, done) => {
     const stdin = new stream.PassThrough()
     const stdout = new stream.PassThrough()
     const stderr = new stream.PassThrough()
     const argv = ['parse']
     bin(stdin, stdout, stderr, argv, function (status) {
-      test.equal(status, 0, 'exits 0')
+      assert.equal(status, 0, 'exits 0')
       simpleConcat(stdout, function (error, buffer) {
-        test.ifError(error)
-        test.same(
+        assert.ifError(error)
+        assert.deepEqual(
           JSON.parse(buffer).form,
           JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
         )
-        test.end()
+        done()
       })
       stdout.end()
       stderr.end()
@@ -39,20 +40,20 @@ fs.globSync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown)
     stdin.end(fs.readFileSync(markdown))
   })
 
-  tape('bin.js parse positional: ' + basename, function (test) {
+  test('bin.js parse positional: ' + basename, (t, done) => {
     const stdin = new stream.PassThrough()
     const stdout = new stream.PassThrough()
     const stderr = new stream.PassThrough()
     const argv = ['parse', markdown]
     bin(stdin, stdout, stderr, argv, function (status) {
-      test.equal(status, 0, 'exits 0')
+      assert.equal(status, 0, 'exits 0')
       simpleConcat(stdout, function (error, buffer) {
-        test.ifError(error)
-        test.same(
+        assert.ifError(error)
+        assert.deepEqual(
           JSON.parse(buffer).form,
           JSON.parse(fs.readFileSync(markdown.replace('.md', '.json')))
         )
-        test.end()
+        done()
       })
       stdout.end()
       stderr.end()
@@ -62,19 +63,19 @@ fs.globSync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown)
 
 fs.globSync(path.join(examples, 'parse/invalid/*.md')).forEach(function (markdown) {
   const basename = path.basename(markdown, '.md')
-  tape('parse: ' + basename, function (test) {
+  test('parse: ' + basename, (t, done) => {
     const commonmark = fs.readFileSync(markdown).toString()
-    test.throws(function () {
+    assert.throws(function () {
       toCommonForm(commonmark)
     })
-    test.end()
+    done()
   })
 })
 
-tape('parse: blank', function (test) {
+test('parse: blank', (t, done) => {
   const commonmark = 'The **Purchase Price** is `dollars`.'
   const result = toCommonForm(commonmark)
-  test.deepEqual(
+  assert.deepEqual(
     result.directions,
     [
       {
@@ -83,10 +84,10 @@ tape('parse: blank', function (test) {
       }
     ]
   )
-  test.end()
+  done()
 })
 
-tape('parse: front matter', function (test) {
+test('parse: front matter', (t, done) => {
   const commonmark = [
     '---',
     'title: Form Title',
@@ -95,7 +96,7 @@ tape('parse: front matter', function (test) {
     'This form has front matter.'
   ].join('\n')
   const result = toCommonForm(commonmark)
-  test.deepEqual(
+  assert.deepEqual(
     result,
     {
       form: { content: ['This form has front matter.'] },
@@ -103,5 +104,5 @@ tape('parse: front matter', function (test) {
       frontMatter: { title: 'Form Title' }
     }
   )
-  test.end()
+  done()
 })

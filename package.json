@@ -29,13 +29,12 @@
   },
   "devDependencies": {
     "defence-cli": "^3.0.1",
-    "licensee": "^8.2.0",
-    "tape": "^5.5.3"
+    "licensee": "^8.2.0"
   },
   "scripts": {
     "coverage": "node --experimental-test-coverage --test test/**.test.js",
     "test": "npm run test:readme && npm run test:suite",
-    "test:suite": "tape test/**.test.js",
+    "test:suite": "node --test test/**.test.js",
     "test:readme": "defence -i javascript README.md | sed \"s!from 'commonform-commonmark'!from './index.js'!\" | node",
     "licenses": "licensee --errors-only"
   }
