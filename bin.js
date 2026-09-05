@@ -1,18 +1,12 @@
-#!/usr/bin/env node
-if (module.parent) {
-  module.exports = bin
-} else {
-  bin(
-    process.stdin,
-    process.stdout,
-    process.stderr,
-    process.argv.slice(2),
-    status => process.exit(status)
-  )
-}
+import yargs from 'yargs'
+import { readFileSync, createReadStream } from 'node:fs'
+import { normalize } from 'node:path'
+import simpleConcat from 'simple-concat'
+import prepareBlanks from 'commonform-prepare-blanks'
+import { stringify, parse } from './index.js'
 
-function bin (stdin, stdout, stderr, argv, done) {
-  require('yargs')
+export default function bin (stdin, stdout, stderr, argv, done) {
+  yargs()
     .scriptName('commonform-commonmark')
 
     .command(
@@ -33,7 +27,7 @@ function bin (stdin, stdout, stderr, argv, done) {
         readInput(args, buffer => {
           let parsed
           try {
-            parsed = require('./').parse(buffer.toString())
+            parsed = parse(buffer.toString())
           } catch (error) {
             return fail(error)
           }
@@ -100,7 +94,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           let blanks
           if (args.values) {
             try {
-              blanks = require('commonform-prepare-blanks')(
+              blanks = prepareBlanks(
                 args.values, args.directions
               )
             } catch (error) {
@@ -118,8 +112,7 @@ function bin (stdin, stdout, stderr, argv, done) {
           let json, stringified
           try {
             json = JSON.parse(input)
-            stringified = require('./')
-              .stringify(json, blanks, options)
+            stringified = stringify(json, blanks, options)
           } catch (error) {
             return fail(error)
           }
@@ -137,9 +130,9 @@ function bin (stdin, stdout, stderr, argv, done) {
 
   function readInput (args, callback) {
     const input = args.file
-      ? require('fs').createReadStream(args.file)
+      ? createReadStream(args.file)
       : stdin
-    require('simple-concat')(input, (error, buffer) => {
+    simpleConcat(input, (error, buffer) => {
       if (error) return fail(error)
       callback(buffer)
     })
@@ -153,8 +146,8 @@ function bin (stdin, stdout, stderr, argv, done) {
 
 function readJSON (file) {
   return JSON.parse(
-    require('fs').readFileSync(
-      require('path').normalize(file)
+    readFileSync(
+      normalize(file)
     )
   )
 }

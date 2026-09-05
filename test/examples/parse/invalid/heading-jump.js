@@ -1,1 +1,1 @@
-module.exports = /heading/
+export default /heading/

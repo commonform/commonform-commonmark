@@ -1,12 +1,12 @@
-const assert = require('nanoassert')
-const commonmark = require('commonmark')
-const fixStrings = require('commonform-fix-strings')
-const grayMatter = require('gray-matter')
-const has = require('has')
+import assert from 'nanoassert'
+import * as commonmark from 'commonmark'
+import fixStrings from 'commonform-fix-strings'
+import grayMatter from 'gray-matter'
+import legalVersioningRegExp from 'legal-versioning-regexp' with { type: 'json' }
 
-const VERSION_SUFFIX_RE = new RegExp('/' + require('legal-versioning-regexp') + '$')
+const VERSION_SUFFIX_RE = new RegExp('/' + legalVersioningRegExp + '$')
 
-module.exports = markdown => {
+export default markdown => {
   assert(typeof markdown === 'string')
   const split = grayMatter(markdown)
   const parser = new commonmark.Parser()
@@ -158,7 +158,7 @@ function emptyForm () {
 
 function recursivelyFixStrings (form) {
   form.content.forEach(element => {
-    if (has(element, 'form')) {
+    if (Object.hasOwn(element, 'form')) {
       recursivelyFixStrings(element.form)
     }
   })
@@ -169,11 +169,11 @@ const BLANK_RE = /^"(?<value>[^"]+)" for blank (?<number>[1-9]?[0-9]*)$/
 
 function recursivelyPromoteComponents (form) {
   form.content.forEach((element, index) => {
-    if (!has(element, 'form')) return
+    if (!Object.hasOwn(element, 'form')) return
     const childForm = element.form
     const childContent = childForm.content
     const firstElement = childContent[0]
-    const startsWithLink = firstElement && has(firstElement, 'link')
+    const startsWithLink = firstElement && Object.hasOwn(firstElement, 'link')
     if (!startsWithLink) return recursivelyPromoteComponents(element.form)
     const { link: url } = firstElement
     const versionMatch = VERSION_SUFFIX_RE.exec(url)
@@ -198,20 +198,20 @@ function recursivelyPromoteComponents (form) {
         const child = remainder[index]
         if (
           typeof child !== 'object' ||
-          !has(child, 'form') ||
+          !Object.hasOwn(child, 'form') ||
           typeof child.form !== 'object' ||
-          !has(child.form, 'content')
+          !Object.hasOwn(child.form, 'content')
         ) return fail()
         const content = child.form.content
         const first = content[0]
         const second = content[1]
         const third = content[2]
-        if (has(first, 'use')) {
-          if (second === ' for ' && has(third, 'use')) {
+        if (Object.hasOwn(first, 'use')) {
+          if (second === ' for ' && Object.hasOwn(third, 'use')) {
             component.substitutions.terms[third.use] = first.use
           } else return fail()
-        } else if (has(first, 'reference')) {
-          if (second === ' for ' && has(third, 'reference')) {
+        } else if (Object.hasOwn(first, 'reference')) {
+          if (second === ' for ' && Object.hasOwn(third, 'reference')) {
             component.substitutions.headings[third.reference] = first.reference
           } else return fail()
         } else if (typeof first === 'string' && !second && !third) {
@@ -234,7 +234,7 @@ function recursivelyPromoteComponents (form) {
 
 function recursivelyMarkConspicuous (form) {
   form.content.forEach(element => {
-    if (!has(element, 'form')) return
+    if (!Object.hasOwn(element, 'form')) return
     const content = element.form.content
     const firstElement = content[0]
     const conspicuous = (
@@ -251,8 +251,8 @@ function recursivelyMarkConspicuous (form) {
 
 function recursivelyRemoveHeadings (form) {
   form.content.forEach(element => {
-    const hasForm = has(element, 'form')
-    const formOrComponent = hasForm || has(element, 'repository')
+    const hasForm = Object.hasOwn(element, 'form')
+    const formOrComponent = hasForm || Object.hasOwn(element, 'repository')
     if (!formOrComponent) return
     const heading = element.heading
     if (heading === '(No Heading)') delete element.heading
@@ -263,7 +263,7 @@ function recursivelyRemoveHeadings (form) {
 function recursivelyHandleContinuations (form) {
   const spliceList = []
   form.content.forEach((element, index) => {
-    if (!has(element, 'form')) return
+    if (!Object.hasOwn(element, 'form')) return
     const heading = element.heading
     if (heading !== '(Continuing)') {
       return recursivelyHandleContinuations(element.form)
@@ -288,7 +288,7 @@ function extractDirections (formWithBlankLabels, directions, path) {
     const elementIsObject = typeof element === 'object'
     const elementIsBlank = (
       elementIsObject &&
-      has(element, 'blank')
+      Object.hasOwn(element, 'blank')
     )
     if (elementIsBlank) {
       const label = element.blank
@@ -300,16 +300,16 @@ function extractDirections (formWithBlankLabels, directions, path) {
     } else {
       const elementIsChild = (
         elementIsObject &&
-        has(element, 'form')
+        Object.hasOwn(element, 'form')
       )
       if (elementIsChild) {
         const childPath = path.concat('content', index, 'form')
         const result = extractDirections(element.form, directions, childPath)
         const newChild = { form: result.form }
-        if (has(element, 'heading')) {
+        if (Object.hasOwn(element, 'heading')) {
           newChild.heading = element.heading
         }
-        if (has(element, 'conspicuous')) {
+        if (Object.hasOwn(element, 'conspicuous')) {
           newChild.form.conspicuous = element.form.conspicuous
         }
         newContent.push(newChild)
@@ -319,7 +319,7 @@ function extractDirections (formWithBlankLabels, directions, path) {
     }
   })
   const newForm = { content: newContent }
-  if (has(formWithBlankLabels, 'conspicuous')) {
+  if (Object.hasOwn(formWithBlankLabels, 'conspicuous')) {
     newForm.conspicuous = formWithBlankLabels.conspicuous
   }
   return {

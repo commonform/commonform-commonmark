@@ -1,10 +1,10 @@
-const fs = require('fs')
-const glob = require('glob')
-const path = require('path')
-const tape = require('tape')
-const exported = require('../')
+import fs from 'fs'
+import glob from 'glob'
+import path from 'path'
+import tape from 'tape'
+import * as exported from '../index.js'
 
-const examples = path.join(__dirname, 'examples', 'roundtrip')
+const examples = path.join('test', 'examples', 'roundtrip')
 
 glob.sync(path.join(examples, '*')).forEach(function (file) {
   const extname = path.extname(file)

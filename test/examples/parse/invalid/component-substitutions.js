@@ -1,1 +1,1 @@
-module.exports = /after component/
+export default /after component/

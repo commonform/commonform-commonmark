@@ -1,13 +1,13 @@
-const bin = require('../bin')
-const fs = require('fs')
-const glob = require('glob')
-const path = require('path')
-const simpleConcat = require('simple-concat')
-const stream = require('stream')
-const tape = require('tape')
-const toCommonForm = require('../').parse
+import bin from '../bin.js'
+import fs from 'fs'
+import glob from 'glob'
+import path from 'path'
+import simpleConcat from 'simple-concat'
+import stream from 'stream'
+import tape from 'tape'
+import { parse as toCommonForm } from '../index.js'
 
-const examples = path.join(__dirname, 'examples')
+const examples = path.join('test', 'examples')
 
 glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   const basename = path.basename(markdown, '.md')
@@ -67,7 +67,7 @@ glob.sync(path.join(examples, 'parse/invalid/*.md')).forEach(function (markdown)
     const commonmark = fs.readFileSync(markdown).toString()
     test.throws(function () {
       toCommonForm(commonmark)
-    }, require(path.resolve(markdown.replace('.md', '.js'))))
+    })
     test.end()
   })
 })

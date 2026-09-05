@@ -5,12 +5,13 @@
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
   "repository": "commonform/commonform-commonmark",
   "license": "BlueOak-1.0.0",
-  "bin": "./bin.js",
+  "bin": "binscript",
+  "type": "module",
+  "main": "index.js",
   "files": [
-    "index.js",
+    "bin.js",
     "parse.js",
-    "stringify.js",
-    "bin.js"
+    "stringify.js"
   ],
   "dependencies": {
     "commonform-fix-strings": "^2.0.1",

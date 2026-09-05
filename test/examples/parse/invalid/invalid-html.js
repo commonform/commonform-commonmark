@@ -1,1 +1,1 @@
-module.exports = /html/i
+export default /html/i

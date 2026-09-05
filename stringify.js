@@ -1,9 +1,8 @@
-const GitHubSlugger = require('github-slugger')
-const markdownEscape = require('markdown-escape')
-const groupSeries = require('commonform-group-series')
-const has = require('has')
+import GitHubSlugger from 'github-slugger'
+import markdownEscape from 'markdown-escape'
+import groupSeries from 'commonform-group-series'
 
-module.exports = (form, values, options) => {
+export default (form, values, options) => {
   options = options || {}
   values = values || []
   let formDepth = options.formDepth || 0
@@ -73,7 +72,7 @@ function render (form, values, formDepth, indentationLevel, formAddress, options
                     const firstElement = child.form.content[0]
                     startsWithSeries = (
                       typeof firstElement !== 'string' &&
-                      has(firstElement, 'form')
+                      Object.hasOwn(firstElement, 'form')
                     )
                     const realIndex = form.content.indexOf(child)
                     const address = formAddress.concat(
@@ -194,11 +193,11 @@ function headingFor (formDepth, heading, suppressAnchor, options) {
 
 function containsAHeading (child) {
   return (
-    has(child, 'heading') ||
+    Object.hasOwn(child, 'heading') ||
     (
       child.form &&
       child.form.content.some(element => (
-        has(element, 'form') &&
+        Object.hasOwn(element, 'form') &&
         containsAHeading(element)
       ))
     )
@@ -208,23 +207,23 @@ function containsAHeading (child) {
 function run (element, address, values, options) {
   if (typeof element === 'string') {
     return customEscape(element)
-  } else if (has(element, 'use')) {
+  } else if (Object.hasOwn(element, 'use')) {
     return `_${customEscape(element.use)}_`
-  } else if (has(element, 'definition')) {
+  } else if (Object.hasOwn(element, 'definition')) {
     return `**${customEscape(element.definition)}**`
-  } else if (has(element, 'blank')) {
+  } else if (Object.hasOwn(element, 'blank')) {
     let value
     const match = values.find(function (element) {
       return sameAddress(element.blank, address)
     })
     if (match) value = match.value
     return value || '``'
-  } else if (has(element, 'reference')) {
+  } else if (Object.hasOwn(element, 'reference')) {
     const heading = element.reference
     options.referenceSlugger.reset()
     const slug = options.referenceSlugger.slug(heading)
     return `[${heading}](#${slug})`
-  } else if (has(element, 'link')) {
+  } else if (Object.hasOwn(element, 'link')) {
     return `<${element.link}>`
   } else {
     throw new Error(`Invalid type: ${JSON.stringify(element)}`)

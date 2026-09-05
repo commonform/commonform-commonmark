@@ -1,13 +1,13 @@
-const bin = require('../bin')
-const fs = require('fs')
-const glob = require('glob')
-const path = require('path')
-const simpleConcat = require('simple-concat')
-const stream = require('stream')
-const stringify = require('../').stringify
-const tape = require('tape')
+import bin from '../bin.js'
+import fs from 'fs'
+import glob from 'glob'
+import path from 'path'
+import simpleConcat from 'simple-concat'
+import stream from 'stream'
+import { stringify } from '../index.js'
+import tape from 'tape'
 
-const examples = path.join(__dirname, 'examples/stringify')
+const examples = path.join('test', 'examples', 'stringify')
 
 glob.sync(path.join(examples, '*.json'))
   .forEach(function (json) {
@@ -24,7 +24,7 @@ glob.sync(path.join(examples, '*.json'))
         ? JSON.parse(fs.readFileSync(base + '.blanks'))
         : undefined
       test.equal(
-        stringify(require(base + '.json'), blanks, options),
+        stringify(JSON.parse(fs.readFileSync(base + '.json')), blanks, options),
         fs.readFileSync(base + '.md').toString()
       )
       test.end()
