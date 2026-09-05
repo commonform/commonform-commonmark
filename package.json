@@ -31,13 +31,12 @@
     "defence-cli": "^3.0.1",
     "glob": "^8.0.1",
     "licensee": "^8.2.0",
-    "nyc": "^15.0.0",
     "standard": "^17.0.0",
     "standard-markdown": "^7.1.0",
     "tape": "^5.5.3"
   },
   "scripts": {
-    "coverage": "nyc --reporter=lcov --reporter=text-summary npm run test",
+    "coverage": "node --experimental-test-coverage --test test/**.test.js",
     "test": "npm run test:readme && npm run test:suite",
     "test:suite": "tape test/**.test.js",
     "test:readme": "defence -i javascript README.md | sed \"s!from 'commonform-commonmark'!from './index.js'!\" | node",
