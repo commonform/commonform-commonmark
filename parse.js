@@ -1,16 +1,18 @@
 import assert from 'nanoassert'
 import * as commonmark from 'commonmark'
 import fixStrings from 'commonform-fix-strings'
-import grayMatter from 'gray-matter'
+import parseFrontMatter from 'front-matter'
 import legalVersioningRegExp from 'legal-versioning-regexp' with { type: 'json' }
 
 const VERSION_SUFFIX_RE = new RegExp('/' + legalVersioningRegExp + '$')
 
-export default markdown => {
-  assert(typeof markdown === 'string')
-  const split = grayMatter(markdown)
+export default input => {
+  assert(typeof input === 'string')
+  const withFront = parseFrontMatter(input)
+  const markup = withFront.body
+  const frontMatter = withFront.attributes
   const parser = new commonmark.Parser()
-  const parsed = parser.parse(split.content)
+  const parsed = parser.parse(markup)
   const walker = parsed.walker()
   const form = emptyForm()
   const contentStack = [form]
@@ -148,7 +150,7 @@ export default markdown => {
   recursivelyRemoveHeadings(form)
   recursivelyHandleContinuations(form)
   const returned = extractDirections(form)
-  returned.frontMatter = split.data
+  returned.frontMatter = frontMatter
   return returned
 }
 
