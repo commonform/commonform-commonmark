@@ -11,15 +11,15 @@ This package includes a [JavaScript module](#JavaScript) and [command-line inter
 ## JavaScript
 
 ```javascript
-const commonmark = require('commonform-commonmark')
-const assert = require('assert')
+import { stringify, parse } from 'commonform-commonmark'
+import assert from 'node:assert'
 ```
 
 ### Parse CommonMark to Common Form.
 
 ```javascript
 assert.deepStrictEqual(
-  commonmark.parse(
+  parse(
     [
       '# Purchase Price',
       'The purchase price is $10.'
@@ -40,7 +40,7 @@ assert.deepStrictEqual(
 
 ```javascript
 assert.deepStrictEqual(
-  commonmark.parse(
+  parse(
     [
       '# Purchase Price',
       'The purchase price is `dollars`.'
@@ -59,7 +59,7 @@ assert.deepStrictEqual(
 
 ```javascript
 assert.deepStrictEqual(
-  commonmark.stringify({
+  stringify({
     content: [
       'The ',
       { definition: 'Purchase Price' },
@@ -70,7 +70,7 @@ assert.deepStrictEqual(
 )
 
 assert.deepStrictEqual(
-  commonmark.stringify(
+  stringify(
     {
       content: [
         'The ',
