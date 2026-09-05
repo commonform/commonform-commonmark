@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "defence-cli": "^3.0.1",
-    "glob": "^8.0.1",
     "licensee": "^8.2.0",
     "standard": "^17.0.0",
     "standard-markdown": "^7.1.0",

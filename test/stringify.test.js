@@ -1,6 +1,5 @@
 import bin from '../bin.js'
 import fs from 'fs'
-import glob from 'glob'
 import path from 'path'
 import simpleConcat from 'simple-concat'
 import stream from 'stream'
@@ -9,7 +8,7 @@ import tape from 'tape'
 
 const examples = path.join('test', 'examples', 'stringify')
 
-glob.sync(path.join(examples, '*.json'))
+fs.globSync(path.join(examples, '*.json'))
   .forEach(function (json) {
     const basename = path.basename(json, '.json')
     const dirname = path.dirname(json)

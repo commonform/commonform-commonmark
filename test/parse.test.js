@@ -1,6 +1,5 @@
 import bin from '../bin.js'
 import fs from 'fs'
-import glob from 'glob'
 import path from 'path'
 import simpleConcat from 'simple-concat'
 import stream from 'stream'
@@ -9,7 +8,7 @@ import { parse as toCommonForm } from '../index.js'
 
 const examples = path.join('test', 'examples')
 
-glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
+fs.globSync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   const basename = path.basename(markdown, '.md')
 
   tape('parse: ' + basename, function (test) {
@@ -61,7 +60,7 @@ glob.sync(path.join(examples, 'parse/valid/*.md')).forEach(function (markdown) {
   })
 })
 
-glob.sync(path.join(examples, 'parse/invalid/*.md')).forEach(function (markdown) {
+fs.globSync(path.join(examples, 'parse/invalid/*.md')).forEach(function (markdown) {
   const basename = path.basename(markdown, '.md')
   tape('parse: ' + basename, function (test) {
     const commonmark = fs.readFileSync(markdown).toString()

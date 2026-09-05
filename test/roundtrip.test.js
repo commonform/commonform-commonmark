@@ -1,12 +1,11 @@
 import fs from 'fs'
-import glob from 'glob'
 import path from 'path'
 import tape from 'tape'
 import * as exported from '../index.js'
 
 const examples = path.join('test', 'examples', 'roundtrip')
 
-glob.sync(path.join(examples, '*')).forEach(function (file) {
+fs.globSync(path.join(examples, '*')).forEach(function (file) {
   const extname = path.extname(file)
   const basename = path.basename(file, extname)
   tape('round trip: ' + basename, function (test) {
